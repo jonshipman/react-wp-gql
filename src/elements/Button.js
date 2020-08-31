@@ -5,7 +5,7 @@ export const Button = ({ children, to = "/", onClick, className = "" }) => {
   if (onClick) {
     return (
       <div
-        className={`${className} bg-light-gray pv2 ph3 dib`}
+        className={`${className} bg-light-gray pv2 ph3 dib pointer`}
         onClick={onClick}
       >
         {children}
@@ -13,7 +13,7 @@ export const Button = ({ children, to = "/", onClick, className = "" }) => {
     );
   }
   return (
-    <div className={`${className} bg-light-gray pv2 ph3 dib`}>
+    <div className={`${className} pointer bg-light-gray pv2 ph3 dib`}>
       <Link to={to} className="color-inherit no-underline">
         {children}
       </Link>
