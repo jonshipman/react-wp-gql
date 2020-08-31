@@ -3,7 +3,6 @@ export * from "./Category";
 export * from "./Context";
 export * from "./elements/ArchiveCard";
 export * from "./elements/ArchiveRender";
-export * from "./elements/Button";
 export * from "./elements/ErrorRouting";
 export * from "./elements/Loading";
 export * from "./elements/LoadingError";
