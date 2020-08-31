@@ -37,7 +37,7 @@ export const Search = ({
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
-      <SearchForm filter={filter} setFilter={setFilter} />
+      <components.SearchForm filter={filter} setFilter={setFilter} />
 
       <Render />
     </NodeProvider>
