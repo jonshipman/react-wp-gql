@@ -9,16 +9,14 @@ export const Single = ({ components = {}, fragments = {}, ...props }) => {
   PopulateComponents(components);
   PopulateFragments(fragments);
 
-  console.log(node, loading, error, components);
-
-  if (loading || error || !node.id) {
-    return <components.ErrorRouting loading={loading} error={error} />;
-  }
-
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
       <components.TitleRender {...node} />
-      <components.SingleRender node={node} />
+      {loading || error || !node.id ? (
+        <components.ErrorRouting loading={loading} error={error} />
+      ) : (
+        <components.SingleRender node={node} />
+      )}
     </NodeProvider>
   );
 };
