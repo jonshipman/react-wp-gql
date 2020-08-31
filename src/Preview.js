@@ -30,7 +30,7 @@ export const Preview = ({
 
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
-      <components.TitleRender {...node} />
+      <components.SingleTitle {...node} />
       <components.SingleRender node={node} />
     </NodeProvider>
   );
