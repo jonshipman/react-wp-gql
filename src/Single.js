@@ -1,16 +1,13 @@
 import React from "react";
 
 import { NodeProvider } from "./Context";
-import { PopulateComponents, PopulateFragments } from "./Defaults";
 import { useSingle } from "./hooks/useSingle";
 
-export const Single = ({ components = {}, fragments = {}, ...props }) => {
+export const Single = (props) => {
   const { node, loading, error } = useSingle();
-  PopulateComponents(components);
-  PopulateFragments(fragments);
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <NodeProvider value={props}>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (

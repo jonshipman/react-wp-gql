@@ -1,16 +1,9 @@
 import React from "react";
 
 import { NodeProvider } from "./Context";
-import { PopulateComponents, PopulateFragments } from "./Defaults";
 import { useSearch } from "./hooks/useSearch";
 
-export const Search = ({
-  components = {},
-  fragments = {},
-  uri = "/search",
-  title = "Search",
-  ...props
-}) => {
+export const Search = ({ uri = "/search", title = "Search", ...props }) => {
   const {
     edges,
     loading,
@@ -19,8 +12,6 @@ export const Search = ({
     setFilter,
     ...hookProps
   } = useSearch();
-  PopulateComponents(components);
-  PopulateFragments(fragments);
 
   let Render = () => <components.ArchiveRender edges={edges} {...hookProps} />;
 
@@ -33,7 +24,7 @@ export const Search = ({
   }
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <NodeProvider value={props}>
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
