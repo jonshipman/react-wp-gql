@@ -8,7 +8,7 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   const { current } = inputRef;
 
   return (
-    <components.PageWidth className="search flex-l items-center-l mb4">
+    <components.PageWidth className="search flex-l items-center-l mv4">
       <components.FormGroup
         ref={inputRef}
         type="search"

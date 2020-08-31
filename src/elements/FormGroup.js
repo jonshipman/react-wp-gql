@@ -8,7 +8,7 @@ let FormGroup = (
   props.className = `w-100 db ${props.className || ""}`;
 
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <input
         onChange={(e) => onChange(e.currentTarget.value)}
         ref={ref}
