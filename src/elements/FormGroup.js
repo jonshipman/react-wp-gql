@@ -1,10 +1,14 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 // Simple placeholder.
-export const FormGroup = ({ onEnter = () => {}, ...props }) => {
+let FormGroup = ({ onEnter = () => {}, ...props }, ref) => {
   return (
     <div>
-      <input {...props} />
+      <input ref={ref} {...props} />
     </div>
   );
 };
+
+FormGroup = forwardRef(FormGroup);
+
+export { FormGroup };
