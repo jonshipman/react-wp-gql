@@ -9,7 +9,7 @@ export const useSingle = (props = {}) => {
   const QUERY = gql`
     query SingleHook($uri: ID!) {
       contentNode(id: $uri, idType: URI) {
-        ...contentInfo
+        ${fragments.QueryContentNode}
       }
     }
     ${fragments.FragmentSeo}
@@ -22,7 +22,7 @@ export const useSingle = (props = {}) => {
   const QUERY_BY_ID = gql`
     query SingleByIdHook($databaseId: ID!) {
       contentNode(id: $databaseId, idType: DATABASE_ID) {
-        ...contentInfo
+        ${fragments.QueryContentNode}
       }
     }
     ${fragments.FragmentSeo}

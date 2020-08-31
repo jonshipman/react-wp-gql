@@ -1,23 +1,7 @@
 import { useContext } from "react";
 
 import { NodeContext } from "../Context";
-import {
-  FragmentPageInfo,
-  FragmentSeo,
-  FragmentCategory,
-  FragmentPost,
-  FragmentPage,
-  FragmentContentNode,
-} from "../gql/fragments";
-
-const DefaultFragments = {
-  FragmentPageInfo,
-  FragmentSeo,
-  FragmentCategory,
-  FragmentPost,
-  FragmentPage,
-  FragmentContentNode,
-};
+import * as DefaultFragments from "../gql/fragments";
 
 export const useFragments = () => {
   const { fragments } = useContext(NodeContext);

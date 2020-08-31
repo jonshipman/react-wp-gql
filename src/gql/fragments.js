@@ -1,5 +1,18 @@
 import { gql } from "@apollo/client";
 
+export const QueryContentNode = `
+...contentInfo
+... on Post {
+  ...postInfo
+}
+... on Page {
+  ...pageInfo
+}
+... on Product {
+  ...productInfo
+}
+`;
+
 export const FragmentPageInfo = gql`
   fragment edgePageInfo on WPPageInfo {
     endCursor
