@@ -1,16 +1,13 @@
 import { gql } from "@apollo/client";
 
 export const QueryContentNode = `
-...contentInfo
-... on Post {
-  ...postInfo
-}
-... on Page {
-  ...pageInfo
-}
-... on Product {
-  ...productInfo
-}
+  ...contentInfo
+  ... on Post {
+    ...postInfo
+  }
+  ... on Page {
+    ...pageInfo
+  }
 `;
 
 export const FragmentPageInfo = gql`
