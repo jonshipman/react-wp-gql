@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
 
-import { ExampleComponent } from 'react-boilerplate-nodes'
-import 'react-boilerplate-nodes/dist/index.css'
+import { Single } from "react-boilerplate-nodes";
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
-}
+  return <Single />;
+};
 
-export default App
+export default App;
