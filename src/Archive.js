@@ -4,16 +4,22 @@ import { NodeProvider } from "./Context";
 import { PopulateComponents, PopulateFragments } from "./Defaults";
 import { useArchive } from "./hooks/useArchive";
 
-export const Archive = ({ components = {}, fragments = {}, ...props }) => {
+export const Archive = ({
+  components = {},
+  fragments = {},
+  uri = "/blog",
+  title = "Blog",
+  ...props
+}) => {
   const { edges, loading, error, ...hookProps } = useArchive();
   PopulateComponents(components);
   PopulateFragments(fragments);
 
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
-      <components.Seo title="Blog" canonical="/blog" />
+      <components.Seo title={title} canonical={uri} />
 
-      <components.Title>Blog</components.Title>
+      <components.Title>{title}</components.Title>
       {loading || error || !edges.length ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
