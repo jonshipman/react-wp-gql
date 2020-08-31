@@ -12,7 +12,7 @@ export const Single = ({ components = {}, fragments = {}, ...props }) => {
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
       <components.TitleRender {...node} />
-      {false ? (
+      {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
         <components.SingleRender node={node} />
