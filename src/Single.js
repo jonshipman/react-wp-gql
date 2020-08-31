@@ -9,7 +9,7 @@ export const Single = ({ components = {}, fragments = {}, ...props }) => {
   PopulateComponents(components);
   PopulateFragments(fragments);
 
-  console.log(node, error, id);
+  console.log(node, error, loading);
 
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
