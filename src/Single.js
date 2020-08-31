@@ -11,11 +11,13 @@ export const Single = ({ components = {}, fragments = {}, ...props }) => {
 
   return (
     <NodeProvider value={{ components, fragments, ...props }}>
-      <components.SingleTitle {...node} />
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
-        <components.SingleRender node={node} />
+        <React.Fragment>
+          <components.SingleTitle {...node} />
+          <components.SingleRender node={node} />
+        </React.Fragment>
       )}
     </NodeProvider>
   );
