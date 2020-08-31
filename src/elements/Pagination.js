@@ -6,7 +6,7 @@ export const Pagination = ({ hasNextPage, hasPreviousPage, prev, next }) => {
   const { components } = useComponents();
 
   return (
-    <div className="pagination cf">
+    <div className="pagination cf mv4">
       {hasPreviousPage && (
         <components.Button className="fl" onClick={prev}>
           Previous
