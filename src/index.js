@@ -1,4 +1,5 @@
 export * from "./Archive";
+export * from "./Category";
 export * from "./Context";
 export * from "./elements/ArchiveCard";
 export * from "./elements/ArchiveRender";
@@ -22,6 +23,8 @@ export * from "./hooks/useCategory";
 export * from "./hooks/usePagination";
 export * from "./hooks/useSearch";
 export * from "./hooks/useSingle";
+export * from "./Preview";
+export * from "./Search";
 export * from "./Single";
 
 import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
