@@ -2,19 +2,7 @@ import React, { useRef } from "react";
 
 import { useComponents } from "../hooks/useComponents";
 
-export const SearchForm = () => {
-  const { components } = useComponents();
-
-  return (
-    <components.PageWidth className="gray tc">
-      <div className="f4 f3-l mv4">
-        This is where the search results will be. Use the form above to search.
-      </div>
-    </components.PageWidth>
-  );
-};
-
-const SearchForm = ({ filter = "", setFilter = () => {} }) => {
+export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   const { components } = useComponents();
   const inputRef = useRef();
   const { current } = inputRef;
