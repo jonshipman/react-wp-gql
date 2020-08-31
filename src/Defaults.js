@@ -2,14 +2,18 @@ import { ArchiveCard } from "./elements/ArchiveCard";
 import { ArchiveRender } from "./elements/ArchiveRender";
 import { Button } from "./elements/Button";
 import { ErrorRouting } from "./elements/ErrorRouting";
+import { FormGroup } from "./elements/FormGroup";
 import { Loading } from "./elements/Loading";
 import { LoadingError } from "./elements/LoadingError";
+import { NoSearchResults } from "./elements/NoSearchResults";
 import { NotFound } from "./elements/NotFound";
 import { PageWidth } from "./elements/PageWidth";
 import { Pagination } from "./elements/Pagination";
 import { PostContent } from "./elements/PostContent";
 import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
 import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
+import { ReactComponent as SearchIcon } from "./static/images/search.svg";
+import { SearchForm } from "./elements/SearchForm";
 import { Seo } from "./elements/Seo";
 import { SingleRender } from "./elements/SingleRender";
 import { SingleTitle } from "./elements/SingleTitle";
@@ -23,12 +27,16 @@ export const DefaultComponents = {
   ClockIcon,
   ErrorRouting,
   FolderIcon,
+  FormGroup,
   Loading,
   LoadingError,
+  NoSearchResults,
   NotFound,
   PageWidth,
   Pagination,
   PostContent,
+  SearchForm,
+  SearchIcon,
   Seo,
   SingleRender,
   SingleTitle,
