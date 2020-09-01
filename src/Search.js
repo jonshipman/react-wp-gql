@@ -19,7 +19,6 @@ export const Search = ({
     error,
     filter,
     setFilter,
-    components = {},
     ...hookProps
   } = useSearch();
 
