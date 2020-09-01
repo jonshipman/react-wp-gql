@@ -45,6 +45,11 @@ export const DefaultComponents = {
   Title,
 };
 
+export const Populate = ({ components, fragments }) => {
+  PopulateComponents(components);
+  PopulateFragments(fragments);
+};
+
 export const PopulateComponents = (components = {}) => {
   if (!components) components = {};
 

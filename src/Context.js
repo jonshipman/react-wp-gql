@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 
-import { PopulateComponents, PopulateFragments } from "./Defaults";
+import { Populate } from "./Defaults";
 
 const NodeContext = createContext({
   components: {},
@@ -14,8 +14,7 @@ const NodeProvider = ({
   fragments = {},
   ...props
 }) => {
-  PopulateComponents(components);
-  PopulateFragments(fragments);
+  Populate({ components, fragments });
 
   return (
     <NodeContext.Provider value={{ components, fragments, ...props }}>

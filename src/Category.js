@@ -3,7 +3,7 @@ import React from "react";
 import { NodeProvider } from "./Context";
 import { useCategory } from "./hooks/useCategory";
 
-export const Category = (props) => {
+export const Category = ({ components = {}, ...props }) => {
   const {
     category: { name, uri, seo = {} },
     edges,
@@ -13,7 +13,7 @@ export const Category = (props) => {
   } = useCategory();
 
   return (
-    <NodeProvider value={props}>
+    <NodeProvider value={{ components, ...props }}>
       <components.Seo title={seo.title} canonical={uri} />
 
       <components.Title>{name}</components.Title>

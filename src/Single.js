@@ -3,11 +3,11 @@ import React from "react";
 import { NodeProvider } from "./Context";
 import { useSingle } from "./hooks/useSingle";
 
-export const Single = (props) => {
+export const Single = ({ components = {}, ...props }) => {
   const { node, loading, error } = useSingle();
 
   return (
-    <NodeProvider value={props}>
+    <NodeProvider value={{ components, ...props }}>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (

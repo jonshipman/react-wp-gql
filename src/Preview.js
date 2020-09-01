@@ -8,6 +8,7 @@ import { useHeartbeat } from "./hooks/useHeartbeat";
 export const Preview = ({
   ifRestricted = () => {},
   HeartbeatProps = {},
+  components = {},
   ...props
 }) => {
   useHeartbeat(HeartbeatProps);
@@ -24,7 +25,7 @@ export const Preview = ({
   }
 
   return (
-    <NodeProvider value={props}>
+    <NodeProvider value={{ components, ...props }}>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (

@@ -10,6 +10,7 @@ export const Search = ({ uri = "/search", title = "Search", ...props }) => {
     error,
     filter,
     setFilter,
+    components = {},
     ...hookProps
   } = useSearch();
 
@@ -24,7 +25,7 @@ export const Search = ({ uri = "/search", title = "Search", ...props }) => {
   }
 
   return (
-    <NodeProvider value={props}>
+    <NodeProvider value={{ components, ...props }}>
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
