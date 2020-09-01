@@ -25,9 +25,7 @@ export const useQueries = () => {
   if (!queries) queries = {};
 
   Object.keys(DefaultQueries).forEach((key) => {
-    console.log(`Query Key ${key}`);
     if (!queries[key]) {
-      console.log(`Query Key not Found.`);
       queries[key] = DefaultQueries[key];
     }
   });
