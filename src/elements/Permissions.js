@@ -1,7 +1,7 @@
 import { createElement, cloneElement } from "react";
 import { useQuery } from "@apollo/client";
 
-import { useQueries } from "./useQueries";
+import { useQueries } from "../hooks/useQueries";
 
 export const Permissions = ({
   cap,
