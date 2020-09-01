@@ -9,6 +9,7 @@ import { NoSearchResults } from "./elements/NoSearchResults";
 import { NotFound } from "./elements/NotFound";
 import { PageWidth } from "./elements/PageWidth";
 import { Pagination } from "./elements/Pagination";
+import { Permissions } from "./elements/Permissions";
 import { PostContent } from "./elements/PostContent";
 import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
 import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
@@ -34,6 +35,7 @@ export const DefaultComponents = {
   NotFound,
   PageWidth,
   Pagination,
+  Permissions,
   PostContent,
   SearchForm,
   SearchIcon,
