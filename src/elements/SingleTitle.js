@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Title } from "./Title";
 import { useComponents } from "../hooks/useComponents";
 
 export const SingleTitle = ({
@@ -7,7 +8,8 @@ export const SingleTitle = ({
   __typename,
   categories = { edges: [] },
 }) => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign({}, { Title }, components);
 
   if ("Post" === __typename) {
     return (

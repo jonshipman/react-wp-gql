@@ -1,9 +1,11 @@
 import React from "react";
 
+import { Button } from "./Button";
 import { useComponents } from "../hooks/useComponents";
 
 export const Pagination = ({ hasNextPage, hasPreviousPage, prev, next }) => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign({}, { Button }, components);
 
   return (
     <div className="pagination cf mv4">

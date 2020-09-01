@@ -1,9 +1,18 @@
 import React from "react";
 
+import { Loading } from "./Loading";
+import { LoadingError } from "./LoadingError";
+import { NotFound } from "./NotFound";
+import { PageWidth } from "./PageWidth";
 import { useComponents } from "../hooks/useComponents";
 
 export const ErrorRouting = ({ loading, error }) => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign(
+    {},
+    { PageWidth, Loading, LoadingError, NotFound },
+    components,
+  );
 
   if (loading) {
     return (

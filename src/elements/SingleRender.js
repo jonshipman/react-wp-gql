@@ -1,6 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { PageWidth } from "./PageWidth";
+import { PostContent } from "./PostContent";
+import { ReactComponent as ClockIcon } from "../static/images/clock.svg";
+import { ReactComponent as FolderIcon } from "../static/images/folder.svg";
+import { Seo } from "./Seo";
 import { useComponents } from "../hooks/useComponents";
 
 export const SingleRender = ({ node = {} }) => {
@@ -15,7 +20,12 @@ export const SingleRender = ({ node = {} }) => {
     content,
   } = node;
 
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign(
+    {},
+    { PageWidth, PostContent, Seo, ClockIcon, FolderIcon },
+    components,
+  );
 
   return (
     <article className={`single post-${databaseId}`}>

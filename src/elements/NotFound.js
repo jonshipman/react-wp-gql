@@ -1,9 +1,12 @@
 import React from "react";
 
+import { PageWidth } from "./PageWidth";
 import { useComponents } from "../hooks/useComponents";
 
 export const NotFound = () => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign({}, { PageWidth }, components);
+
   return (
     <components.PageWidth className="content post-not-found">
       <h1 className="content--title tc">

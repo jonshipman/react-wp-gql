@@ -1,9 +1,18 @@
 import React, { useRef } from "react";
 
+import { FormGroup } from "./FormGroup";
+import { PageWidth } from "./PageWidth";
+import { ReactComponent as SearchIcon } from "../static/images/search.svg";
 import { useComponents } from "../hooks/useComponents";
 
 export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign(
+    {},
+    { PageWidth, FormGroup, SearchIcon },
+    components,
+  );
+
   const inputRef = useRef();
   const { current } = inputRef;
 
