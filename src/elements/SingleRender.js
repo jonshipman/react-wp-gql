@@ -53,7 +53,12 @@ export const SingleRender = ({ node = {} }) => {
                         key={`cat-${category.node.databaseId}-post-cats`}
                         className="dib mr2 pr2 br b--near-white drop-last-br"
                       >
-                        <Link to={category.node.uri}>{category.node.name}</Link>
+                        <Link
+                          to={category.node.uri}
+                          className="primary no-underline"
+                        >
+                          {category.node.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>
