@@ -1,7 +1,7 @@
-import { Single } from ".";
+import { NodeProvider } from ".";
 
-describe("Single", () => {
+describe("NodeProvider", () => {
   it("is truthy", () => {
-    expect(Single).toBeTruthy();
+    expect(NodeProvider).toBeTruthy();
   });
 });

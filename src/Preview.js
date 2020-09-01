@@ -1,19 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import { NodeProvider } from "./Context";
-import { Populate } from "./Defaults";
 import { useHeartbeat } from "./hooks/useHeartbeat";
 import { useSingle } from "./hooks/useSingle";
+import { useComponents } from "./hooks/useComponents";
 
-export const Preview = ({
-  ifRestricted = () => {},
-  HeartbeatProps = {},
-  components = {},
-  fragments = {},
-  ...props
-}) => {
-  Populate({ components, fragments });
+export const Preview = ({ ifRestricted = () => {}, HeartbeatProps = {} }) => {
+  const { components } = useComponents();
 
   useHeartbeat(HeartbeatProps);
 
@@ -28,7 +21,7 @@ export const Preview = ({
   }
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <React.Fragment>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
@@ -37,6 +30,6 @@ export const Preview = ({
           <components.SingleRender node={node} />
         </React.Fragment>
       )}
-    </NodeProvider>
+    </React.Fragment>
   );
 };

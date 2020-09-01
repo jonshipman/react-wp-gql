@@ -1,16 +1,14 @@
 import React from "react";
 
-import { NodeProvider } from "./Context";
-import { Populate } from "./Defaults";
+import { useComponents } from "./hooks/useComponents";
 import { useSingle } from "./hooks/useSingle";
 
-export const Single = ({ components = {}, fragments = {}, ...props }) => {
-  Populate({ components, fragments });
-
+export const Single = () => {
+  const { components } = useComponents();
   const { node, loading, error } = useSingle();
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <React.Fragment>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
@@ -19,6 +17,6 @@ export const Single = ({ components = {}, fragments = {}, ...props }) => {
           <components.SingleRender node={node} />
         </React.Fragment>
       )}
-    </NodeProvider>
+    </React.Fragment>
   );
 };

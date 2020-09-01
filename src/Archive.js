@@ -1,22 +1,15 @@
 import React from "react";
 
-import { Populate } from "./Defaults";
-import { NodeProvider } from "./Context";
 import { useArchive } from "./hooks/useArchive";
+import { useComponents } from "./hooks/useComponents";
 
-export const Archive = ({
-  uri = "/blog",
-  title = "Blog",
-  components = {},
-  fragments = {},
-  ...props
-}) => {
-  Populate({ components, fragments });
+export const Archive = ({ uri = "/blog", title = "Blog" }) => {
+  const { components } = useComponents();
 
   const { edges, loading, error, ...hookProps } = useArchive();
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <React.Fragment>
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
@@ -25,6 +18,6 @@ export const Archive = ({
       ) : (
         <components.ArchiveRender edges={edges} {...hookProps} />
       )}
-    </NodeProvider>
+    </React.Fragment>
   );
 };

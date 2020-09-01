@@ -1,4 +1,6 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
+
+import { Populate } from "./Defaults";
 
 const NodeContext = createContext({
   components: {},
@@ -6,6 +8,19 @@ const NodeContext = createContext({
   FRONTEND_URL: "",
 });
 
-const NodeProvider = NodeContext.Provider;
+const NodeProvider = ({
+  children,
+  components = {},
+  fragments = {},
+  ...props
+}) => {
+  Populate({ components, fragments });
+
+  return (
+    <NodeContext.Provider value={{ components, fragments, ...props }}>
+      {children}
+    </NodeContext.Provider>
+  );
+};
 
 export { NodeProvider, NodeContext };

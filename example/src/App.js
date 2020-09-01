@@ -1,9 +1,13 @@
 import React from "react";
 
-import { Single } from "react-boilerplate-nodes";
+import { NodeProvider, Single } from "react-boilerplate-nodes";
 
 const App = () => {
-  return <Single />;
+  return (
+    <NodeProvider>
+      <Single />
+    </NodeProvider>
+  );
 };
 
 export default App;

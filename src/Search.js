@@ -1,28 +1,14 @@
 import React from "react";
 
-import { NodeProvider } from "./Context";
-import { Populate } from "./Defaults";
 import { useSearch } from "./hooks/useSearch";
+import { useComponents } from "./hooks/useComponents";
 
-export const Search = ({
-  uri = "/search",
-  title = "Search",
-  fragments = {},
-  components = {},
-  ...props
-}) => {
-  Populate({ components, fragments });
+export const Search = ({ uri = "/search", title = "Search" }) => {
+  const { components } = useComponents();
 
-  const {
-    edges,
-    loading,
-    error,
-    filter,
-    setFilter,
-    ...hookProps
-  } = useSearch();
+  const { edges, loading, error, filter, setFilter, ...props } = useSearch();
 
-  let Render = () => <components.ArchiveRender edges={edges} {...hookProps} />;
+  let Render = () => <components.ArchiveRender edges={edges} {...props} />;
 
   if (loading || error || !edges.length) {
     Render = () => <components.ErrorRouting loading={loading} error={error} />;
@@ -33,13 +19,13 @@ export const Search = ({
   }
 
   return (
-    <NodeProvider value={{ components, fragments, ...props }}>
+    <React.Fragment>
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
       <components.SearchForm filter={filter} setFilter={setFilter} />
 
       <Render />
-    </NodeProvider>
+    </React.Fragment>
   );
 };
