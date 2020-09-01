@@ -12,6 +12,8 @@ export const NodeProvider = ({
 }) => {
   Populate({ components, fragments, queries });
 
+  console.log(fragments, queries);
+
   return (
     <NodeContext.Provider value={{ components, fragments, queries, ...props }}>
       {children}
