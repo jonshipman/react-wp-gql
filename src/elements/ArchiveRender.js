@@ -1,6 +1,10 @@
 import React from "react";
 
 import { useComponents } from "../hooks/useComponents";
+import { PageWidth } from "./PageWidth";
+import { Seo } from "./Seo";
+import { ArchiveCard } from "./ArchiveCard";
+import { Pagination } from "./Pagination";
 
 export const ArchiveRender = ({
   edges = [],
@@ -9,7 +13,12 @@ export const ArchiveRender = ({
   next,
   prev,
 }) => {
-  const { components } = useComponents();
+  let { components } = useComponents();
+  components = Object.assign(
+    {},
+    { PageWidth, Seo, ArchiveCard, Pagination },
+    components,
+  );
 
   if (!edges.length) {
     return <components.PageWidth>Nothing found.</components.PageWidth>;
