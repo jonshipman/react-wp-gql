@@ -47,12 +47,16 @@ export const DefaultComponents = {
 };
 
 export const Populate = ({ components, fragments, queries }) => {
-  PopulateComponents(components);
-  PopulateFragments(fragments);
-  PopulateQueries(queries);
+  const ret = {};
+  ret.components = PopulateComponents(components);
+  ret.fragments = PopulateFragments(fragments);
+  ret.queries = PopulateQueries(queries);
+
+  return ret;
 };
 
-export const PopulateComponents = (components = {}) => {
+export const PopulateComponents = (passed = {}) => {
+  let components = { ...passed };
   if (!components) components = {};
 
   Object.keys(DefaultComponents).forEach((key) => {
@@ -60,9 +64,12 @@ export const PopulateComponents = (components = {}) => {
       components[key] = DefaultComponents[key];
     }
   });
+
+  return components;
 };
 
-export const PopulateFragments = (fragments = {}) => {
+export const PopulateFragments = (passed = {}) => {
+  let fragments = { ...passed };
   if (!fragments) fragments = {};
 
   Object.keys(DefaultFragments).forEach((key) => {
@@ -70,9 +77,12 @@ export const PopulateFragments = (fragments = {}) => {
       fragments[key] = DefaultFragments[key];
     }
   });
+
+  return fragments;
 };
 
-export const PopulateQueries = (queries = {}) => {
+export const PopulateQueries = (passed = {}) => {
+  let queries = { ...passed };
   if (!queries) queries = {};
 
   Object.keys(DefaultQueries).forEach((key) => {
@@ -80,4 +90,6 @@ export const PopulateQueries = (queries = {}) => {
       queries[key] = DefaultQueries[key];
     }
   });
+
+  return queries;
 };

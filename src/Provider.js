@@ -10,12 +10,12 @@ export const NodeProvider = ({
   queries = {},
   ...props
 }) => {
-  Populate({ components, fragments, queries });
+  const refactored = Populate({ components, fragments, queries });
 
-  console.log(fragments, queries);
+  console.log(refactored);
 
   return (
-    <NodeContext.Provider value={{ components, fragments, queries, ...props }}>
+    <NodeContext.Provider value={{ ...refactored, ...props }}>
       {children}
     </NodeContext.Provider>
   );
