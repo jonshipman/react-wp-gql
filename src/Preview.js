@@ -2,19 +2,22 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import { NodeProvider } from "./Context";
-import { useSingle } from "./hooks/useSingle";
+import { Populate } from "./Defaults";
 import { useHeartbeat } from "./hooks/useHeartbeat";
+import { useSingle } from "./hooks/useSingle";
 
 export const Preview = ({
   ifRestricted = () => {},
   HeartbeatProps = {},
   components = {},
+  fragments = {},
   ...props
 }) => {
+  Populate({ components, fragments });
+
   useHeartbeat(HeartbeatProps);
 
   const { revisionId } = useParams();
-
   const { node, loading, error } = useSingle({
     ssr: false,
     databaseId: revisionId,
@@ -25,7 +28,7 @@ export const Preview = ({
   }
 
   return (
-    <NodeProvider value={{ components, ...props }}>
+    <NodeProvider value={{ components, fragments, ...props }}>
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (

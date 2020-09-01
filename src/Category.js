@@ -1,9 +1,12 @@
 import React from "react";
 
 import { NodeProvider } from "./Context";
+import { Populate } from "./Defaults";
 import { useCategory } from "./hooks/useCategory";
 
-export const Category = ({ components = {}, ...props }) => {
+export const Category = ({ components = {}, fragments = {}, ...props }) => {
+  Populate({ components, fragments });
+
   const {
     category: { name, uri, seo = {} },
     edges,
@@ -13,7 +16,7 @@ export const Category = ({ components = {}, ...props }) => {
   } = useCategory();
 
   return (
-    <NodeProvider value={{ components, ...props }}>
+    <NodeProvider value={{ components, fragments, ...props }}>
       <components.Seo title={seo.title} canonical={uri} />
 
       <components.Title>{name}</components.Title>

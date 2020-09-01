@@ -1,3 +1,4 @@
+export { Populate } from "./Defaults";
 export * from "./Archive";
 export * from "./Category";
 export * from "./Context";

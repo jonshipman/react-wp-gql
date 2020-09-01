@@ -1,9 +1,18 @@
 import React from "react";
 
 import { NodeProvider } from "./Context";
+import { Populate } from "./Defaults";
 import { useSearch } from "./hooks/useSearch";
 
-export const Search = ({ uri = "/search", title = "Search", ...props }) => {
+export const Search = ({
+  uri = "/search",
+  title = "Search",
+  fragments = {},
+  components = {},
+  ...props
+}) => {
+  Populate({ components, fragments });
+
   const {
     edges,
     loading,
@@ -25,7 +34,7 @@ export const Search = ({ uri = "/search", title = "Search", ...props }) => {
   }
 
   return (
-    <NodeProvider value={{ components, ...props }}>
+    <NodeProvider value={{ components, fragments, ...props }}>
       <components.Seo title={title} canonical={uri} />
 
       <components.Title>{title}</components.Title>
