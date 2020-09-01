@@ -22,6 +22,7 @@ export * from "./hooks/useCategory";
 export * from "./hooks/usePagination";
 export * from "./hooks/useSearch";
 export * from "./hooks/useSingle";
+export * from "./hooks/useHeartbeat";
 export * from "./Preview";
 export * from "./Search";
 export * from "./Single";

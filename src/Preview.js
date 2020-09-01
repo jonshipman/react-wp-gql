@@ -3,8 +3,15 @@ import { useParams } from "react-router-dom";
 
 import { NodeProvider } from "./Context";
 import { useSingle } from "./hooks/useSingle";
+import { useHeartbeat } from "./hooks/useHeartbeat";
 
-export const Preview = ({ ifRestricted = () => {}, ...props }) => {
+export const Preview = ({
+  ifRestricted = () => {},
+  HeartbeatProps = {},
+  ...props
+}) => {
+  useHeartbeat(HeartbeatProps);
+
   const { revisionId } = useParams();
 
   const { node, loading, error } = useSingle({
