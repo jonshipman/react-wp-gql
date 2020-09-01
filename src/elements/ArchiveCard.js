@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Button } from "./Button";
 import { PostContent } from "./PostContent";
-import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
+import { ReactComponent as ClockIcon } from "../static/images/clock.svg";
 import { useComponents } from "../hooks/useComponents";
 
 export const ArchiveCard = ({
