@@ -27,6 +27,7 @@ export * from "./hooks/usePagination";
 export * from "./hooks/useSearch";
 export * from "./hooks/useSingle";
 export * from "./Preview";
+export * from "./Provider";
 export * from "./Search";
 export * from "./Single";
 
