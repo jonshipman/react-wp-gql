@@ -12,11 +12,7 @@ export const useSingle = (props = {}) => {
         ${fragments.QueryContentNode}
       }
     }
-    ${fragments.FragmentSeo}
-    ${fragments.FragmentCategory}
-    ${fragments.FragmentContentNode}
-    ${fragments.FragmentPost}
-    ${fragments.FragmentPage}
+    ${fragments.QueryContentNodeFragments}
   `;
 
   const QUERY_BY_ID = gql`
@@ -25,11 +21,7 @@ export const useSingle = (props = {}) => {
         ${fragments.QueryContentNode}
       }
     }
-    ${fragments.FragmentSeo}
-    ${fragments.FragmentCategory}
-    ${fragments.FragmentContentNode}
-    ${fragments.FragmentPost}
-    ${fragments.FragmentPage}
+    ${fragments.QueryContentNodeFragments}
   `;
 
   const { ssr = true, databaseId, uri: passedUri } = props;

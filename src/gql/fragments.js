@@ -10,6 +10,14 @@ export const QueryContentNode = `
   }
 `;
 
+export const QueryContentNodeFragments = `
+  ${FragmentSeo}
+  ${FragmentCategory}
+  ${FragmentContentNode}
+  ${FragmentPost}
+  ${FragmentPage}
+`;
+
 export const FragmentPageInfo = gql`
   fragment edgePageInfo on WPPageInfo {
     endCursor
