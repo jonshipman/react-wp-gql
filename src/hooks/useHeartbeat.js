@@ -33,7 +33,7 @@ export const useCleanup = ({
   }, [redirect, history]);
 };
 
-export const useHeartbeat = ({ beats = 30000, onError = {}, query }) => {
+export const useHeartbeat = ({ ibi = 30000, onError = {}, query }) => {
   const [beats, setBeats] = useState(1);
   const { queries } = useQueries();
 
@@ -46,14 +46,14 @@ export const useHeartbeat = ({ beats = 30000, onError = {}, query }) => {
   useEffect(() => {
     let interval = setInterval(() => {
       setBeats(beats + 1);
-    }, beats);
+    }, ibi);
 
     return () => {
       if (interval) {
         clearInterval(interval);
       }
     };
-  }, [beats, error, setBeats]);
+  }, [beats, error, setBeats, ibi]);
 
   if (error) {
     useCleanup(onError);
