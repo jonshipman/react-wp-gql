@@ -1,49 +1,18 @@
 import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
-import { useFragments } from "./useFragments";
+import { useQueries } from "./useQueries";
 import { usePagination, getPageInfo, useNavigation } from "./usePagination";
 
 export const useSearch = () => {
-  const { fragments } = useFragments();
-
-  const QUERY = gql`
-    query SearchHook(
-      $filter: String!
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
-    ) {
-      posts(
-        first: $first
-        last: $last
-        after: $after
-        before: $before
-        where: { search: $filter, status: PUBLISH, hasPassword: false }
-      ) {
-        edges {
-          node {
-            ...postInfo
-          }
-        }
-        pageInfo {
-          ...edgePageInfo
-        }
-      }
-    }
-    ${fragments.FragmentCategory}
-    ${fragments.FragmentPageInfo}
-    ${fragments.FragmentSeo}
-    ${fragments.FragmentPost}
-  `;
+  const { queries } = useQueries();
 
   const [filter, setFilter] = useState("");
   const { variables, goNext, goPrev } = usePagination();
 
   variables.filter = filter;
 
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(queries.QuerySearch, {
     variables,
     errorPolicy: "all",
   });

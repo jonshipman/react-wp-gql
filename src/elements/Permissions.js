@@ -1,15 +1,7 @@
 import { createElement, cloneElement } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
-const DEFAULT_QUERY = gql`
-  query PermissionsQuery {
-    viewer {
-      id
-      databaseId
-      capabilities
-    }
-  }
-`;
+import { useQueries } from "./useQueries";
 
 export const Permissions = ({
   cap,
@@ -19,7 +11,8 @@ export const Permissions = ({
   query: QUERY = DEFAULT_QUERY,
   ...props
 }) => {
-  const { data } = useQuery(QUERY, { errorPolicy: "all" });
+  const { queries } = useQueries();
+  const { data } = useQuery(queries.QueryPermissions, { errorPolicy: "all" });
 
   if (data?.viewer?.capabilities?.length > 0) {
     if (data.viewer.capabilities.includes(cap)) {

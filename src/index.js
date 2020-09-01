@@ -19,6 +19,7 @@ export * from "./elements/SingleRender";
 export * from "./elements/SingleTitle";
 export * from "./elements/Title";
 export * from "./gql/fragments";
+export * from "./gql/queries";
 export * from "./hooks/useArchive";
 export * from "./hooks/useCategory";
 export * from "./hooks/useHeartbeat";

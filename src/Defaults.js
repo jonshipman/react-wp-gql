@@ -20,6 +20,7 @@ import { SingleRender } from "./elements/SingleRender";
 import { SingleTitle } from "./elements/SingleTitle";
 import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
+import * as DefaultQueries from "./gql/queries";
 
 export const DefaultComponents = {
   ArchiveCard,
@@ -45,9 +46,10 @@ export const DefaultComponents = {
   Title,
 };
 
-export const Populate = ({ components, fragments }) => {
+export const Populate = ({ components, fragments, queries }) => {
   PopulateComponents(components);
   PopulateFragments(fragments);
+  PopulateQueries(queries);
 };
 
 export const PopulateComponents = (components = {}) => {
@@ -66,6 +68,16 @@ export const PopulateFragments = (fragments = {}) => {
   Object.keys(DefaultFragments).forEach((key) => {
     if (!fragments[key]) {
       fragments[key] = DefaultFragments[key];
+    }
+  });
+};
+
+export const PopulateQueries = (queries = {}) => {
+  if (!queries) queries = {};
+
+  Object.keys(DefaultQueries).forEach((key) => {
+    if (!queries[key]) {
+      queries[key] = DefaultQueries[key];
     }
   });
 };

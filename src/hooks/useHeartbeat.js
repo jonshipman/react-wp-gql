@@ -1,16 +1,7 @@
 import { useEffect } from "react";
-import { gql, useQuery, useApolloClient } from "@apollo/client";
+import { useQuery, useApolloClient } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-
-const DEFAULT_QUERY = gql`
-  query HeartbeatQuery {
-    viewer {
-      id
-      jwtAuthExpiration
-      capabilities
-    }
-  }
-`;
+import { useQueries } from "./useQueries";
 
 export const protectedTypes = ["User"];
 
@@ -42,14 +33,11 @@ export const useCleanup = ({
   }, [redirect, history]);
 };
 
-export const useHeartbeat = ({
-  beats = 30000,
-  onError = {},
-  query: QUERY = DEFAULT_QUERY,
-}) => {
-  cosnt[(beats, setBeats)] = useState(1);
+export const useHeartbeat = ({ beats = 30000, onError = {}, query }) => {
+  const [beats, setBeats] = useState(1);
+  const { queries } = useQueries();
 
-  const { error } = useQuery(QUERY, {
+  const { error } = useQuery(query || queries.QueryHeartbeat, {
     errorPolicy: "all",
     fetchPolicy: "network-only",
     variables: { beats },

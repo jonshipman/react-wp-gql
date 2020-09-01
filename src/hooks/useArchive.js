@@ -1,43 +1,13 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
-import { useFragments } from "./useFragments";
 import { usePagination, getPageInfo, useNavigation } from "./usePagination";
+import { useQueries } from "./useQueries";
 
 export const useArchive = (props = {}) => {
-  const { fragments } = useFragments();
-
-  const DEFAULT_QUERY = gql`
-    query ArchiveHook(
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
-    ) {
-      posts(
-        first: $first
-        last: $last
-        after: $after
-        before: $before
-        where: { status: PUBLISH, hasPassword: false }
-      ) {
-        edges {
-          node {
-            ...postInfo
-          }
-        }
-        pageInfo {
-          ...edgePageInfo
-        }
-      }
-    }
-    ${fragments.FragmentSeo}
-    ${fragments.FragmentCategory}
-    ${fragments.FragmentPageInfo}
-    ${fragments.FragmentPost}
-  `;
+  const { queries } = useQueries();
 
   const {
-    QUERY = DEFAULT_QUERY,
+    QUERY = queries.QueryArchive,
     variables: propVariables = {},
     field = "posts",
     perPage = 10,

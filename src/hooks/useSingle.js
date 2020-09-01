@@ -1,37 +1,19 @@
 import { useLocation } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
-import { useFragments } from "./useFragments";
+import { useQueries } from "./useQueries";
 
 export const useSingle = (props = {}) => {
-  const { fragments } = useFragments();
-
-  const QUERY = gql`
-    query SingleHook($uri: ID!) {
-      contentNode(id: $uri, idType: URI) {
-        ${fragments.QueryContentNode}
-      }
-    }
-    ${fragments.QueryContentNodeFragments}
-  `;
-
-  const QUERY_BY_ID = gql`
-    query SingleByIdHook($databaseId: ID!) {
-      contentNode(id: $databaseId, idType: DATABASE_ID) {
-        ${fragments.QueryContentNode}
-      }
-    }
-    ${fragments.QueryContentNodeFragments}
-  `;
+  const { queries } = useQueries();
 
   const { ssr = true, databaseId, uri: passedUri } = props;
   const { pathname: uri } = useLocation();
   const variables = {};
-  let q = QUERY;
+  let q = queries.QuerySingle;
 
   if (databaseId) {
     variables.databaseId = databaseId;
-    q = QUERY_BY_ID;
+    q = queries.QuerySingleById;
   } else {
     if (passedUri) {
       variables.uri = passedUri.replace(/\/+$/, "");

@@ -83,21 +83,3 @@ export const FragmentContentNode = gql`
     }
   }
 `;
-
-export const QueryContentNode = `
-  ...contentInfo
-  ... on Post {
-    ...postInfo
-  }
-  ... on Page {
-    ...pageInfo
-  }
-`;
-
-export const QueryContentNodeFragments = `
-  ${FragmentSeo}
-  ${FragmentCategory}
-  ${FragmentContentNode}
-  ${FragmentPost}
-  ${FragmentPage}
-`;
