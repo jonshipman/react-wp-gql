@@ -1,23 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const QueryContentNode = `
-  ...contentInfo
-  ... on Post {
-    ...postInfo
-  }
-  ... on Page {
-    ...pageInfo
-  }
-`;
-
-export const QueryContentNodeFragments = `
-  ${FragmentSeo}
-  ${FragmentCategory}
-  ${FragmentContentNode}
-  ${FragmentPost}
-  ${FragmentPage}
-`;
-
 export const FragmentPageInfo = gql`
   fragment edgePageInfo on WPPageInfo {
     endCursor
@@ -100,4 +82,22 @@ export const FragmentContentNode = gql`
       ...pageInfo
     }
   }
+`;
+
+export const QueryContentNode = `
+  ...contentInfo
+  ... on Post {
+    ...postInfo
+  }
+  ... on Page {
+    ...pageInfo
+  }
+`;
+
+export const QueryContentNodeFragments = `
+  ${FragmentSeo}
+  ${FragmentCategory}
+  ${FragmentContentNode}
+  ${FragmentPost}
+  ${FragmentPage}
 `;
