@@ -36,7 +36,7 @@ export const SingleRender = ({ node = {} }) => {
         breadcrumbs={seo.breadcrumbs}
       />
       <components.PageWidth className="mv4">
-        {"Post" === __typename && (
+        {__typename === "Post" && (
           <React.Fragment>
             <h1 className="f2 fw4 mb4">{title}</h1>
 

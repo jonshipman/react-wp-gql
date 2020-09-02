@@ -35,7 +35,7 @@ export const ArchiveCard = ({
         </div>
       </h2>
 
-      <components.PostContent className="mv4" trim={true}>
+      <components.PostContent className="mv4" trim>
         {excerpt || content}
       </components.PostContent>
 

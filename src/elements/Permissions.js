@@ -8,11 +8,13 @@ export const Permissions = ({
   children,
   fallback = null,
   authorId,
-  query: QUERY = DEFAULT_QUERY,
+  query: QUERY,
   ...props
 }) => {
   const { queries } = useQueries();
-  const { data } = useQuery(queries.QueryPermissions, { errorPolicy: "all" });
+  const { data } = useQuery(QUERY || queries.QueryPermissions, {
+    errorPolicy: "all",
+  });
 
   if (data?.viewer?.capabilities?.length > 0) {
     if (data.viewer.capabilities.includes(cap)) {
@@ -30,7 +32,7 @@ export const Permissions = ({
     }
   }
 
-  if (null === fallback) {
+  if (fallback === null) {
     return null;
   }
 

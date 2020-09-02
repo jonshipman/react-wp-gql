@@ -11,7 +11,7 @@ export const SingleTitle = ({
   let { components } = useComponents();
   components = Object.assign({}, { Title }, components);
 
-  if ("Post" === __typename) {
+  if (__typename === "Post") {
     return (
       <components.Title heading="div">
         {categories.edges[0]?.node?.name || "Blog"}

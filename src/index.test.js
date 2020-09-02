@@ -1,7 +1,9 @@
-import { NodeProvider } from ".";
+import * as tests from ".";
 
-describe("NodeProvider", () => {
-  it("is truthy", () => {
-    expect(NodeProvider).toBeTruthy();
+Object.keys(tests).forEach((key) => {
+  describe(key, () => {
+    it("is truthy", () => {
+      expect(tests[key]).toBeTruthy();
+    });
   });
 });

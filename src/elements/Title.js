@@ -8,14 +8,16 @@ let Title = ({ notHeading, className = "", children, ...props }, ref) => {
   components = Object.assign({}, { PageWidth }, components);
 
   const Wrap = createElement(notHeading ? "div" : "h1", {});
+  const WrapType = Wrap.type;
+
   return (
     <div className={`bg-near-white ${className}`} {...props}>
       <components.PageWidth>
-        <Wrap.type className="title ma0 lh-solid pv4">
+        <WrapType className="title ma0 lh-solid pv4">
           <span className="f4 fw4 db" ref={ref}>
             {children}
           </span>
-        </Wrap.type>
+        </WrapType>
       </components.PageWidth>
     </div>
   );

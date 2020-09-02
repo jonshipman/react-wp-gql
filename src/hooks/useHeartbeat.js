@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { useQueries } from "./useQueries";
@@ -6,7 +6,7 @@ import { useQueries } from "./useQueries";
 export const protectedTypes = ["User"];
 
 const DefaultCleanup = () => {
-  localStorage.removeItem("auth-token");
+  window.localStorage.removeItem("auth-token");
 };
 
 export const useCleanup = ({
@@ -22,7 +22,7 @@ export const useCleanup = ({
   // Clear the sensitize caches
   Object.keys(client.cache.data.data).forEach((key) =>
     types.forEach(
-      (type) => 0 === key.indexOf(type) && client.cache.data.delete(key),
+      (type) => key.indexOf(type) === 0 && client.cache.data.delete(key),
     ),
   );
 
@@ -44,7 +44,7 @@ export const useHeartbeat = ({ ibi = 30000, onError = {}, query }) => {
   });
 
   useEffect(() => {
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       setBeats(beats + 1);
     }, ibi);
 
