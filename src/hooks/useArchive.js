@@ -1,4 +1,5 @@
-import { useQuery, useContext } from "@apollo/client";
+import { useContext } from "react";
+import { useQuery } from "@apollo/client";
 
 import { NodeContext } from "../Context";
 import { usePagination, getPageInfo, useNavigation } from "./usePagination";
