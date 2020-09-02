@@ -5,7 +5,7 @@ import { usePagination, getPageInfo, useNavigation } from "./usePagination";
 import { useQueries } from "./useQueries";
 
 export const useArchive = (props = {}) => {
-  const { perPage = 10 } = useContext(NodeContext);
+  const { perPage } = useContext(NodeContext);
   const { queries } = useQueries();
 
   const {

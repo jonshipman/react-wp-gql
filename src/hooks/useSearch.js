@@ -10,7 +10,7 @@ export const useSearch = () => {
   const { queries } = useQueries();
 
   const [filter, setFilter] = useState("");
-  const { variables, goNext, goPrev } = usePagination(perPage || 10);
+  const { variables, goNext, goPrev } = usePagination(perPage);
 
   variables.filter = filter;
 
