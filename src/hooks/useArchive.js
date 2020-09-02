@@ -13,8 +13,9 @@ export const useArchive = (props = {}) => {
     QUERY = queries.QueryArchive,
     variables: propVariables = {},
     field = "posts",
+    perPage: perPageProp,
   } = props;
-  const { variables, goNext, goPrev } = usePagination(perPage);
+  const { variables, goNext, goPrev } = usePagination(perPageProp || perPage);
 
   const { data = {}, loading, error } = useQuery(QUERY, {
     variables: { ...variables, ...propVariables },
