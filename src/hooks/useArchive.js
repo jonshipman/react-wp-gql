@@ -5,14 +5,14 @@ import { usePagination, getPageInfo, useNavigation } from "./usePagination";
 import { useQueries } from "./useQueries";
 
 export const useArchive = (props = {}) => {
-  const { perPage } = useContext(NodeContext);
+  const { perPage = 10 } = useContext(NodeContext);
   const { queries } = useQueries();
 
   const {
     QUERY = queries.QueryArchive,
     variables: propVariables = {},
     field = "posts",
-    perPage = perPageArchive || 10,
+    perPage,
   } = props;
   const { variables, goNext, goPrev } = usePagination(perPage);
 
