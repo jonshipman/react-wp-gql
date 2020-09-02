@@ -9,13 +9,11 @@ export const Single = () => {
 
   return (
     <React.Fragment>
+      <components.SingleTitle {...node} />
       {loading || error || !node.id ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
-        <React.Fragment>
-          <components.SingleTitle {...node} />
-          <components.SingleRender node={node} />
-        </React.Fragment>
+        <components.SingleRender node={node} />
       )}
     </React.Fragment>
   );
