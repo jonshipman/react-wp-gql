@@ -13,7 +13,9 @@ export const useQueries = () => {
   const executedQueries = {};
 
   Object.keys(queries).forEach((key) => {
-    executedQueries[key] = queries[key](fragments);
+    if (typeof queries[key] === "function") {
+      executedQueries[key] = queries[key](fragments);
+    }
   });
 
   return { queries: executedQueries, fragments };
