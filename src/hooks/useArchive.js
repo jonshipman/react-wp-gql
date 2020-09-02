@@ -1,16 +1,18 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useContext } from "@apollo/client";
 
+import { NodeContext } from "../Context";
 import { usePagination, getPageInfo, useNavigation } from "./usePagination";
 import { useQueries } from "./useQueries";
 
 export const useArchive = (props = {}) => {
+  const { perPage } = useContext(NodeContext);
   const { queries } = useQueries();
 
   const {
     QUERY = queries.QueryArchive,
     variables: propVariables = {},
     field = "posts",
-    perPage = 10,
+    perPage = perPageArchive || 10,
   } = props;
   const { variables, goNext, goPrev } = usePagination(perPage);
 

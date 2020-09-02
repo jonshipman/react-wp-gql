@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
 
+import { NodeContext } from "../Context";
 import { useQueries } from "./useQueries";
 import { usePagination, getPageInfo, useNavigation } from "./usePagination";
 
 export const useSearch = () => {
+  const { perPage } = useContext(NodeContext);
   const { queries } = useQueries();
 
   const [filter, setFilter] = useState("");
-  const { variables, goNext, goPrev } = usePagination();
+  const { variables, goNext, goPrev } = usePagination(perPage || 10);
 
   variables.filter = filter;
 
