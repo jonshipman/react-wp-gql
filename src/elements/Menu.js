@@ -16,6 +16,8 @@ export const ChildItem = ({
   let { components } = useComponents();
   components = { SubMenu, ChildItem, MenuItem, ...components };
 
+  console.log("ChildItem", components);
+
   const { menuItems } = props;
   const hasChildren = menuItem?.childItems?.nodes?.length > 0;
   const localLevel = level ? level + 1 : 1;
@@ -191,6 +193,8 @@ export const SubMenu = ({
 export const Skeleton = ({ error, ...props }) => {
   let { components } = useComponents();
   components = { MenuItem, ...components };
+
+  console.log("Skeleton", components);
 
   return Array.from(new Array(error?.message ? 1 : 5)).map(() => (
     <components.MenuItem key={Math.random()} href="/" {...props}>
