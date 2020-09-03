@@ -36,6 +36,7 @@ export * from "./hooks/useCategory";
 export * from "./hooks/useHeartbeat";
 export * from "./hooks/useMenu";
 export * from "./hooks/usePagination";
+export * from "./hooks/useQueries";
 export * from "./hooks/useSearch";
 export * from "./hooks/useSingle";
 export * from "./Login";
