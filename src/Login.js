@@ -73,7 +73,7 @@ export const useLogin = ({ setMessage = () => true }) => {
   });
 
   useEffect(() => {
-    if (error && "Internal server error" !== error.message) {
+    if (error && error.message !== "Internal server error") {
       setMessage(error);
     }
   }, [error, setMessage]);
@@ -162,7 +162,7 @@ export const ForgotPasswordRender = ({ setMessage }) => {
   );
 
   useEffect(() => {
-    if (error && "Internal server error" !== error.message) {
+    if (error && error.message !== "Internal server error") {
       setMessage(error);
     }
   }, [error, setMessage]);
@@ -217,7 +217,7 @@ export const RegisterRender = ({ setMessage }) => {
   );
 
   useEffect(() => {
-    if (error && "Internal server error" !== error.message) {
+    if (error && error.message !== "Internal server error") {
       setMessage(error);
     }
   }, [error, setMessage]);
@@ -285,7 +285,7 @@ export const ResetPasswordRender = ({ setMessage }) => {
   );
 
   useEffect(() => {
-    if (error && "Internal server error" !== error.message) {
+    if (error && error.message !== "Internal server error") {
       setMessage(error);
     }
   }, [error, setMessage]);
