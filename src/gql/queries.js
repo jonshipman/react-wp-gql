@@ -156,7 +156,7 @@ export const QueryMenu = (fragments) => gql`
         ...menuInfo
         menuItems(first: 100) {
           nodes {
-            ...menuItem
+            ...menuItemInfo
           }
         }
       }
