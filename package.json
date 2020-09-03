@@ -8,7 +8,6 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
-  "style" : "src/scss/style.scss",
   "engines": {
     "node": ">=10"
   },

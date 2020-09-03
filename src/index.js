@@ -1,6 +1,7 @@
 import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
 import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
+import "./scss/style.scss";
 
 export { Populate } from "./Defaults";
 export * from "./Archive";
