@@ -1,4 +1,5 @@
 import * as tests from ".";
+import "./scss/style.scss";
 
 Object.keys(tests).forEach((key) => {
   describe(key, () => {
