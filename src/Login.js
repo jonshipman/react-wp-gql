@@ -5,6 +5,12 @@ import { useMutation } from "@apollo/client";
 import { NodeContext } from "./Context";
 import { useComponents } from "./hooks/useComponents";
 import { useQueries } from "./hooks/useQueries";
+import {
+  getAuthToken,
+  getRedirect,
+  setAuthToken as DefaultSetAuthToken,
+  removeRedirect as DefaultRemoveRedirect,
+} from "./functions";
 
 export const generatePassword = (props) => {
   const { length = 12, specialChars = true, extraSpecialChars = false } =
@@ -33,10 +39,10 @@ export const useLogin = ({ setMessage = () => true }) => {
   const history = useHistory();
 
   const {
-    loginRedirect = window.localStorage.getItem("redirect"),
-    authToken = window.localStorage.getItem("auth-token"),
-    setAuthToken = (token) => window.localStorage.setItem("auth-token", token),
-    removeRedirect = () => window.localStorage.removeItem("redirect"),
+    loginRedirect = getRedirect(),
+    authToken = getAuthToken(),
+    setAuthToken = DefaultSetAuthToken,
+    removeRedirect = DefaultRemoveRedirect,
   } = useContext(NodeContext);
 
   useEffect(() => {

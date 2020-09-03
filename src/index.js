@@ -25,6 +25,7 @@ export * from "./elements/Seo";
 export * from "./elements/SingleRender";
 export * from "./elements/SingleTitle";
 export * from "./elements/Title";
+export * from "./functions";
 export * from "./gql/fragments";
 export * from "./gql/mutations";
 export * from "./gql/queries";
