@@ -83,3 +83,31 @@ export const FragmentContentNode = gql`
     }
   }
 `;
+
+export const FragmentMenu = gql`
+  fragment menuInfo on Menu {
+    id
+  }
+`;
+
+export const FragmentMenuItem = gql`
+  fragment menuItemInfo on MenuItem {
+    id
+    databaseId
+    parentId
+    url
+    label
+    cssClasses
+    connectedNode {
+      node {
+        __typename
+      }
+    }
+    childItems {
+      nodes {
+        id
+        parentId
+      }
+    }
+  }
+`;

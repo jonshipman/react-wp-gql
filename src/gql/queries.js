@@ -148,3 +148,20 @@ export const QueryPermissions = () => gql`
     }
   }
 `;
+
+export const QueryMenu = (fragments) => gql`
+  query MenuHook($location: MenuLocationEnum!) {
+    menus(where: { location: $location }) {
+      nodes {
+        ...menuInfo
+        menuItems(first: 100) {
+          nodes {
+            ...menuItem
+          }
+        }
+      }
+    }
+  }
+  ${fragments.FragmentMenu}
+  ${fragments.FragmentMenuItem}
+`;

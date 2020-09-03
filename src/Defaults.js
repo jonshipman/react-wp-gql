@@ -21,8 +21,10 @@ import { SingleTitle } from "./elements/SingleTitle";
 import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
 import * as DefaultQueries from "./gql/queries";
+import * as Menu from "./elements/Menu";
 
 export const DefaultComponents = {
+  ...Menu,
   ArchiveCard,
   ArchiveRender,
   Button,
