@@ -2,13 +2,8 @@ import { useContext } from "react";
 
 import { NodeContext } from "../Context";
 
-const useFragments = () => {
-  return useContext(NodeContext);
-};
-
 export const useQueries = () => {
-  const { queries } = useContext(NodeContext);
-  const { fragments } = useFragments();
+  const { queries, fragments, mutations } = useContext(NodeContext);
 
   const executedQueries = {};
 
@@ -18,5 +13,13 @@ export const useQueries = () => {
     }
   });
 
-  return { queries: executedQueries, fragments };
+  const executedMutations = {};
+
+  Object.keys(mutations).forEach((key) => {
+    if (typeof mutations[key] === "function") {
+      executedMutations[key] = mutations[key](fragments);
+    }
+  });
+
+  return { queries: executedQueries, fragments, mutations: executedMutations };
 };

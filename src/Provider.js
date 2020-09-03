@@ -8,9 +8,10 @@ export const NodeProvider = ({
   components = {},
   fragments = {},
   queries = {},
+  mutations = {},
   ...props
 }) => {
-  const refactored = Populate({ components, fragments, queries });
+  const refactored = Populate({ components, fragments, queries, mutations });
 
   return (
     <NodeContext.Provider value={{ ...refactored, ...props }}>

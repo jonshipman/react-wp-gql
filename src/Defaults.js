@@ -20,10 +20,13 @@ import { SingleRender } from "./elements/SingleRender";
 import { SingleTitle } from "./elements/SingleTitle";
 import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
+import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
+import * as Login from "./Login";
 import * as Menu from "./elements/Menu";
 
 export const DefaultComponents = {
+  ...Login,
   ...Menu,
   ArchiveCard,
   ArchiveRender,
@@ -48,11 +51,12 @@ export const DefaultComponents = {
   Title,
 };
 
-export const Populate = ({ components, fragments, queries }) => {
+export const Populate = ({ components, fragments, queries, mutations }) => {
   const ret = {};
   ret.components = PopulateComponents(components);
   ret.fragments = PopulateFragments(fragments);
   ret.queries = PopulateQueries(queries);
+  ret.mutations = PopulateMutations(mutations);
 
   return ret;
 };
@@ -94,4 +98,17 @@ export const PopulateQueries = (passed = {}) => {
   });
 
   return queries;
+};
+
+export const PopulateMutations = (passed = {}) => {
+  let mutations = { ...passed };
+  if (!mutations) mutations = {};
+
+  Object.keys(DefaultMutations).forEach((key) => {
+    if (!mutations[key]) {
+      mutations[key] = DefaultMutations[key];
+    }
+  });
+
+  return mutations;
 };
