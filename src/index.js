@@ -29,6 +29,8 @@ export * from "./functions";
 export * from "./gql/fragments";
 export * from "./gql/mutations";
 export * from "./gql/queries";
+export * from "./handlers/resize";
+export * from "./handlers/scroll";
 export * from "./hooks/useArchive";
 export * from "./hooks/useCategory";
 export * from "./hooks/useHeartbeat";
