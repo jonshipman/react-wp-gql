@@ -117,7 +117,7 @@ export const MenuItem = ({
     className += " pv2";
   }
 
-  let TransformedSubmenu = null;
+  let TransformedSubmenu = () => null;
 
   if (submenu) {
     const SubMenuType = submenu.type;
