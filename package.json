@@ -12,8 +12,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --css-modules false --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --css-modules false --format modern,cjs",
+    "build": "microbundle-crl --no-compress --css-modules false --format modern,cjs && yarn export:sass",
+    "start": "microbundle-crl watch --no-compress --css-modules false --format modern,cjs && yarn export:sass",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -21,7 +21,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "export:sass": "cp -r src/scss dist/scss"
   },
   "peerDependencies": {
     "react": "^16.0.0"
