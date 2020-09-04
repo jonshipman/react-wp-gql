@@ -16,9 +16,10 @@ export const useSingle = (props = {}) => {
     q = queries.QuerySingleById;
   } else {
     if (passedUri) {
-      variables.uri = passedUri.replace(/\/+$/, "");
+      variables.uri =
+        passedUri !== "/" ? passedUri.replace(/\/+$/, "") : passedUri;
     } else {
-      variables.uri = uri.replace(/\/+$/, "");
+      variables.uri = uri !== "/" ? uri.replace(/\/+$/, "") : uri;
     }
   }
 
