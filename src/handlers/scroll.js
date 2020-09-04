@@ -43,7 +43,7 @@ class _sharedScrollHandler {
         this.functions.forEach((fn) => {
           fn(props);
         });
-      }, 500);
+      }, 90);
     }
   }
 
