@@ -43,29 +43,12 @@ export const ChildItem = ({
 
   if (hasChildren) {
     menuItemProps.className += " has-children";
-    menuItemProps.submenu = (
-      <components.SubMenu>
-        {newChildren.map((m) => {
-          if (m.parentId === menuItem.id) {
-            return (
-              <components.ChildItem
-                key={m.id}
-                menuItem={m}
-                level={localLevel}
-                anchorOnClick={anchorOnClick}
-                {...props}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
-      </components.SubMenu>
-    );
+    menuItemProps.submenuChildren = newChildren;
   }
 
   return (
     <components.MenuItem
+      hasChildren
       onClick={anchorOnClick}
       key={menuItem.id}
       level={localLevel}
@@ -117,23 +100,21 @@ export const MenuItem = (props) => {
 
 // Exportable menu item container.
 export const MenuItemAnchor = ({
-  anchorClass = "",
+  hasChildren,
+  submenuChildren,
   children,
-  flat = false,
+  anchorClass = "",
   href,
-  level = 1,
-  onClick = () => {},
   spanClassName = "",
-  submenu,
   to,
+  ...props,
 }) => {
+  const {
+    flat = false,
+    level = 1,
+    onClick = () => {},
+  } = props;
   const { components } = useComponents();
-
-  let TransformedSubmenu = () => null;
-
-  if (submenu) {
-    TransformedSubmenu = () => cloneElement(submenu, { level, flat });
-  }
 
   const innerProps = {
     flat,
@@ -167,7 +148,17 @@ export const MenuItemAnchor = ({
           </components.LinkInner>
         </NavLink>
       )}
-      <TransformedSubmenu />
+      {hasChildren && <components.SubMenu>
+        {submenuChildren.map((m) => (
+            <components.ChildItem
+              key={m.id}
+              menuItem={m}
+              level={level}
+              anchorOnClick={onClick}
+              {...props}
+            />
+          ))}
+      </components.SubMenu>}
     </React.Fragment>
   );
 };
