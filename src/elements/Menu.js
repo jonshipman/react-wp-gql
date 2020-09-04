@@ -17,7 +17,7 @@ export const ChildItem = ({
   components = { SubMenu, ChildItem, MenuItem, ...components };
 
   const { menuItems } = props;
-  const hasChildren = menuItem?.childItems?.nodes?.length > 0;
+  let hasChildren = menuItem?.childItems?.nodes?.length > 0;
   const localLevel = level ? level + 1 : 1;
   const newChildren = [];
 
@@ -26,6 +26,8 @@ export const ChildItem = ({
       newChildren.push(menuItems.find((i) => i.id === childItem.id));
     });
   }
+
+  hasChildren = newChildren.length > 0;
 
   const menuItemProps = {
     className: "",
