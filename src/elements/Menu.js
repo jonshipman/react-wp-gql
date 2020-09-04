@@ -132,7 +132,7 @@ export const MenuItemAnchor = ({
   let TransformedSubmenu = () => null;
 
   if (submenu) {
-    TransformedSubmenu = cloneElement(submenu, { level, flat });
+    TransformedSubmenu = () => cloneElement(submenu, { level, flat });
   }
 
   const innerProps = {
