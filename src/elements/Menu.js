@@ -50,7 +50,6 @@ export const ChildItem = ({
 
   return (
     <components.MenuItem
-      hasChildren
       onClick={anchorOnClick}
       key={menuItem.id}
       level={localLevel}
@@ -102,8 +101,7 @@ export const MenuItem = (props) => {
 
 // Exportable menu item container.
 export const MenuItemAnchor = ({
-  hasChildren,
-  submenuChildren,
+  submenuChildren = [],
   children,
   anchorClass = "",
   href,
@@ -146,7 +144,7 @@ export const MenuItemAnchor = ({
           </components.LinkInner>
         </NavLink>
       )}
-      {hasChildren && (
+      {submenuChildren.length && (
         <components.SubMenu>
           {submenuChildren.map((m) => (
             <components.ChildItem
@@ -225,6 +223,7 @@ export const MenuRender = ({
       {loading || props.error?.message ? (
         <components.Skeleton {...props} />
       ) : (
+        props?.menuItems?.length &&
         props.menuItems.map((menuItem) => {
           if (menuItem.parentId === null) {
             return (
