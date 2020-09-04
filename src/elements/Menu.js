@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef, useEffect, cloneElement } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
@@ -43,7 +43,7 @@ export const ChildItem = ({
 
   if (hasChildren) {
     menuItemProps.className += " has-children";
-    menuItemProps.submenu = (
+    menuItemProps.submenu = () => (
       <components.SubMenu>
         {newChildren.map((m) => {
           if (m.parentId === menuItem.id) {
@@ -132,10 +132,7 @@ export const MenuItemAnchor = ({
   let TransformedSubmenu = () => null;
 
   if (submenu) {
-    const SubMenuType = submenu.type;
-    const stprops = { level, flat, ...submenu.props };
-
-    TransformedSubmenu = () => <SubMenuType {...stprops} />;
+    TransformedSubmenu = cloneElement(submenu, { level, flat });
   }
 
   const innerProps = {
