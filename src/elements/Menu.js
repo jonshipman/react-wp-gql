@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, cloneElement } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
@@ -107,13 +107,9 @@ export const MenuItemAnchor = ({
   href,
   spanClassName = "",
   to,
-  ...props,
+  ...props
 }) => {
-  const {
-    flat = false,
-    level = 1,
-    onClick = () => {},
-  } = props;
+  const { flat = false, level = 1, onClick = () => {} } = props;
   const { components } = useComponents();
 
   const innerProps = {
@@ -148,8 +144,9 @@ export const MenuItemAnchor = ({
           </components.LinkInner>
         </NavLink>
       )}
-      {hasChildren && <components.SubMenu>
-        {submenuChildren.map((m) => (
+      {hasChildren && (
+        <components.SubMenu>
+          {submenuChildren.map((m) => (
             <components.ChildItem
               key={m.id}
               menuItem={m}
@@ -158,7 +155,8 @@ export const MenuItemAnchor = ({
               {...props}
             />
           ))}
-      </components.SubMenu>}
+        </components.SubMenu>
+      )}
     </React.Fragment>
   );
 };
