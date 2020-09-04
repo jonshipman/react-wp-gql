@@ -85,7 +85,8 @@ export const LinkInner = ({ className = "link-inner", children }) => {
 export const MenuItem = (props) => {
   const { components } = useComponents();
 
-  const { id, level = 1, className = "", flat = false } = props;
+  const { id, level = 1, flat = false } = props;
+  let { className = "" } = props;
 
   let anchorClass = "";
 
