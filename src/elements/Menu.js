@@ -82,21 +82,10 @@ export const LinkInner = ({ className = "link-inner", children }) => {
   return <span className={className}>{children}</span>;
 };
 
-// Exportable menu item container.
-export const MenuItem = ({
-  id,
-  level = 1,
-  className = "",
-  spanClassName = "",
-  href,
-  to,
-  children,
-  flat = false,
-  onClick = () => {},
-  submenu,
-}) => {
-  let { components } = useComponents();
-  components = { LinkInner, ...components };
+export const MenuItem = (props) => {
+  const { components } = useComponents();
+
+  const { id, level = 1, className = "", flat = false } = props;
 
   let anchorClass = "";
 
@@ -114,6 +103,30 @@ export const MenuItem = ({
   } else {
     className += " pv2";
   }
+
+  return (
+    <li
+      id={id}
+      className={`menu-item level-${level} db relative z-1 ${className}`}
+    >
+      <components.MenuItemAnchor anchorClass={anchorClass} {...props} />
+    </li>
+  );
+};
+
+// Exportable menu item container.
+export const MenuItemAnchor = ({
+  anchorClass = "",
+  children,
+  flat = false,
+  href,
+  level = 1,
+  onClick = () => {},
+  spanClassName = "",
+  submenu,
+  to,
+}) => {
+  const { components } = useComponents();
 
   let TransformedSubmenu = () => null;
 
@@ -142,10 +155,7 @@ export const MenuItem = ({
   };
 
   return (
-    <li
-      id={id}
-      className={`menu-item level-${level} db relative z-1 ${className}`}
-    >
+    <React.Fragment>
       {href ? (
         <a href={href} rel="nofollow noopen" className={anchorClass}>
           <components.LinkInner {...innerProps}>
@@ -160,7 +170,7 @@ export const MenuItem = ({
         </NavLink>
       )}
       <TransformedSubmenu />
-    </li>
+    </React.Fragment>
   );
 };
 
