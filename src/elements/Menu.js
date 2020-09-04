@@ -14,7 +14,6 @@ export const ChildItem = ({
   ...props
 }) => {
   let { components } = useComponents();
-  components = { SubMenu, ChildItem, MenuItem, ...components };
 
   const { menuItems } = props;
   let hasChildren = menuItem?.childItems?.nodes?.length > 0;
@@ -144,7 +143,7 @@ export const MenuItemAnchor = ({
           </components.LinkInner>
         </NavLink>
       )}
-      {submenuChildren.length && (
+      {submenuChildren.length > 0 && (
         <components.SubMenu>
           {submenuChildren.map((m) => (
             <components.ChildItem
