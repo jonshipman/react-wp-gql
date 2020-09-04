@@ -13,7 +13,7 @@ export const ChildItem = ({
   anchorOnClick = () => {},
   ...props
 }) => {
-  let { components } = useComponents();
+  const { components } = useComponents();
 
   const { menuItems } = props;
   let hasChildren = menuItem?.childItems?.nodes?.length > 0;
