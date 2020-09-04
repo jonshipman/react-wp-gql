@@ -6,7 +6,7 @@ import { useQueries } from "./useQueries";
 export const useSingle = (props = {}) => {
   const { queries } = useQueries();
 
-  const { ssr = true, databaseId, uri: passedUri } = props;
+  const { ssr = true, databaseId, uri: passedUri, skip } = props;
   const { pathname: uri } = useLocation();
   const variables = {};
   let q = queries.QuerySingle;
@@ -27,6 +27,7 @@ export const useSingle = (props = {}) => {
     variables,
     errorPolicy: "all",
     ssr,
+    skip,
   });
 
   return {
