@@ -43,7 +43,7 @@ export const ChildItem = ({
 
   if (hasChildren) {
     menuItemProps.className += " has-children";
-    menuItemProps.submenu = () => (
+    menuItemProps.submenu = (
       <components.SubMenu>
         {newChildren.map((m) => {
           if (m.parentId === menuItem.id) {
