@@ -184,7 +184,7 @@ export const SubMenu = ({
 /**
  * The placeholder skeleton that shows before query loads.
  */
-export const Skeleton = ({ error, ...props }) => {
+export const MenuSkeleton = ({ error, ...props }) => {
   let { components } = useComponents();
   components = { MenuItem, ...components };
 
@@ -210,7 +210,7 @@ export const MenuRender = ({
   ...props
 }) => {
   let { components } = useComponents();
-  components = { Skeleton, ChildItem, ...components };
+  components = { MenuSkeleton, ChildItem, ...components };
 
   return (
     <ul
@@ -220,7 +220,7 @@ export const MenuRender = ({
       style={{ touchAction: "pan-y" }}
     >
       {loading || props.error?.message ? (
-        <components.Skeleton {...props} />
+        <components.MenuSkeleton {...props} />
       ) : (
         props?.menuItems?.length &&
         props.menuItems.map((menuItem) => {
