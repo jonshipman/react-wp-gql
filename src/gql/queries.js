@@ -12,7 +12,8 @@ export const QuerySingle = (fragments) => gql`
       }
     }
   }
-  ${fragments.FragmentSeo}
+  ${fragments.FragmentPostSeo}
+  ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
   ${fragments.FragmentContentNode}
   ${fragments.FragmentPost}
@@ -31,7 +32,8 @@ export const QuerySingleById = (fragments) => gql`
       }
     }
   }
-  ${fragments.FragmentSeo}
+  ${fragments.FragmentPostSeo}
+  ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
   ${fragments.FragmentContentNode}
   ${fragments.FragmentPost}
@@ -63,9 +65,10 @@ export const QuerySearch = (fragments) => gql`
       }
     }
   }
+  ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
   ${fragments.FragmentPageInfo}
-  ${fragments.FragmentSeo}
+  ${fragments.FragmentPostSeo}
   ${fragments.FragmentPost}
 `;
 
@@ -108,8 +111,9 @@ export const QueryCategories = (fragments) => gql`
       ...categoryInfo
     }
   }
-  ${fragments.FragmentSeo}
+  ${fragments.FragmentPostSeo}
   ${fragments.FragmentPageInfo}
+  ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
   ${fragments.FragmentPost}
 `;
@@ -133,7 +137,8 @@ export const QueryArchive = (fragments) => gql`
       }
     }
   }
-  ${fragments.FragmentSeo}
+  ${fragments.FragmentPostSeo}
+  ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
   ${fragments.FragmentPageInfo}
   ${fragments.FragmentPost}

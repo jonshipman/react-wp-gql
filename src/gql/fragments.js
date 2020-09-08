@@ -9,8 +9,19 @@ export const FragmentPageInfo = gql`
   }
 `;
 
-export const FragmentSeo = gql`
-  fragment seoInfo on SEO {
+export const FragmentPostSeo = gql`
+  fragment seoPostInfo on PostTypeSEO {
+    title
+    metaDesc
+    breadcrumbs {
+      url
+      text
+    }
+  }
+`;
+
+export const FragmentTaxSeo = gql`
+  fragment seoTaxInfo on TaxonomySEO {
     title
     metaDesc
     breadcrumbs {
@@ -28,7 +39,7 @@ export const FragmentCategory = gql`
     name
     uri
     seo {
-      ...seoInfo
+      ...seoTaxInfo
     }
   }
 `;
@@ -43,7 +54,7 @@ export const FragmentPost = gql`
     content
     dateFormatted
     seo {
-      ...seoInfo
+      ...seoPostInfo
     }
     categories(first: 5) {
       edges {
@@ -62,7 +73,7 @@ export const FragmentPage = gql`
     content
     pageTemplate
     seo {
-      ...seoInfo
+      ...seoPostInfo
     }
   }
 `;
