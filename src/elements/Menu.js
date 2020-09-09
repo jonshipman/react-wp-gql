@@ -222,7 +222,7 @@ export const MenuRender = ({
       {loading || props.error?.message ? (
         <components.MenuSkeleton {...props} />
       ) : (
-        props?.menuItems?.length &&
+        props?.menuItems?.length > 0 &&
         props.menuItems.map((menuItem) => {
           if (menuItem.parentId === null) {
             return (
@@ -265,7 +265,7 @@ let FlatMenu = (
   };
 
   useEffect(() => {
-    menuItems.length && onLoad(menuItems);
+    menuItems.length > 0 && onLoad(menuItems);
   }, [menuItems, onLoad]);
 
   return <components.MenuRender {...renderProps} />;
@@ -293,7 +293,7 @@ let Menu = ({ location = "HEADER_MENU", onLoad = () => {}, ...props }, ref) => {
   };
 
   useEffect(() => {
-    menuItems.length && onLoad(menuItems);
+    menuItems.length > 0 && onLoad(menuItems);
   }, [menuItems, onLoad]);
 
   return <components.MenuRender {...renderProps} />;
