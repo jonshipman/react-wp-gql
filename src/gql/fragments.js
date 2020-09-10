@@ -69,6 +69,7 @@ export const FragmentPost = gql`
 export const FragmentPage = gql`
   fragment pageInfo on Page {
     id
+    databaseId
     title
     content
     pageTemplate
