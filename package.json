@@ -12,8 +12,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --css-modules false --format modern,cjs && yarn export:sass",
-    "start": "microbundle-crl watch --no-compress --css-modules false --format modern,cjs && yarn export:sass",
+    "build": "microbundle-crl --no-compress --css-modules false --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --css-modules false --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -21,8 +21,7 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
-    "export:sass": "cp -r src/scss dist/scss"
+    "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
     "@apollo/client": "^3.1.4",
@@ -55,7 +54,8 @@
     "react-scripts": "^3.4.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "scss"
   ],
   "dependencies": {
     "react-helmet": "^6.1.0"
