@@ -25,7 +25,13 @@
     "export:sass": "cp -r src/scss dist/scss"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "@apollo/client": "^3.1.4",
+    "graphql": "^15.3.0",
+    "react-router-dom": "^5.2.0",
+    "react": "^16.0.0",
+    "subscriptions-transport-ws": "^0.9.18",
+    "tachyons-sass": "^4.9.5",
+    "typescript": "^4.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -42,7 +48,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
     "microbundle-crl": "^0.13.10",
-    "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
@@ -53,12 +58,6 @@
     "dist"
   ],
   "dependencies": {
-    "@apollo/client": "^3.1.4",
-    "graphql": "^15.3.0",
-    "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0",
-    "subscriptions-transport-ws": "^0.9.18",
-    "tachyons-sass": "^4.9.5",
-    "typescript": "^4.0.2"
+    "react-helmet": "^6.1.0"
   }
 }
