@@ -28,7 +28,7 @@
     "graphql": "^15.3.0",
     "react": "^16.0.0",
     "react-router-dom": "^5.2.0",
-    "subscriptions-transport-ws": "^0.9.18",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
