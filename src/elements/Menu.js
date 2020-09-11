@@ -130,7 +130,7 @@ export const MenuItemAnchor = ({
 
   return (
     <React.Fragment>
-      {href && (
+      {href && href !== "#no-link" && (
         <a href={href || "#"} rel="nofollow noopen" className={anchorClass}>
           <components.LinkInner {...innerProps}>
             {children}
@@ -146,7 +146,7 @@ export const MenuItemAnchor = ({
         </NavLink>
       )}
 
-      {!href && !to && (
+      {((!href && !to) || href === "#no-link") && (
         <span className={anchorClass} onClick={onClick}>
           <components.LinkInner {...innerProps}>
             {children}
