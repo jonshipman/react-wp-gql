@@ -34,5 +34,6 @@ export const useSingle = (props = {}) => {
     node: data?.contentNode || {},
     loading,
     error,
+    data,
   };
 };
