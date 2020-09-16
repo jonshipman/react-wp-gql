@@ -19,7 +19,7 @@ export const ArchiveCard = ({
       className={`content blog-entry b--near-white bb pb4 mv4 post-${databaseId}`}
     >
       <h2 className="mt0">
-        <Link to={uri} className="primary no-underline">
+        <Link to={uri || "/"} className="primary no-underline">
           {title ? title : <components.SkullLine className="mw6 w-100" />}
         </Link>
         <div className="posted fr-ns mt2 mt0-ns f6">
