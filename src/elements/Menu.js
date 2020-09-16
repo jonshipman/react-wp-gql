@@ -181,7 +181,8 @@ export const SubMenu = ({
   if (!flat) {
     className += " child bg-white absolute-l z-1";
     if (level === 1) {
-      className += " ba-l b--light-gray w5-l tl-l top-100-l right-0-l";
+      className +=
+        " ba-l b--light-gray w5-l tl-l top-100-l left-50-l trans-x--50-l";
     } else {
       className += " left-100 top-0";
     }
