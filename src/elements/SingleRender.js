@@ -11,7 +11,7 @@ export const SingleRender = ({ node = {} }) => {
     __typename,
     title,
     dateFormatted,
-    categories = { edges: [] },
+    categories = {},
     content,
   } = node;
 
