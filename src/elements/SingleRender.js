@@ -39,7 +39,7 @@ export const SingleRender = ({ node = {} }) => {
                   width={20}
                   height={20}
                 />
-                {dataFormatted ? (
+                {dateFormatted ? (
                   <span>{dateFormatted}</span>
                 ) : (
                   <components.SkullWord />
