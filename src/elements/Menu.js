@@ -202,11 +202,7 @@ export const MenuSkeleton = ({ error, ...props }) => {
 
   return Array.from(new Array(error?.message ? 1 : 5)).map(() => (
     <components.MenuItem key={Math.random()} href="/" {...props}>
-      {error?.message ? (
-        error.message
-      ) : (
-        <span className="h1 w3 ml2 loading-block dib" />
-      )}
+      {error?.message ? error.message : <components.SkullWord />}
     </components.MenuItem>
   ));
 };
