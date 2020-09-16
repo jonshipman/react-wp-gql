@@ -58,9 +58,7 @@ export const SkullImage = ({ className, color = "light-gray" }) => {
 export const SkullPage = ({ className }) => {
   return (
     <div {...{ className }}>
-      <div className="nt4">
-        <SkullParagraph />
-      </div>
+      <SkullParagraph />
 
       <div className="f2 mv3 mw6 w-100">
         <SkullLine />
