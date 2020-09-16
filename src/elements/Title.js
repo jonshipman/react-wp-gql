@@ -1,11 +1,9 @@
 import React, { forwardRef, createElement } from "react";
 
 import { useComponents } from "../hooks/useComponents";
-import { PageWidth } from "./PageWidth";
 
 let Title = ({ notHeading, className = "", children, ...props }, ref) => {
-  let { components } = useComponents();
-  components = Object.assign({}, { PageWidth }, components);
+  const { components } = useComponents();
 
   const Wrap = createElement(notHeading ? "div" : "h1", {});
   const WrapType = Wrap.type;
