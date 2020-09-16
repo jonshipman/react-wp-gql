@@ -12,7 +12,7 @@ export const Archive = ({ uri = "/blog", title = "Blog" }) => {
 
   let seoTitle = title;
   if (siteName) {
-    seoTitle = `${title} | ${siteName}`;
+    seoTitle = `${title} - ${siteName}`;
   }
 
   return (

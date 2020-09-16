@@ -24,7 +24,7 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
 
   let seoTitle = title;
   if (siteName) {
-    seoTitle = `${title} | ${siteName}`;
+    seoTitle = `${title} - ${siteName}`;
   }
 
   return (
