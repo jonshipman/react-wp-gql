@@ -21,10 +21,10 @@ export const Category = () => {
       <components.Seo title={seo.title} canonical={uri} />
 
       <components.Title>{name}</components.Title>
-      {loading || error || !edges.length ? (
-        <components.ErrorRouting loading={loading} error={error} />
+      {error || (!loading && edges.length < 1) ? (
+        <components.ErrorRouting {...{ loading, error }} />
       ) : (
-        <components.ArchiveRender edges={edges} {...props} />
+        <components.ArchiveRender {...{ edges, loading }} {...props} />
       )}
     </React.Fragment>
   );

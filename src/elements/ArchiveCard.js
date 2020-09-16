@@ -1,25 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "./Button";
-import { PostContent } from "./PostContent";
-import { ReactComponent as ClockIcon } from "../static/images/clock.svg";
 import { useComponents } from "../hooks/useComponents";
 
 export const ArchiveCard = ({
-  databaseId,
+  databaseId = 0,
   uri,
   title,
   dateFormatted,
   excerpt,
   content,
 }) => {
-  let { components } = useComponents();
-  components = Object.assign(
-    {},
-    { ClockIcon, PostContent, Button },
-    components,
-  );
+  const { components } = useComponents();
+  const body = excerpt || content;
 
   return (
     <article
@@ -27,22 +20,32 @@ export const ArchiveCard = ({
     >
       <h2 className="mt0">
         <Link to={uri} className="primary no-underline">
-          {title}
+          {title ? title : <components.SkullLine className="mw6 w-100" />}
         </Link>
         <div className="posted fr-ns mt2 mt0-ns f6">
           <components.ClockIcon className="v-mid mr2" width={12} height={12} />
-          <span>{dateFormatted}</span>
+          <span>
+            {dateFormatted ? dateFormatted : <components.SkullWord />}
+          </span>
         </div>
       </h2>
 
-      <components.PostContent className="mv4" trim>
-        {excerpt || content}
-      </components.PostContent>
+      {body ? (
+        <components.PostContent className="mv4" trim>
+          {body}
+        </components.PostContent>
+      ) : (
+        <components.SkullParagraph />
+      )}
 
       <div className="tr">
-        <components.Button to={uri} type={3}>
-          Read more
-        </components.Button>
+        {uri ? (
+          <components.Button to={uri} type={3}>
+            Read more
+          </components.Button>
+        ) : (
+          <components.SkullButton />
+        )}
       </div>
     </article>
   );

@@ -24,8 +24,8 @@ export const Preview = ({ ifRestricted = () => {}, HeartbeatProps = {} }) => {
 
   return (
     <React.Fragment>
-      {loading || error || !node.id ? (
-        <components.ErrorRouting loading={loading} error={error} />
+      {error || (!loading && !node.id) ? (
+        <components.ErrorRouting {...{ loading, error }} />
       ) : (
         <React.Fragment>
           <components.SingleTitle {...node} />

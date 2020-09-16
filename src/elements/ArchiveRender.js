@@ -1,26 +1,18 @@
 import React from "react";
 
 import { useComponents } from "../hooks/useComponents";
-import { PageWidth } from "./PageWidth";
-import { Seo } from "./Seo";
-import { ArchiveCard } from "./ArchiveCard";
-import { Pagination } from "./Pagination";
 
 export const ArchiveRender = ({
   edges = [],
+  loading,
   hasPreviousPage,
   hasNextPage,
   next,
   prev,
 }) => {
-  let { components } = useComponents();
-  components = Object.assign(
-    {},
-    { PageWidth, Seo, ArchiveCard, Pagination },
-    components,
-  );
+  const { components } = useComponents();
 
-  if (!edges.length) {
+  if (!edges.length && !loading) {
     return <components.PageWidth>Nothing found.</components.PageWidth>;
   }
 
@@ -37,11 +29,20 @@ export const ArchiveRender = ({
         <meta name="robots" content="noindex" />
       </components.Seo>
 
-      <div className="entries">
-        {edges.map((edge) => (
-          <components.ArchiveCard key={edge.node.id} {...edge.node} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="entries">
+          <components.ArchiveCard />
+          <components.ArchiveCard />
+          <components.ArchiveCard />
+          <components.ArchiveCard />
+        </div>
+      ) : (
+        <div className="entries">
+          {edges.map((edge) => (
+            <components.ArchiveCard key={edge.node.id} {...edge.node} />
+          ))}
+        </div>
+      )}
 
       <components.Pagination {...PaginationProps} />
     </components.PageWidth>

@@ -12,10 +12,12 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
 
   const { edges, loading, error, filter, setFilter, ...props } = useSearch();
 
-  let Render = () => <components.ArchiveRender edges={edges} {...props} />;
+  let Render = () => (
+    <components.ArchiveRender {...{ edges, loading }} {...props} />
+  );
 
-  if (loading || error || !edges.length) {
-    Render = () => <components.ErrorRouting loading={loading} error={error} />;
+  if (error || (!loading && edges.length < 1)) {
+    Render = () => <components.ErrorRouting {...{ loading, error }} />;
   }
 
   if (filter.length < 3) {
@@ -32,7 +34,7 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
       <components.Seo title={seoTitle} canonical={uri} />
 
       <components.Title>{title}</components.Title>
-      <components.SearchForm filter={filter} setFilter={setFilter} />
+      <components.SearchForm {...{ setFilter, filter }} />
 
       <Render />
     </React.Fragment>
