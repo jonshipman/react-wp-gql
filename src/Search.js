@@ -14,11 +14,11 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
     <components.ArchiveRender {...{ edges, loading }} {...props} />
   );
 
-  if (error || (!loading && edges.length < 1)) {
-    Render = () => <components.ErrorRouting {...{ loading, error }} />;
+  if (error) {
+    Render = () => <components.ErrorRouting {...{ error }} />;
   }
 
-  if (filter.length < 3) {
+  if (filter.length < 3 || edges.length < 1) {
     Render = () => <components.NoSearchResults />;
   }
 
