@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { PageWidth } from "./PageWidth";
-import { PostContent } from "./PostContent";
-import { ReactComponent as ClockIcon } from "../static/images/clock.svg";
-import { ReactComponent as FolderIcon } from "../static/images/folder.svg";
-import { Seo } from "./Seo";
 import { useComponents } from "../hooks/useComponents";
 
 export const SingleRender = ({ node = {} }) => {
@@ -20,12 +15,7 @@ export const SingleRender = ({ node = {} }) => {
     content,
   } = node;
 
-  let { components } = useComponents();
-  components = Object.assign(
-    {},
-    { PageWidth, PostContent, Seo, ClockIcon, FolderIcon },
-    components,
-  );
+  const { components } = useComponents();
 
   return (
     <article className={`single post-${databaseId}`}>
@@ -38,7 +28,9 @@ export const SingleRender = ({ node = {} }) => {
       <components.PageWidth className="mv4">
         {__typename === "Post" && (
           <React.Fragment>
-            <h1 className="f2 fw4 mb4">{title}</h1>
+            <h1 className="f2 fw4 mb4">
+              {title ? title : <components.SkullLine />}
+            </h1>
 
             <div className="post-meta mv4">
               <div className="posted dib mr4">
@@ -47,18 +39,22 @@ export const SingleRender = ({ node = {} }) => {
                   width={20}
                   height={20}
                 />
-                <span>{dateFormatted}</span>
+                {dataFormatted ? (
+                  <span>{dateFormatted}</span>
+                ) : (
+                  <components.SkullWord />
+                )}
               </div>
 
-              {categories.edges.length > 0 && (
-                <div className="post-categories dib">
-                  <components.FolderIcon
-                    className="mr2 v-mid"
-                    width={20}
-                    height={20}
-                  />
-                  <ul className="list pl0 dib">
-                    {categories.edges.map((category) => (
+              <div className="post-categories dib">
+                <components.FolderIcon
+                  className="mr2 v-mid"
+                  width={20}
+                  height={20}
+                />
+                <ul className="list pl0 dib">
+                  {categories?.edges?.length > 0 ? (
+                    categories.edges.map((category) => (
                       <li
                         key={`cat-${category.node.databaseId}-post-cats`}
                         className="dib mr2 pr2 br b--near-white drop-last-br"
@@ -70,15 +66,28 @@ export const SingleRender = ({ node = {} }) => {
                           {category.node.name}
                         </Link>
                       </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                    ))
+                  ) : (
+                    <React.Fragment>
+                      <li className="dib mr2 pr2 br b--near-white drop-last-br">
+                        <components.SkullWord />
+                      </li>
+                      <li className="dib mr2 pr2 br b--near-white drop-last-br">
+                        <components.SkullWord />
+                      </li>
+                    </React.Fragment>
+                  )}
+                </ul>
+              </div>
             </div>
           </React.Fragment>
         )}
 
-        <components.PostContent>{content}</components.PostContent>
+        {content ? (
+          <components.PostContent>{content}</components.PostContent>
+        ) : (
+          <components.SkullPage />
+        )}
       </components.PageWidth>
     </article>
   );

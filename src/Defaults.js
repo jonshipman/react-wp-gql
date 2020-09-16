@@ -24,10 +24,12 @@ import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
 import * as Menu from "./elements/Menu";
+import * as Skeleton from "./elements/Skeleton";
 
 export const DefaultComponents = {
   ...Login,
   ...Menu,
+  ...Skeleton,
   ArchiveCard,
   ArchiveRender,
   Button,

@@ -10,7 +10,7 @@ export const Single = () => {
   return (
     <React.Fragment>
       <components.SingleTitle {...node} />
-      {loading || error || !node.id ? (
+      {error || (!loading && !node.id) ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
         <components.SingleRender node={node} />
