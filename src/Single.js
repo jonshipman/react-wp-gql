@@ -4,6 +4,7 @@ import { useComponents } from "./hooks/useComponents";
 import { useSingle } from "./hooks/useSingle";
 
 export const Single = () => {
+  const { lastRoute } = usePreviousRoute("Single");
   const { components } = useComponents();
   const { node, loading, error } = useSingle();
 
@@ -13,7 +14,10 @@ export const Single = () => {
       {error || (!loading && !node.id) ? (
         <components.ErrorRouting loading={loading} error={error} />
       ) : (
-        <components.SingleRender node={node} />
+        <components.SingleRender
+          node={node}
+          postPreload={lastRoute === "Archive"}
+        />
       )}
     </React.Fragment>
   );

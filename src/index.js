@@ -32,6 +32,7 @@ export * from "./handlers/resize";
 export * from "./handlers/scroll";
 export * from "./hooks/useArchive";
 export * from "./hooks/useCategory";
+export * from "./hooks/useComponentHistory";
 export * from "./hooks/useHeartbeat";
 export * from "./hooks/useMenu";
 export * from "./hooks/usePagination";

@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 
 import { NodeContext } from "./Context";
+import { usePreviousRoute } from "./hooks/useComponentHistory";
 import { useComponents } from "./hooks/useComponents";
 import { useSearch } from "./hooks/useSearch";
 
 export const Search = ({ uri = "/search", title = "Search" }) => {
   const { components } = useComponents();
   const { siteName = "" } = useContext(NodeContext);
+  usePreviousRoute("Search");
 
   const { edges, loading, error, filter, setFilter, ...props } = useSearch();
 

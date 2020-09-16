@@ -1,9 +1,11 @@
 import React from "react";
 
 import { useCategory } from "./hooks/useCategory";
+import { usePreviousRoute } from "./hooks/useComponentHistory";
 import { useComponents } from "./hooks/useComponents";
 
 export const Category = () => {
+  usePreviousRoute("Category");
   const { components } = useComponents();
 
   const {

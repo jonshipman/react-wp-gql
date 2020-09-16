@@ -12,9 +12,17 @@ export const NodeProvider = ({
   ...props
 }) => {
   const refactored = Populate({ components, fragments, queries, mutations });
+  const [prevComponentRoute, setPrevComponentRoute] = useState();
 
   return (
-    <NodeContext.Provider value={{ ...refactored, ...props }}>
+    <NodeContext.Provider
+      value={{
+        ...refactored,
+        ...props,
+        setPrevComponentRoute,
+        prevComponentRoute,
+      }}
+    >
       {children}
     </NodeContext.Provider>
   );
