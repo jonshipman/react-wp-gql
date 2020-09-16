@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useComponents } from "./hooks/useComponents";
+import { usePreviousRoute } from "./hooks/useComponentHistory";
 import { useSingle } from "./hooks/useSingle";
 
 export const Single = () => {

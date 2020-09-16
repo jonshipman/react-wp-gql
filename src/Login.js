@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 
 import { NodeContext } from "./Context";
 import { useComponents } from "./hooks/useComponents";
+import { usePreviousRoute } from "./hooks/useComponentHistory";
 import { useQueries } from "./hooks/useQueries";
 import {
   getAuthToken,
@@ -11,7 +12,6 @@ import {
   setAuthToken as DefaultSetAuthToken,
   removeRedirect as DefaultRemoveRedirect,
 } from "./functions";
-import { usePreviousRoute } from "./hooks/useComponentHistory";
 
 export const generatePassword = (props) => {
   const { length = 12, specialChars = true, extraSpecialChars = false } =
