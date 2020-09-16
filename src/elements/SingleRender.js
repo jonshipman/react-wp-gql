@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
 
-export const SingleRender = ({ node = {}, postPreload }) => {
+export const SingleRender = ({ node = {} }) => {
   const {
     seo = {},
     uri,
@@ -16,7 +16,7 @@ export const SingleRender = ({ node = {}, postPreload }) => {
   } = node;
 
   const { components } = useComponents();
-  const loadPostMeta = __typename === "Post" || postPreload;
+  const loadPostMeta = __typename === "Post";
 
   return (
     <article className={`single post-${databaseId}`}>

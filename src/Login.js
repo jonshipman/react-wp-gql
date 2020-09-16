@@ -4,7 +4,6 @@ import { useMutation } from "@apollo/client";
 
 import { NodeContext } from "./Context";
 import { useComponents } from "./hooks/useComponents";
-import { usePreviousRoute } from "./hooks/useComponentHistory";
 import { useQueries } from "./hooks/useQueries";
 import {
   getAuthToken,
@@ -330,7 +329,6 @@ export const BackToLogin = () => (
 );
 
 export const Login = () => {
-  usePreviousRoute("Login");
   const { components } = useComponents();
   const [message, setMessage] = useState("");
 
