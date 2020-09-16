@@ -15,7 +15,11 @@ let Title = ({ notHeading, className = "", children, ...props }, ref) => {
       <components.PageWidth>
         <WrapType className="title ma0 lh-solid pv4">
           <span className="f4 fw4 db" ref={ref}>
-            {children}
+            {children ? (
+              children
+            ) : (
+              <components.SkullLine className="w-100 mw6" />
+            )}
           </span>
         </WrapType>
       </components.PageWidth>
