@@ -12,7 +12,7 @@ export const useSearch = () => {
   const [filter, setFilter] = useState("");
   const { variables, goNext, goPrev } = usePagination(perPage);
 
-  variables.filter = filter;
+  variables.filter = filter || "";
 
   const { data, loading, error } = useQuery(queries.QuerySearch, {
     variables,

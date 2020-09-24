@@ -18,8 +18,12 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
     Render = () => <components.ErrorRouting {...{ error }} />;
   }
 
-  if (filter.length < 3 || edges.length < 1) {
-    Render = () => <components.NoSearchResults />;
+  if (!loading && edges.length < 1) {
+    if (filter.length < 3) {
+      Render = () => <components.NoSearchResults />;
+    } else {
+      Render = () => <components.NotFound />;
+    }
   }
 
   let seoTitle = title;
