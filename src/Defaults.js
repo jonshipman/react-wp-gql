@@ -16,7 +16,6 @@ import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 import { SearchForm } from "./elements/SearchForm";
 import { Seo } from "./elements/Seo";
-import { SingleRender } from "./elements/SingleRender";
 import { SingleTitle } from "./elements/SingleTitle";
 import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
@@ -24,11 +23,13 @@ import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
 import * as Menu from "./elements/Menu";
+import * as SingleRender from "./elements/SingleRender";
 import * as Skeleton from "./elements/Skeleton";
 
 export const DefaultComponents = {
   ...Login,
   ...Menu,
+  ...SingleRender,
   ...Skeleton,
   ArchiveCard,
   ArchiveRender,
@@ -48,7 +49,6 @@ export const DefaultComponents = {
   SearchForm,
   SearchIcon,
   Seo,
-  SingleRender,
   SingleTitle,
   Title,
 };

@@ -3,6 +3,17 @@ import { Link } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
 
+export const SingleCategoryListItem = ({ uri, name, children }) => {
+  const Wrap = uri ? Link : "span";
+  return (
+    <li className="dib mr2 pr2 br b--near-white drop-last-br">
+      <Wrap to={uri} className="primary no-underline">
+        {name || children}
+      </Wrap>
+    </li>
+  );
+};
+
 export const SingleRender = ({ node = {} }) => {
   const {
     seo = {},
@@ -56,26 +67,19 @@ export const SingleRender = ({ node = {} }) => {
                 <ul className="list pl0 dib">
                   {categories?.edges?.length > 0 ? (
                     categories.edges.map((category) => (
-                      <li
-                        key={`cat-${category.node.databaseId}-post-cats`}
-                        className="dib mr2 pr2 br b--near-white drop-last-br"
-                      >
-                        <Link
-                          to={category.node.uri}
-                          className="primary no-underline"
-                        >
-                          {category.node.name}
-                        </Link>
-                      </li>
+                      <components.SingleCategoryListItem
+                        key={category.node.id}
+                        {...category.node}
+                      />
                     ))
                   ) : (
                     <React.Fragment>
-                      <li className="dib mr2 pr2 br b--near-white drop-last-br">
+                      <components.SingleCategoryListItem>
                         <components.SkullWord />
-                      </li>
-                      <li className="dib mr2 pr2 br b--near-white drop-last-br">
+                      </components.SingleCategoryListItem>
+                      <components.SingleCategoryListItem>
                         <components.SkullWord />
-                      </li>
+                      </components.SingleCategoryListItem>
                     </React.Fragment>
                   )}
                 </ul>
