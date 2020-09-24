@@ -8,6 +8,7 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   return (
     <components.PageWidth className="search flex-l items-center-l mv4">
       <components.FormGroup
+        className="flex-auto-l mb0-l"
         type="search"
         value={filter}
         placeholder="Search by name and content"
