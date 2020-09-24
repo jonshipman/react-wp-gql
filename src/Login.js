@@ -3,6 +3,7 @@ import { Link, Switch, Route, useHistory, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { NodeContext } from "./Context";
+import { useCleanup } from "./hooks/useHeartbeat";
 import { useComponents } from "./hooks/useComponents";
 import { useQueries } from "./hooks/useQueries";
 import {
@@ -11,6 +12,12 @@ import {
   setAuthToken as DefaultSetAuthToken,
   removeRedirect as DefaultRemoveRedirect,
 } from "./functions";
+
+export const Logout = () => {
+  useCleanup({ redirect: "/" });
+
+  return null;
+};
 
 export const generatePassword = (props) => {
   const { length = 12, specialChars = true, extraSpecialChars = false } =
