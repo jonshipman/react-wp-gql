@@ -43,5 +43,6 @@ export * from "./Preview";
 export * from "./Provider";
 export * from "./Search";
 export * from "./Single";
+export * from "./WordPressRoutes";
 
 export { ClockIcon, FolderIcon, SearchIcon };
