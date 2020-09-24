@@ -17,6 +17,7 @@ export const useSearch = () => {
   const { data, loading, error } = useQuery(queries.QuerySearch, {
     variables,
     errorPolicy: "all",
+    skip: variables.filter.length < 3,
   });
 
   const edges = data?.posts?.edges?.length ? data.posts.edges : [];
