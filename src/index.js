@@ -3,6 +3,7 @@ import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 
 export { Populate } from "./Defaults";
+export * from "./ApolloSetup";
 export * from "./Archive";
 export * from "./Category";
 export * from "./Context";
