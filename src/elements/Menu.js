@@ -16,7 +16,7 @@ export const ChildItem = ({
 }) => {
   const { components } = useComponents();
 
-  const { menuItems } = props;
+  const { menuItems, flat } = props;
   let hasChildren = menuItem?.childItems?.nodes?.length > 0;
   const localLevel = level ? level + 1 : 1;
   const newChildren = [];
@@ -33,6 +33,8 @@ export const ChildItem = ({
     className: "",
     spanClassName: menuItem.cssClasses?.join(" ") || "",
     location,
+    flat,
+    source: menuItem,
   };
 
   if (
@@ -55,7 +57,6 @@ export const ChildItem = ({
       key={menuItem.id}
       level={localLevel}
       id={`menu-item-${menuItem.databaseId}`}
-      flat={props.flat}
       {...menuItemProps}
     >
       {menuItem.label}
