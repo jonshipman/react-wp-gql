@@ -10,6 +10,7 @@ import { useMenu } from "../hooks/useMenu";
 export const ChildItem = ({
   menuItem,
   level,
+  location,
   anchorOnClick = () => {},
   ...props
 }) => {
@@ -31,6 +32,7 @@ export const ChildItem = ({
   const menuItemProps = {
     className: "",
     spanClassName: menuItem.cssClasses?.join(" ") || "",
+    location,
   };
 
   if (
