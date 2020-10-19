@@ -96,9 +96,24 @@ export const FragmentContentNode = gql`
   }
 `;
 
-export const FragmentMenu = gql`
-  fragment menuInfo on Menu {
-    id
+export const FragmentMenuItemLevel3 = gql`
+  fragment menuItemLevel3 on MenuItem {
+    childItems {
+      nodes {
+        ...menuItemInfo
+      }
+    }
+  }
+`;
+
+export const FragmentMenuItemLevel2 = gql`
+  fragment menuItemLevel2 on MenuItem {
+    childItems {
+      nodes {
+        ...menuItemInfo
+        ...menuItemLevel3
+      }
+    }
   }
 `;
 
@@ -113,12 +128,6 @@ export const FragmentMenuItem = gql`
     connectedNode {
       node {
         __typename
-      }
-    }
-    childItems {
-      nodes {
-        id
-        parentId
       }
     }
   }

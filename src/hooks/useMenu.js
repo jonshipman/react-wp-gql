@@ -5,8 +5,8 @@ import { useQueries } from "./useQueries";
 export const useMenu = (props = {}) => {
   const { queries } = useQueries();
 
-  const { ssr = false, location = "HEADER_MENU" } = props;
-  const variables = { location };
+  const { ssr = true, location = "HEADER_MENU", parentId = 0 } = props;
+  const variables = { location, parentId };
 
   const { data, loading, error } = useQuery(queries.QueryMenu, {
     variables,
@@ -14,9 +14,7 @@ export const useMenu = (props = {}) => {
     ssr,
   });
 
-  const menuItems = data?.menus?.nodes[0]?.menuItems?.nodes?.length
-    ? data.menus.nodes[0].menuItems.nodes
-    : [];
+  const menuItems = data?.menuItems?.nodes?.length ? data.menuItems.nodes : [];
 
   return {
     menuItems,

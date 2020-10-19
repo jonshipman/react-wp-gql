@@ -155,18 +155,15 @@ export const QueryPermissions = () => gql`
 `;
 
 export const QueryMenu = (fragments) => gql`
-  query MenuHook($location: MenuLocationEnum!) {
-    menus(where: { location: $location }) {
+  query MenuHook($location: MenuLocationEnum!, $parentId: ID!) {
+    menuItems(first: 100, where: { location: $location, parentId: $parentId }) {
       nodes {
-        ...menuInfo
-        menuItems(first: 100) {
-          nodes {
-            ...menuItemInfo
-          }
-        }
+        ...menuItemInfo
+        ...menuItemLevel2
       }
     }
   }
-  ${fragments.FragmentMenu}
   ${fragments.FragmentMenuItem}
+  ${fragments.FragmentMenuItemLevel2}
+  ${fragments.FragmentMenuItemLevel3}
 `;

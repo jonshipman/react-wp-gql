@@ -4,120 +4,38 @@ import { NavLink } from "react-router-dom";
 import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
 
-/**
- * Child item that loops to created the nested menu.
- */
-export const ChildItem = ({
-  menuItem,
-  level,
-  location,
-  anchorOnClick = () => {},
-  ...props
-}) => {
-  const { components } = useComponents();
-
-  const { menuItems, flat } = props;
-  let hasChildren = menuItem?.childItems?.nodes?.length > 0;
-  const localLevel = level ? level + 1 : 1;
-  const newChildren = [];
-
-  if (hasChildren) {
-    menuItem.childItems.nodes.forEach((childItem) => {
-      newChildren.push(menuItems.find((i) => i.id === childItem.id));
-    });
-  }
-
-  hasChildren = newChildren.length > 0;
-
-  const menuItemProps = {
-    className: "",
-    spanClassName: menuItem.cssClasses?.join(" ") || "",
-    location,
-    flat,
-    source: menuItem,
-  };
-
-  if (
-    undefined === menuItem?.connectedNode?.node?.__typename ||
-    menuItem?.connectedNode?.node?.__typename === "MenuItem"
-  ) {
-    menuItemProps.href = menuItem.url;
-  } else {
-    menuItemProps.to = menuItem.url;
-  }
-
-  if (hasChildren) {
-    menuItemProps.className += " has-children";
-    menuItemProps.submenuChildren = newChildren;
-  }
-
-  return (
-    <components.MenuItem
-      onClick={anchorOnClick}
-      key={menuItem.id}
-      level={localLevel}
-      id={`menu-item-${menuItem.databaseId}`}
-      {...menuItemProps}
-    >
-      {menuItem.label}
-    </components.MenuItem>
-  );
-};
-
 export const LinkInner = ({ className = "link-inner", children }) => {
   return <span className={className}>{children}</span>;
 };
 
 export const MenuItem = (props) => {
-  const { components } = useComponents();
-
-  const { id, level = 1, flat = false } = props;
-  let { className = "" } = props;
-
-  let anchorClass = "";
-
-  if (!flat) {
-    anchorClass = "color-inherit no-underline db";
-    className += " hide-child-l";
-
-    if (level === 1) {
-      className += " dib-l pv3-l hover-z-2 drop-last-child-pr";
-      anchorClass += " pv2 ph3-l hover-secondary";
-    } else {
-      className += " nowrap";
-      anchorClass += " pa2 gray";
-    }
-  }
+  const { id, level = 1 } = props;
+  const { className = "db relative z-1", children } = props;
 
   return (
-    <li
-      id={id}
-      className={`menu-item level-${level} db relative z-1 ${className}`}
-    >
-      <components.MenuItemAnchor anchorClass={anchorClass} {...props} />
+    <li id={id} className={`menu-item level-${level} ${className}`}>
+      {children}
     </li>
   );
 };
 
 // Exportable menu item container.
 export const MenuItemAnchor = ({
-  submenuChildren = [],
+  source = {},
   children,
-  anchorClass = "",
+  className = "",
   href,
   spanClassName = "",
   to,
   ...props
 }) => {
-  const { flat = false, level = 1, onClick = () => {} } = props;
+  const { level = 1, onClick = () => {} } = props;
   const { components } = useComponents();
 
   const innerProps = {
-    flat,
     level,
     href,
     to,
-    spanClassName,
     className: `link-inner ${spanClassName}`,
   };
 
@@ -125,14 +43,14 @@ export const MenuItemAnchor = ({
     exact: true,
     to,
     onClick,
-    className: anchorClass,
+    className,
     activeClassName: "current-item",
   };
 
   return (
     <React.Fragment>
       {href && href !== "#no-link" && (
-        <a href={href || "#"} rel="nofollow noopen" className={anchorClass}>
+        <a href={href || "#"} rel="nofollow noopen" {...{ className }}>
           <components.LinkInner {...innerProps}>
             {children}
           </components.LinkInner>
@@ -148,64 +66,138 @@ export const MenuItemAnchor = ({
       )}
 
       {((!href && !to) || href === "#no-link") && (
-        <span className={anchorClass} onClick={onClick}>
+        <span {...{ className, onClick }}>
           <components.LinkInner {...innerProps}>
             {children}
           </components.LinkInner>
         </span>
-      )}
-
-      {submenuChildren.length > 0 && (
-        <components.SubMenu>
-          {submenuChildren.map((m) => (
-            <components.ChildItem
-              key={m.id}
-              menuItem={m}
-              level={level}
-              anchorOnClick={onClick}
-              {...props}
-            />
-          ))}
-        </components.SubMenu>
       )}
     </React.Fragment>
   );
 };
 
 // Exportable submenu container.
-export const SubMenu = ({
-  className = "",
-  level = 1,
-  flat = false,
-  children,
-}) => {
-  if (!flat) {
-    className += " child bg-white absolute-l z-1";
-    if (level === 1) {
-      className +=
-        " ba-l b--light-gray w5-l tl-l top-100-l left-50-l trans-x--50-l";
-    } else {
-      className += " left-100 top-0";
-    }
-  } else {
-    className += " dn";
-  }
-
-  return <ul className={`sub-menu list pl0 ${className}`}>{children}</ul>;
+export const SubMenu = ({ className = "", children }) => {
+  return <ul className={`sub-menu ${className}`}>{children}</ul>;
 };
 
 /**
  * The placeholder skeleton that shows before query loads.
  */
 export const MenuSkeleton = ({ error, ...props }) => {
-  let { components } = useComponents();
-  components = { MenuItem, ...components };
+  const { components } = useComponents();
+
+  const skullMenuItem = {
+    url: "/",
+    label: error?.message ? error.message : <components.SkullWord />,
+  };
 
   return Array.from(new Array(error?.message ? 1 : 5)).map(() => (
-    <components.MenuItem key={Math.random()} href="/" {...props}>
-      {error?.message ? error.message : <components.SkullWord />}
-    </components.MenuItem>
+    <ChildItem key={Math.random()} menuItem={skullMenuItem} {...props} />
   ));
+};
+
+/**
+ * Child item that loops to created the nested menu.
+ */
+const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
+  const { components } = useComponents();
+
+  const {
+    childItems = { nodes: [] },
+    cssClasses = [],
+    connectedNode: connection = { node: {} },
+  } = menuItem;
+  const { nodes: children = [] } = childItems;
+  const { node: connectedNode } = connection;
+
+  const { elements } = props;
+  const hasChildren = children.length > 0;
+  const localLevel = level ? level + 1 : 1;
+
+  let menuItemProps = {
+    className: "hide-child-l",
+    location,
+    source: menuItem,
+  };
+
+  let anchorProps = {
+    spanClassName: cssClasses?.join(" ") || "",
+    className: "color-inherit no-underline db",
+    location,
+    source: menuItem,
+  };
+
+  let subMenuProps = {
+    className: "list pl0 child bg-white absolute-l z-1",
+    location,
+    source: menuItem,
+  };
+
+  if (localLevel === 1) {
+    menuItemProps.className += " dib-l pv3-l hover-z-2 drop-last-child-pr";
+    anchorProps.className += " pv2 ph3-l hover-secondary";
+    subMenuProps.className +=
+      " ba-l b--light-gray w5-l tl-l top-100-l left-50-l trans-x--50-l";
+  } else {
+    menuItemProps.className += " nowrap";
+    anchorProps.className += " pa2 gray";
+    subMenuProps.className += " left-100 top-0";
+  }
+
+  if (
+    undefined === connectedNode.__typename ||
+    connectedNode.__typename === "MenuItem"
+  ) {
+    anchorProps.href = menuItem.url;
+  } else {
+    anchorProps.to = menuItem.url;
+  }
+
+  if (hasChildren) {
+    menuItemProps.className += " has-children";
+  }
+
+  let ComponentType = components.MenuItem;
+  let AnchorType = components.MenuItemAnchor;
+  let SubMenuType = components.SubMenu;
+
+  if (elements && elements[localLevel]?.length > 0) {
+    ComponentType = elements[localLevel][0].type;
+    menuItemProps = { ...menuItemProps, ...elements[localLevel][0].props };
+
+    if (elements[localLevel][1].type) {
+      AnchorType = elements[localLevel][1].type;
+      anchorProps = { ...anchorProps, ...elements[localLevel][1].props };
+    }
+
+    if (elements[localLevel][2].type) {
+      SubMenuType = elements[localLevel][2].type;
+      subMenuProps = { ...subMenuProps, ...elements[localLevel][2].props };
+    }
+  }
+
+  return (
+    <ComponentType
+      key={menuItem.id}
+      level={localLevel}
+      id={`menu-item-${menuItem.databaseId}`}
+      {...menuItemProps}
+    >
+      <AnchorType {...anchorProps}>{menuItem.label}</AnchorType>
+      {children.length > 0 && (
+        <SubMenuType {...subMenuProps}>
+          {children.map((menuItem) => (
+            <components.ChildItem
+              key={m.id}
+              {...{ level, menuItem }}
+              {...props}
+            />
+          ))}
+        </SubMenuType>
+      )}
+    </ComponentType>
+  );
 };
 
 /**
@@ -214,83 +206,83 @@ export const MenuSkeleton = ({ error, ...props }) => {
 export const MenuRender = ({
   forwardedRef,
   loading,
-  children,
-  className = "",
+  append,
+  prepend,
+  className = "list pl0",
+  menuItems,
   ...props
 }) => {
-  let { components } = useComponents();
-  components = { MenuSkeleton, ChildItem, ...components };
+  const { components } = useComponents();
 
   return (
     <ul
       ref={forwardedRef}
       id={`menu-${props.location.toLowerCase().replace("_", "-")}`}
-      className={`nested-menu list pl0 ${className}`}
+      className={`nested-menu ${className}`}
       style={{ touchAction: "pan-y" }}
     >
+      {prepend}
       {loading || props.error?.message ? (
         <components.MenuSkeleton {...props} />
       ) : (
-        props?.menuItems?.length > 0 &&
-        props.menuItems.map((menuItem) => {
-          if (menuItem.parentId === null) {
-            return (
-              <components.ChildItem
-                key={menuItem.id}
-                menuItem={menuItem}
-                {...props}
-              />
-            );
-          } else {
-            return null;
-          }
+        menuItems?.length > 0 &&
+        menuItems.map((menuItem) => {
+          return <ChildItem key={menuItem.id} {...{ menuItem }} {...props} />;
         })
       )}
-      {children}
+      {append}
     </ul>
   );
 };
 
 /**
- * Loads a flat menu without hover classes.
+ * Builds a layered menu structure from passed props.
+ * Each level has an array of 3 items - the li wrapper, anchor, and ul.
  */
-let FlatMenu = (
-  { location = "HEADER_MENU", onLoad = () => {}, ...props },
-  ref,
-) => {
-  let { components } = useComponents();
-  components = { MenuRender, ...components };
+const childLayoutBuilder = (children, elements, level = 1) => {
+  if (children) {
+    const levelArray = [];
 
-  const { menuItems, loading, error } = useMenu({ location, ssr: false });
+    React.Children.forEach(children, (element) => {
+      if (!React.isValidElement(element)) return;
 
-  const renderProps = {
-    flat: true,
-    menuItems,
-    forwardedRef: ref,
-    loading,
-    error,
-    location,
-    ...props,
-  };
+      const { children: elementChildren, ...childProps } = element.props || {};
 
-  useEffect(() => {
-    menuItems.length > 0 && onLoad(menuItems);
-  }, [menuItems, onLoad]);
+      const levelObject = {};
+      levelObject.type = element.type;
+      levelObject.props = childProps;
+      levelArray.push(levelObject);
 
-  return <components.MenuRender {...renderProps} />;
+      React.Children.forEach(elementChildren, (inner) => {
+        if (!React.isValidElement(inner)) return;
+
+        const { children: innerChildren, ...innerChildProps } =
+          inner.props || {};
+
+        const innerLevelObject = {};
+        innerLevelObject.type = inner.type;
+        innerLevelObject.props = innerChildProps;
+        levelArray.push(innerLevelObject);
+
+        childLayoutBuilder(innerChildren, elements, level + 1);
+      });
+    });
+
+    elements[level] = levelArray;
+  }
 };
-
-FlatMenu = forwardRef(FlatMenu);
 
 /**
  * Loading component that loads the skeleton, error,
  * or finished component based on results.
  */
-let Menu = ({ location = "HEADER_MENU", onLoad = () => {}, ...props }, ref) => {
-  let { components } = useComponents();
-  components = { MenuRender, ...components };
+let Menu = (
+  { location = "HEADER_MENU", onLoad = () => {}, children, ...props },
+  ref,
+) => {
+  const { components } = useComponents();
 
-  const { menuItems, loading, error } = useMenu({ location, ssr: false });
+  const { menuItems, loading, error } = useMenu({ location });
 
   const renderProps = {
     menuItems,
@@ -302,12 +294,47 @@ let Menu = ({ location = "HEADER_MENU", onLoad = () => {}, ...props }, ref) => {
   };
 
   useEffect(() => {
-    menuItems.length > 0 && onLoad(menuItems);
+    if (menuItems.length > 0) {
+      onLoad(menuItems);
+    }
   }, [menuItems, onLoad]);
+
+  if (children) {
+    const elements = {};
+    childLayoutBuilder(children, elements);
+
+    renderProps.elements = elements;
+  }
 
   return <components.MenuRender {...renderProps} />;
 };
 
 Menu = forwardRef(Menu);
+
+/**
+ * Loads a flat menu without hover classes.
+ */
+let FlatMenu = (props, ref) => {
+  return (
+    <Menu {...{ ...props, ref }}>
+      <MenuItem className="db">
+        <MenuItemAnchor className="color-inherit no-underline" />
+        <SubMenu className="db">
+          <MenuItem className="db">
+            <MenuItemAnchor className="color-inherit no-underline" />
+            <SubMenu className="db">
+              <MenuItem className="db">
+                <MenuItemAnchor className="color-inherit no-underline" />
+                <SubMenu className="db" />
+              </MenuItem>
+            </SubMenu>
+          </MenuItem>
+        </SubMenu>
+      </MenuItem>
+    </Menu>
+  );
+};
+
+FlatMenu = forwardRef(FlatMenu);
 
 export { Menu, FlatMenu };
