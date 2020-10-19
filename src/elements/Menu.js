@@ -82,13 +82,11 @@ export const MenuItem = (props) => {
 
     if (level === 1) {
       className += " dib-l pv3-l hover-z-2 drop-last-child-pr";
-      anchorClass += " ttu-l pv2 ph3-l hover-silver";
+      anchorClass += " pv2 ph3-l hover-secondary";
     } else {
       className += " nowrap";
-      anchorClass += " pa2 gray hover-secondary";
+      anchorClass += " pa2 gray";
     }
-  } else {
-    className += " pv2";
   }
 
   return (
