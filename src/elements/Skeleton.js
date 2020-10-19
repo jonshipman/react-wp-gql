@@ -3,7 +3,7 @@ import React from "react";
 export const SkullLine = ({ className = "", color = "light-gray" }) => {
   return (
     <div className={`bg-${color} ${className}`}>
-      <div className="o-0 lh-solid" aria-hidden="true">
+      <div className="o-0" aria-hidden="true">
         Loading
       </div>
     </div>
@@ -12,9 +12,15 @@ export const SkullLine = ({ className = "", color = "light-gray" }) => {
 
 export const SkullWord = ({ className = "", color = "light-gray" }) => {
   return (
-    <div className={`bg-${color} dib ${className}`}>
-      <div className="o-0 lh-solid dib" aria-hidden="true">
-        Loading
+    <div className={`dib ${className}`}>
+      <div className="dib relative z-1" aria-hidden="true">
+        <div
+          className={`bg-${color} z-2 absolute top-0 left-0 w-100`}
+          style={{ lineHeight: 1 }}
+        >
+          <span className="o-0">Loading</span>
+        </div>
+        <div className="o-0">Loading</div>
       </div>
     </div>
   );
