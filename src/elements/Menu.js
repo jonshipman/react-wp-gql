@@ -84,12 +84,16 @@ export const SubMenu = ({ className = "", children }) => {
 /**
  * The placeholder skeleton that shows before query loads.
  */
-export const MenuSkeleton = ({ error, ...props }) => {
+export const MenuSkeleton = ({ error, skullColor: color, ...props }) => {
   const { components } = useComponents();
 
   const skullMenuItem = {
     url: "/",
-    label: error?.message ? error.message : <components.SkullWord />,
+    label: error?.message ? (
+      error.message
+    ) : (
+      <components.SkullWord {...{ color }} />
+    ),
   };
 
   return Array.from(new Array(error?.message ? 1 : 5)).map(() => (
