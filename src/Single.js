@@ -13,7 +13,7 @@ export const Single = () => {
       {error || (!loading && !node.id) ? (
         <components.ErrorRouting {...{ loading, error }} />
       ) : (
-        <components.SingleRender {...{ node }} />
+        <components.SingleRender {...{ node, loading }} />
       )}
     </React.Fragment>
   );

@@ -14,7 +14,7 @@ export const SingleCategoryListItem = ({ uri, name, children }) => {
   );
 };
 
-export const SingleRender = ({ node = {} }) => {
+export const SingleRender = ({ node = {}, loading }) => {
   const {
     seo = {},
     uri,
@@ -41,7 +41,7 @@ export const SingleRender = ({ node = {} }) => {
         {loadPostMeta && (
           <React.Fragment>
             <h1 className="f2 fw4 mb4">
-              {title ? title : <components.SkullLine />}
+              {loading ? <components.SkullLine /> : title}
             </h1>
 
             <div className="post-meta mv4">
@@ -51,47 +51,51 @@ export const SingleRender = ({ node = {} }) => {
                   width={20}
                   height={20}
                 />
-                {dateFormatted ? (
-                  <span>{dateFormatted}</span>
-                ) : (
+                {loading ? (
                   <components.SkullWord />
+                ) : (
+                  <span>{dateFormatted}</span>
                 )}
               </div>
 
               <div className="post-categories dib">
-                <components.FolderIcon
-                  className="mr2 v-mid"
-                  width={20}
-                  height={20}
-                />
-                <ul className="list pl0 dib">
-                  {categories?.edges?.length > 0 ? (
-                    categories.edges.map((category) => (
+                {categories?.edges?.length > 0 && (
+                  <components.FolderIcon
+                    className="mr2 v-mid"
+                    width={20}
+                    height={20}
+                  />
+                )}
+
+                {loading ? (
+                  <ul className="list pl0 dib">
+                    <components.SingleCategoryListItem>
+                      <components.SkullWord />
+                    </components.SingleCategoryListItem>
+                    <components.SingleCategoryListItem>
+                      <components.SkullWord />
+                    </components.SingleCategoryListItem>
+                  </ul>
+                ) : (
+                  categories?.edges?.length > 0 &&
+                  categories.edges.map((category) => (
+                    <ul className="list pl0 dib">
                       <components.SingleCategoryListItem
                         key={category.node.id}
                         {...category.node}
                       />
-                    ))
-                  ) : (
-                    <React.Fragment>
-                      <components.SingleCategoryListItem>
-                        <components.SkullWord />
-                      </components.SingleCategoryListItem>
-                      <components.SingleCategoryListItem>
-                        <components.SkullWord />
-                      </components.SingleCategoryListItem>
-                    </React.Fragment>
-                  )}
-                </ul>
+                    </ul>
+                  ))
+                )}
               </div>
             </div>
           </React.Fragment>
         )}
 
-        {content ? (
-          <components.PostContent>{content}</components.PostContent>
-        ) : (
+        {loading ? (
           <components.SkullPage />
+        ) : (
+          <components.PostContent>{content}</components.PostContent>
         )}
       </components.PageWidth>
     </article>
