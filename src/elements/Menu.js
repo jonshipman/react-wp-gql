@@ -166,12 +166,12 @@ const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
     ComponentType = elements[localLevel][0].type;
     menuItemProps = { ...menuItemProps, ...elements[localLevel][0].props };
 
-    if (elements[localLevel][1].type) {
+    if (elements[localLevel][1]?.type) {
       AnchorType = elements[localLevel][1].type;
       anchorProps = { ...anchorProps, ...elements[localLevel][1].props };
     }
 
-    if (elements[localLevel][2].type) {
+    if (elements[localLevel][2]?.type) {
       SubMenuType = elements[localLevel][2].type;
       subMenuProps = { ...subMenuProps, ...elements[localLevel][2].props };
     }
