@@ -14,7 +14,12 @@ export const SingleCategoryListItem = ({ uri, name, children }) => {
   );
 };
 
-export const SingleRender = ({ node = {}, loading }) => {
+export const SingleRender = ({
+  node = {},
+  loading,
+  className = "mv4",
+  wrap,
+}) => {
   const {
     seo = {},
     uri,
@@ -28,6 +33,7 @@ export const SingleRender = ({ node = {}, loading }) => {
 
   const { components } = useComponents();
   const loadPostMeta = __typename === "Post";
+  const RenderWrapper = wrap ? wrap : components.PageWidth;
 
   return (
     <article className={`single post-${databaseId}`}>
@@ -37,7 +43,7 @@ export const SingleRender = ({ node = {}, loading }) => {
         canonical={uri}
         breadcrumbs={seo.breadcrumbs}
       />
-      <components.PageWidth className="mv4">
+      <RenderWrapper {...{ className }}>
         {loadPostMeta && (
           <React.Fragment>
             <h1 className="f2 fw4 mb4">
@@ -97,7 +103,7 @@ export const SingleRender = ({ node = {}, loading }) => {
         ) : (
           <components.PostContent>{content}</components.PostContent>
         )}
-      </components.PageWidth>
+      </RenderWrapper>
     </article>
   );
 };
