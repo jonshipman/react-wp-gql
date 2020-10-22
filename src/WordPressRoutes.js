@@ -1,12 +1,34 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
+import { Loading } from "./elements/Loading";
 
-import { Login, Logout } from "./Login";
-import { Search } from "./Search";
-import { Archive } from "./Archive";
-import { Category } from "./Category";
-import { Preview } from "./Preview";
-import { Single } from "./Single";
+const Login = lazy(() =>
+  import("./Login").then((module) => ({ default: module.Login })),
+);
+
+const Logout = lazy(() =>
+  import("./Login").then((module) => ({ default: module.Logout })),
+);
+
+const Search = lazy(() =>
+  import("./Search").then((module) => ({ default: module.Search })),
+);
+
+const Archive = lazy(() =>
+  import("./Archive").then((module) => ({ default: module.Archive })),
+);
+
+const Category = lazy(() =>
+  import("./Category").then((module) => ({ default: module.Category })),
+);
+
+const Preview = lazy(() =>
+  import("./Preview").then((module) => ({ default: module.Preview })),
+);
+
+const Single = lazy(() =>
+  import("./Single").then((module) => ({ default: module.Single })),
+);
 
 export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
   return (
@@ -15,29 +37,43 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
         exact
         path={["/login", "/register", "/forgot-password", "/rp/:key/:login"]}
       >
-        <Login />
+        <Suspense fallback={<Loading />}>
+          <Login />
+        </Suspense>
       </Route>
 
       <Route exact path="/logout">
-        <Logout />
+        <Suspense fallback={<Loading />}>
+          <Logout />
+        </Suspense>
       </Route>
 
       <Route exact path="/search">
-        <Search />
+        <Suspense fallback={<Loading />}>
+          <Search />
+        </Suspense>
       </Route>
       <Route exact path={`/${blog}`}>
-        <Archive />
+        <Suspense fallback={<Loading />}>
+          <Archive />
+        </Suspense>
       </Route>
       <Route path={`/${category}/:slug`}>
-        <Category />
+        <Suspense fallback={<Loading />}>
+          <Category />
+        </Suspense>
       </Route>
 
       <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
-        <Preview />
+        <Suspense fallback={<Loading />}>
+          <Preview />
+        </Suspense>
       </Route>
 
       <Route path="*">
-        <Single />
+        <Suspense fallback={<Loading />}>
+          <Single />
+        </Suspense>
       </Route>
     </Switch>
   );
