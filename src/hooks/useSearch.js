@@ -1,46 +1,25 @@
 import { useState, useContext } from "react";
-import { useQuery } from "@apollo/client";
 
 import { NodeContext } from "../Context";
 import { useQueries } from "./useQueries";
-import { usePagination, getPageInfo, useNavigation } from "./usePagination";
+import { useArchive } from "./useArchive";
 
 export const useSearch = () => {
   const { perPage } = useContext(NodeContext);
   const { queries } = useQueries();
 
-  const [filter, setFilter] = useState("");
-  const { variables, goNext, goPrev } = usePagination(perPage);
-
-  variables.filter = filter || "";
-
-  const { data, loading, error } = useQuery(queries.QuerySearch, {
+  const [filter = "", setFilter] = useState("");
+  const variables = { filter };
+  const archiveProps = useArchive({
+    query: queries.QuerySearch,
+    perPage,
     variables,
-    errorPolicy: "all",
-    skip: variables.filter.length < 3,
-  });
-
-  const edges = data?.posts?.edges?.length ? data.posts.edges : [];
-  const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
-    data?.posts?.pageInfo,
-  );
-
-  const { prev, next } = useNavigation({
-    endCursor,
-    startCursor,
-    goNext,
-    goPrev,
+    skip: filter.length < 3,
   });
 
   return {
     setFilter,
     filter,
-    edges,
-    loading,
-    error,
-    next,
-    prev,
-    hasNextPage,
-    hasPreviousPage,
+    ...archiveProps,
   };
 };

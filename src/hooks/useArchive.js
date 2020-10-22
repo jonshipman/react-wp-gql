@@ -10,21 +10,25 @@ export const useArchive = (props = {}) => {
   const { queries } = useQueries();
 
   const {
-    QUERY = queries.QueryArchive,
+    query: QUERY = queries.QueryArchive,
     variables: propVariables = {},
-    field = "posts",
     perPage: perPageProp,
+    field = "posts",
+    ...queryProps
   } = props;
   const { variables, goNext, goPrev } = usePagination(perPageProp || perPage);
 
   const { data = {}, loading, error } = useQuery(QUERY, {
     variables: { ...variables, ...propVariables },
     errorPolicy: "all",
+    ...queryProps,
   });
 
-  const edges = data[field]?.edges?.length ? data[field].edges : [];
+  const queryObject = data[field] || {};
+
+  const { edges = [], pageInfo = {} } = queryObject;
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
-    data[field]?.pageInfo,
+    pageInfo,
   );
 
   const { prev, next } = useNavigation({
@@ -35,7 +39,7 @@ export const useArchive = (props = {}) => {
   });
 
   return {
-    edges,
+    edges: edges === null ? [] : edges,
     loading,
     error,
     next,

@@ -11,18 +11,12 @@ export const Search = ({ uri = "/search", title = "Search" }) => {
   const { edges, loading, error, filter, setFilter, ...props } = useSearch();
 
   let Render = () => (
-    <components.ArchiveRender {...{ edges, loading }} {...props} />
+    <components.ArchiveRender {...{ edges, loading, error }} {...props} />
   );
-
-  if (error) {
-    Render = () => <components.ErrorRouting {...{ error }} />;
-  }
 
   if (!loading && edges.length < 1) {
     if (filter.length < 3) {
       Render = () => <components.NoSearchResults />;
-    } else {
-      Render = () => <components.NotFound />;
     }
   }
 

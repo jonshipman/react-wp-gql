@@ -20,11 +20,8 @@ export const Archive = ({ uri = "/blog", title = "Blog" }) => {
       <components.Seo title={seoTitle} canonical={uri} />
 
       <components.Title>{title}</components.Title>
-      {error || (!loading && edges.length < 1) ? (
-        <components.ErrorRouting {...{ loading, error }} />
-      ) : (
-        <components.ArchiveRender {...{ edges, loading }} {...hookProps} />
-      )}
+
+      <components.ArchiveRender {...{ edges, loading, error }} {...hookProps} />
     </React.Fragment>
   );
 };

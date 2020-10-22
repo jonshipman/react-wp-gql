@@ -16,7 +16,6 @@ import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 import { SearchForm } from "./elements/SearchForm";
 import { Seo } from "./elements/Seo";
-import { SingleTitle } from "./elements/SingleTitle";
 import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
 import * as DefaultMutations from "./gql/mutations";
@@ -49,7 +48,6 @@ export const DefaultComponents = {
   SearchForm,
   SearchIcon,
   Seo,
-  SingleTitle,
   Title,
 };
 

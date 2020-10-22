@@ -1,25 +1,27 @@
-import React, { forwardRef, createElement } from "react";
+import React, { forwardRef } from "react";
 
 import { useComponents } from "../hooks/useComponents";
 
-let Title = ({ notHeading, className = "", children, ...props }, ref) => {
+let Title = (
+  { notHeading, wrap = "h1", className = "", children, ...props },
+  ref,
+) => {
   const { components } = useComponents();
 
-  const Wrap = createElement(notHeading ? "div" : "h1", {});
-  const WrapType = Wrap.type;
+  const Wrap = notHeading ? "div" : wrap;
 
   return (
     <div className={`bg-near-white ${className}`} {...props}>
       <components.PageWidth>
-        <WrapType className="title ma0 lh-solid pv4">
-          <span className="f4 fw4 db" ref={ref}>
+        <Wrap className="title ma0 lh-solid pv4">
+          <span className="f4 fw4 db" {...{ ref }}>
             {children ? (
               children
             ) : (
               <components.SkullLine className="w-100 mw6" />
             )}
           </span>
-        </WrapType>
+        </Wrap>
       </components.PageWidth>
     </div>
   );

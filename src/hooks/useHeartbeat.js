@@ -9,28 +9,47 @@ const DefaultCleanup = () => {
   window.localStorage.removeItem("auth-token");
 };
 
-export const useCleanup = ({
-  redirect = "/login",
-  types = protectedTypes,
-  Cleanup = DefaultCleanup,
-}) => {
+export const useCleanup = (props) => {
+  const {
+    redirect = "/login",
+    types = protectedTypes,
+    Cleanup = DefaultCleanup,
+  } = props || {};
+
   const history = useHistory();
   const client = useApolloClient();
-
-  Cleanup();
-
-  // Clear the sensitize caches
-  Object.keys(client.cache.data.data).forEach((key) =>
-    types.forEach(
-      (type) => key.indexOf(type) === 0 && client.cache.data.delete(key),
-    ),
-  );
+  const [skip, setSkip] = useState(true);
 
   useEffect(() => {
-    if (redirect) {
+    if (props === null) {
+      setSkip(true);
+    } else {
+      setSkip(false);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    if (!skip) {
+      Cleanup();
+    }
+  }, [skip, Cleanup]);
+
+  useEffect(() => {
+    if (!skip) {
+      // Clear the sensitize caches
+      Object.keys(client.cache.data.data).forEach((key) =>
+        types.forEach(
+          (type) => key.indexOf(type) === 0 && client.cache.data.delete(key),
+        ),
+      );
+    }
+  }, [client, skip, types]);
+
+  useEffect(() => {
+    if (!skip && redirect) {
       history.push(redirect);
     }
-  }, [redirect, history]);
+  }, [redirect, history, skip]);
 };
 
 export const useHeartbeat = ({ ibi = 30000, onError = {}, query }) => {
@@ -55,7 +74,6 @@ export const useHeartbeat = ({ ibi = 30000, onError = {}, query }) => {
     };
   }, [beats, error, setBeats, ibi]);
 
-  if (error) {
-    useCleanup(onError);
-  }
+  const CleanupProps = error ? onError : null;
+  useCleanup(CleanupProps);
 };

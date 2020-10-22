@@ -8,16 +8,17 @@ export const useMenu = (props = {}) => {
   const { ssr = true, location = "HEADER_MENU", parentId = 0 } = props;
   const variables = { location, parentId };
 
-  const { data, loading, error } = useQuery(queries.QueryMenu, {
+  const { data = {}, loading, error } = useQuery(queries.QueryMenu, {
     variables,
     errorPolicy: "all",
     ssr,
   });
 
-  const menuItems = data?.menuItems?.nodes?.length ? data.menuItems.nodes : [];
+  const { menuItems: queryObject = {} } = data;
+  const { nodes: menuItems = [] } = queryObject;
 
   return {
-    menuItems,
+    menuItems: menuItems === null ? {} : menuItems,
     loading,
     error,
   };

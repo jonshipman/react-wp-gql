@@ -1,33 +1,29 @@
 import React from "react";
 
-import { Loading } from "./Loading";
-import { LoadingError } from "./LoadingError";
-import { NotFound } from "./NotFound";
-import { PageWidth } from "./PageWidth";
 import { useComponents } from "../hooks/useComponents";
 
-export const ErrorRouting = ({ loading, error }) => {
-  let { components } = useComponents();
-  components = Object.assign(
-    {},
-    { PageWidth, Loading, LoadingError, NotFound },
-    components,
-  );
+export const ErrorRouting = ({ loading, error, wrap }) => {
+  const { components } = useComponents();
+  const Wrap = wrap ? wrap : components.PageWidth;
 
   if (loading) {
     return (
-      <components.PageWidth>
+      <Wrap>
         <components.Loading />
-      </components.PageWidth>
+      </Wrap>
     );
   }
   if (error) {
     return (
-      <components.PageWidth>
+      <Wrap>
         <components.LoadingError error={error.message} />
-      </components.PageWidth>
+      </Wrap>
     );
   }
 
-  return <components.NotFound />;
+  return (
+    <Wrap>
+      <components.NotFound />
+    </Wrap>
+  );
 };

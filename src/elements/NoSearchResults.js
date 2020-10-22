@@ -1,11 +1,9 @@
 import React from "react";
 
-import { PageWidth } from "./PageWidth";
 import { useComponents } from "../hooks/useComponents";
 
 export const NoSearchResults = () => {
-  let { components } = useComponents();
-  components = Object.assign({}, { PageWidth }, components);
+  const { components } = useComponents();
 
   return (
     <components.PageWidth className="gray tc">

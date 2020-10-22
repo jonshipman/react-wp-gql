@@ -28,12 +28,16 @@ export const BreadcrumbList = (crumbs) => {
 
 export const Seo = ({
   title,
-  description,
-  canonical,
+  description: descriptionProp,
+  canonical: canonicalProp,
+  uri,
+  metaDesc,
   breadcrumbs = [],
   children,
 }) => {
   const { FRONTEND_URL = "" } = useContext(NodeContext);
+  const canonical = canonicalProp || uri;
+  const description = description || metaDesc;
 
   return (
     <Helmet>

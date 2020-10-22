@@ -7,14 +7,5 @@ export const Single = () => {
   const { components } = useComponents();
   const { node, loading, error } = useSingle();
 
-  return (
-    <React.Fragment>
-      <components.SingleTitle {...node} />
-      {error || (!loading && !node.id) ? (
-        <components.ErrorRouting {...{ loading, error }} />
-      ) : (
-        <components.SingleRender {...{ node, loading }} />
-      )}
-    </React.Fragment>
-  );
+  return <components.SingleRender {...{ node, loading, error }} />;
 };

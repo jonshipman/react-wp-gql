@@ -13,12 +13,12 @@ export const useCategory = () => {
     id,
   };
 
-  const { data, ...props } = useArchive({
-    QUERY: queries.QueryCategories,
+  const { data = {}, ...props } = useArchive({
+    query: queries.QueryCategories,
     variables,
   });
 
-  const category = data?.category || {};
+  const { category = {} } = data;
 
-  return { category, ...props };
+  return { category: category === null ? {} : category, data, ...props };
 };

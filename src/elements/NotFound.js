@@ -1,14 +1,12 @@
 import React from "react";
 
-import { PageWidth } from "./PageWidth";
 import { useComponents } from "../hooks/useComponents";
 
 export const NotFound = () => {
-  let { components } = useComponents();
-  components = Object.assign({}, { PageWidth }, components);
+  const { components } = useComponents();
 
   return (
-    <components.PageWidth className="content post-not-found">
+    <div className="content post-not-found">
       <h1 className="content--title tc">
         <span className="content--title-inner">404: Page Not Found</span>
       </h1>
@@ -26,6 +24,6 @@ export const NotFound = () => {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: `<!-- status-code-404 -->` }}
       />
-    </components.PageWidth>
+    </div>
   );
 };

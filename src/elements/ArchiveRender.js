@@ -5,15 +5,27 @@ import { useComponents } from "../hooks/useComponents";
 export const ArchiveRender = ({
   edges = [],
   loading,
+  error,
   hasPreviousPage,
   hasNextPage,
   next,
   prev,
+  wrap,
 }) => {
   const { components } = useComponents();
+  const RenderWrapper = wrap ? wrap : components.PageWidth;
 
-  if (!edges.length && !loading) {
-    return <components.PageWidth>Nothing found.</components.PageWidth>;
+  if (edges.length < 1 && !loading) {
+    return (
+      <RenderWrapper className="mv4">
+        <div>Nothing found.</div>
+        <div
+          className="dn"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: `<!-- status-code-404 -->` }}
+        />
+      </RenderWrapper>
+    );
   }
 
   const PaginationProps = {
@@ -23,8 +35,12 @@ export const ArchiveRender = ({
     prev,
   };
 
+  if (error) {
+    return <components.ErrorRouting {...{ loading, error }} />;
+  }
+
   return (
-    <components.PageWidth className="entries">
+    <RenderWrapper className="entries">
       <components.Seo>
         <meta name="robots" content="noindex" />
       </components.Seo>
@@ -45,6 +61,6 @@ export const ArchiveRender = ({
       )}
 
       <components.Pagination {...PaginationProps} />
-    </components.PageWidth>
+    </RenderWrapper>
   );
 };
