@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef, useEffect, useState, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
@@ -158,10 +158,6 @@ const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
     anchorProps.to = menuItem.url;
   }
 
-  if (hasChildren) {
-    menuItemProps.className += " has-children";
-  }
-
   let ComponentType = components.MenuItem;
   let AnchorType = components.MenuItemAnchor;
   let SubMenuType = components.SubMenu;
@@ -181,6 +177,10 @@ const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
     }
   }
 
+  if (hasChildren) {
+    menuItemProps.className += " has-children";
+  }
+
   return (
     <ComponentType
       key={menuItem.id}
@@ -192,9 +192,10 @@ const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
       {children.length > 0 && (
         <SubMenuType {...subMenuProps}>
           {children.map((menuItem) => (
-            <components.ChildItem
-              key={m.id}
-              {...{ level, menuItem }}
+            <ChildItem
+              key={menuItem.id}
+              {...{ menuItem }}
+              level={localLevel}
               {...props}
             />
           ))}
@@ -281,12 +282,23 @@ const childLayoutBuilder = (children, elements, level = 1) => {
  * or finished component based on results.
  */
 let Menu = (
-  { location = "HEADER_MENU", onLoad = () => {}, children, ...props },
+  {
+    location = "HEADER_MENU",
+    onLoad = () => {},
+    updateMenu = () => {},
+    children,
+    ...props
+  },
   ref,
 ) => {
   const { components } = useComponents();
+  const [menuItems, setMenuItems] = useState([]);
 
-  const { menuItems, loading, error } = useMenu({ location });
+  const { menuItems: menuItemData, loading, error } = useMenu({ location });
+
+  useEffect(() => {
+    setMenuItems(menuItemData);
+  }, [menuItemData]);
 
   const renderProps = {
     menuItems,
@@ -303,10 +315,20 @@ let Menu = (
     }
   }, [menuItems, onLoad]);
 
-  if (children) {
-    const elements = {};
-    childLayoutBuilder(children, elements);
+  useEffect(() => {
+    updateMenu(setMenuItems);
+  }, [updateMenu]);
 
+  const elements = useMemo(() => {
+    const _elements = {};
+    if (children) {
+      childLayoutBuilder(children, _elements);
+    }
+
+    return _elements;
+  }, [children]);
+
+  if (children) {
     renderProps.elements = elements;
   }
 
