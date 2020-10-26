@@ -23,6 +23,7 @@ export * from "./elements/SearchForm";
 export * from "./elements/Seo";
 export * from "./elements/SingleRender";
 export * from "./elements/Skeleton";
+export * from "./elements/Suspense";
 export * from "./elements/Title";
 export * from "./functions";
 export * from "./gql/fragments";
