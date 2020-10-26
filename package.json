@@ -1,6 +1,6 @@
 {
   "name": "react-boilerplate-nodes",
-  "version": "0.0.17",
+  "version": "0.0.2",
   "description": "Hooks and Components for rendering single.php and archive.php in a typical WP install.",
   "author": "jonshipman",
   "license": "MIT",

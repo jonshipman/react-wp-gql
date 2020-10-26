@@ -5,13 +5,13 @@ import { useQueries } from "./useQueries";
 export const useMenu = (props = {}) => {
   const { queries } = useQueries();
 
-  const { ssr = true, location = "HEADER_MENU", parentId = 0 } = props;
+  const { location = "HEADER_MENU", parentId = 0, ...queryProps } = props;
   const variables = { location, parentId };
 
   const { data = {}, loading, error } = useQuery(queries.QueryMenu, {
     variables,
     errorPolicy: "all",
-    ssr,
+    ...queryProps,
   });
 
   const { menuItems: queryObject = {} } = data;
