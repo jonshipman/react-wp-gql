@@ -2,9 +2,15 @@ import React from "react";
 
 export const SkullLine = ({ className = "", color = "light-gray" }) => {
   return (
-    <div className={`bg-${color} ${className}`}>
-      <div className="o-0" aria-hidden="true">
-        Loading
+    <div {...{ className }}>
+      <div className="relative z-1" aria-hidden="true">
+        <div
+          className={`bg-${color} z-2 absolute top-0 left-0 w-100`}
+          style={{ lineHeight: 1 }}
+        >
+          <span className="o-0">Loading</span>
+        </div>
+        <div className="o-0">Loading</div>
       </div>
     </div>
   );
@@ -39,13 +45,13 @@ export const SkullButton = ({ className, color = "light-gray" }) => {
   );
 };
 
-export const SkullParagraph = () => {
+export const SkullParagraph = ({ className = "mb2", color = "light-gray" }) => {
   return (
-    <div className="mv4">
-      <SkullLine className="mv2" />
-      <SkullLine className="mv2" />
-      <SkullLine className="mv2" />
-      <SkullLine className="mv2 mw4" />
+    <div {...{ className }}>
+      <SkullLine {...{ color }} />
+      <SkullLine {...{ color }} />
+      <SkullLine {...{ color }} />
+      <SkullLine className="mw4" {...{ color }} />
     </div>
   );
 };
