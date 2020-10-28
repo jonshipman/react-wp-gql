@@ -7,10 +7,6 @@ const Login = lazy(() =>
   import("./Login").then((module) => ({ default: module.Login })),
 );
 
-const Logout = lazy(() =>
-  import("./Login").then((module) => ({ default: module.Logout })),
-);
-
 const Search = lazy(() =>
   import("./Search").then((module) => ({ default: module.Search })),
 );
@@ -36,16 +32,16 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
     <Switch>
       <Route
         exact
-        path={["/login", "/register", "/forgot-password", "/rp/:key/:login"]}
+        path={[
+          "/login",
+          "/logout",
+          "/register",
+          "/forgot-password",
+          "/rp/:key/:login",
+        ]}
       >
         <Suspense fallback={<Loading />}>
           <Login />
-        </Suspense>
-      </Route>
-
-      <Route exact path="/logout">
-        <Suspense fallback={<Loading />}>
-          <Logout />
         </Suspense>
       </Route>
 

@@ -167,3 +167,9 @@ export const QueryMenu = (fragments) => gql`
   ${fragments.FragmentMenuItemLevel2}
   ${fragments.FragmentMenuItemLevel3}
 `;
+
+export const QueryIsLoggedIn = () => gql`
+  query IsLoggedIn {
+    isLoggedIn
+  }
+`;

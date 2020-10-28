@@ -7,17 +7,24 @@ export const MutationLogin = () => gql`
     $password: String!
     $clientMutationId: String!
   ) {
-    login(
+    loginCookies(
       input: {
         clientMutationId: $clientMutationId
-        username: $username
+        login: $username
         password: $password
       }
     ) {
-      authToken
-      user {
-        nickname
-      }
+      clientMutationId
+      status
+    }
+  }
+`;
+
+export const MutationLogout = () => gql`
+  mutation LogoutMutation($clientMutationId: String!) {
+    logout(input: { clientMutationId: $clientMutationId }) {
+      clientMutationId
+      status
     }
   }
 `;

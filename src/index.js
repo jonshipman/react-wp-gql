@@ -45,5 +45,6 @@ export * from "./Provider";
 export * from "./Search";
 export * from "./Single";
 export * from "./WordPressRoutes";
+export * from "./hooks/auth/index";
 
 export { ClockIcon, FolderIcon, SearchIcon };

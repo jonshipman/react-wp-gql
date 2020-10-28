@@ -5,7 +5,7 @@ export const Button = ({
   children,
   to = "/",
   onClick,
-  className = "pointer bg-primary pv2 ph3 dib bn",
+  className = "pointer bg-primary white pv2 ph3 dib bn",
 }) => {
   if (onClick) {
     return <div {...{ className, onClick }}>{children}</div>;
