@@ -38,10 +38,14 @@ export const useLogin = ({ setMessage = () => {} }) => {
   const onCompleted = useCallback(
     (data = {}) => {
       const { loginCookies = {} } = data;
-      const { status } = loginCookies;
+      if (null === loginCookies) {
+        setMessage("Incorrect password");
+      } else {
+        const { status } = loginCookies;
 
-      if (status === "SUCCESS") {
-        loggedIn();
+        if (status === "SUCCESS") {
+          loggedIn();
+        }
       }
     },
     [loggedIn],
