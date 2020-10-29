@@ -10,7 +10,7 @@ export const useSingle = (props = {}) => {
   const { pathname: uri } = useLocation();
   const variables = {};
   let q = queries.QuerySingle;
-  let key = "nodeById";
+  let key = "nodeByUri";
 
   if (databaseId) {
     key = "contentNode";
