@@ -10,8 +10,10 @@ export const useSingle = (props = {}) => {
   const { pathname: uri } = useLocation();
   const variables = {};
   let q = queries.QuerySingle;
+  let key = "nodeById";
 
   if (databaseId) {
+    key = "contentNode";
     variables.databaseId = databaseId;
     q = queries.QuerySingleById;
   } else {
@@ -29,7 +31,7 @@ export const useSingle = (props = {}) => {
     ...queryProps,
   });
 
-  const { contentNode: node = {} } = data;
+  const { [key]: node = {} } = data;
 
   return {
     node: node === null ? {} : node,

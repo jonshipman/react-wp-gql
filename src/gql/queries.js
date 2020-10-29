@@ -1,9 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const QuerySingle = (fragments) => gql`
-  query SingleHook($uri: ID!) {
-    contentNode(id: $uri, idType: URI) {
-      ...contentInfo
+  query SingleHook($uri: String!) {
+    nodeByUri(uri: $uri) {
       ... on Post {
         ...postInfo
       }
@@ -15,7 +14,6 @@ export const QuerySingle = (fragments) => gql`
   ${fragments.FragmentPostSeo}
   ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
-  ${fragments.FragmentContentNode}
   ${fragments.FragmentPost}
   ${fragments.FragmentPage}
 `;
