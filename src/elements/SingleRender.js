@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useComponents } from "../hooks/useComponents";
 
 export const SingleTitle = ({
+  name,
   title,
   __typename,
   categories = { edges: [] },
@@ -17,7 +18,7 @@ export const SingleTitle = ({
       </components.Title>
     );
   } else {
-    return <components.Title>{title}</components.Title>;
+    return <components.Title>{title || name}</components.Title>;
   }
 };
 
