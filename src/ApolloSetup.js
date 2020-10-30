@@ -37,7 +37,7 @@ export const ApolloSetup = ({
   });
 
   return new ApolloClient({
-    link: from([authAfterware, link, ...links]),
+    link: from([authAfterware, ...links, link]),
     cache: new InMemoryCache(cache).restore(window.__APOLLO_STATE__ || null),
     ...clientProps,
   });
