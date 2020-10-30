@@ -9,11 +9,17 @@ export const LinkInner = ({ className = "link-inner", children }) => {
 };
 
 export const MenuItem = (props) => {
-  const { id, level = 1 } = props;
-  const { children, className = "", source, ..._props } = props;
+  const {
+    children,
+    className = "",
+    source,
+    level,
+    location,
+    ..._props
+  } = props;
 
   return (
-    <li id={id} className={`menu-item level-${level} ${className}`} {..._props}>
+    <li className={`menu-item level-${level} ${className}`} {..._props}>
       {children}
     </li>
   );
