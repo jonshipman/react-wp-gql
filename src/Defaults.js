@@ -8,7 +8,7 @@ import * as Login from "./Login";
 import * as Elements from "./elements";
 
 export const DefaultComponents = {
-  Login,
+  ...Login,
   ClockIcon,
   FolderIcon,
   SearchIcon,
