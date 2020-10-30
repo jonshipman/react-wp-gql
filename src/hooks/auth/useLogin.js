@@ -16,6 +16,7 @@ export const useLogin = ({ setMessage = () => {} }) => {
   const {
     loginRedirect = getRedirect(),
     removeRedirect = DefaultRemoveRedirect,
+    onLoggedIn = () => {},
   } = useContext(NodeContext);
 
   useEffect(() => {
@@ -52,7 +53,10 @@ export const useLogin = ({ setMessage = () => {} }) => {
   );
 
   const [mutation, { error, loading }] = useMutation(mutations.MutationLogin, {
-    onCompleted,
+    onCompleted: (...args) => {
+      onLoggedIn(...args);
+      onCompleted(...args);
+    },
     errorPolicy: "all",
   });
 
