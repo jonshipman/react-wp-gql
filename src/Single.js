@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { NodeContext } from "./Context";
+import React from "react";
 
 import { useComponents } from "./hooks/useComponents";
 import { useRenderer } from "./hooks/useRenderer";

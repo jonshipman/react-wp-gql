@@ -1,7 +1,6 @@
 import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
-import { Loading } from "./elements/Loading";
-import { Suspense } from "./elements/Suspense";
+import { Loading, Suspense } from "./elements";
 
 const Login = lazy(() =>
   import("./Login").then((module) => ({ default: module.Login })),

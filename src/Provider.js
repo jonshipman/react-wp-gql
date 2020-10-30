@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Populate } from "./Defaults";
 import { NodeContext } from "./Context";
@@ -12,15 +12,12 @@ export const NodeProvider = ({
   ...props
 }) => {
   const refactored = Populate({ components, fragments, queries, mutations });
-  const [prevComponentRoute, setPrevComponentRoute] = useState();
 
   return (
     <NodeContext.Provider
       value={{
         ...refactored,
         ...props,
-        setPrevComponentRoute,
-        prevComponentRoute,
       }}
     >
       {children}

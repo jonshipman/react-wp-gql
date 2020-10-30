@@ -1,54 +1,18 @@
-import { ArchiveCard } from "./elements/ArchiveCard";
-import { ArchiveRender } from "./elements/ArchiveRender";
-import { Button } from "./elements/Button";
-import { ErrorRouting } from "./elements/ErrorRouting";
-import { FormGroup } from "./elements/FormGroup";
-import { Loading } from "./elements/Loading";
-import { LoadingError } from "./elements/LoadingError";
-import { NoSearchResults } from "./elements/NoSearchResults";
-import { NotFound } from "./elements/NotFound";
-import { PageWidth } from "./elements/PageWidth";
-import { Pagination } from "./elements/Pagination";
-import { Permissions } from "./elements/Permissions";
-import { PostContent } from "./elements/PostContent";
 import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
 import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
-import { SearchForm } from "./elements/SearchForm";
-import { Seo } from "./elements/Seo";
-import { Title } from "./elements/Title";
 import * as DefaultFragments from "./gql/fragments";
 import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
-import * as Menu from "./elements/Menu";
-import * as SingleRender from "./elements/SingleRender";
-import * as Skeleton from "./elements/Skeleton";
+import * as Elements from "./elements";
 
 export const DefaultComponents = {
-  ...Login,
-  ...Menu,
-  ...SingleRender,
-  ...Skeleton,
-  ArchiveCard,
-  ArchiveRender,
-  Button,
+  Login,
   ClockIcon,
-  ErrorRouting,
   FolderIcon,
-  FormGroup,
-  Loading,
-  LoadingError,
-  NoSearchResults,
-  NotFound,
-  PageWidth,
-  Pagination,
-  Permissions,
-  PostContent,
-  SearchForm,
   SearchIcon,
-  Seo,
-  Title,
+  ...Elements,
 };
 
 export const Populate = ({ components, fragments, queries, mutations }) => {
