@@ -1,8 +1,10 @@
 import React from "react";
 
 import { useComponents } from "../hooks/useComponents";
+import { useRenderer } from "../hooks/useRenderer";
 
 export const ArchiveRender = ({
+  __typename,
   edges = [],
   loading,
   error,
@@ -14,6 +16,7 @@ export const ArchiveRender = ({
 }) => {
   const { components } = useComponents();
   const RenderWrapper = wrap ? wrap : components.PageWidth;
+  const Card = useRenderer("card", __typename, components.ArchiveCard);
 
   if (edges.length < 1 && !loading) {
     return (
@@ -47,15 +50,15 @@ export const ArchiveRender = ({
 
       {loading ? (
         <div className="entries">
-          <components.ArchiveCard />
-          <components.ArchiveCard />
-          <components.ArchiveCard />
-          <components.ArchiveCard />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
         </div>
       ) : (
         <div className="entries">
           {edges.map((edge) => (
-            <components.ArchiveCard key={edge.node.id} {...edge.node} />
+            <Card key={edge.node.id} {...edge.node} />
           ))}
         </div>
       )}

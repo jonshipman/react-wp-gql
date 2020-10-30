@@ -8,7 +8,7 @@ export const Archive = ({ uri = "/blog", title = "Blog" }) => {
   const { components } = useComponents();
   const { siteName = "" } = useContext(NodeContext);
 
-  const { edges, loading, error, ...hookProps } = useArchive();
+  const renderProps = useArchive();
 
   let seoTitle = title;
   if (siteName) {
@@ -21,7 +21,7 @@ export const Archive = ({ uri = "/blog", title = "Blog" }) => {
 
       <components.Title>{title}</components.Title>
 
-      <components.ArchiveRender {...{ edges, loading, error }} {...hookProps} />
+      <components.ArchiveRender {...renderProps} />
     </React.Fragment>
   );
 };

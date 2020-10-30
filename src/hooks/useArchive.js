@@ -38,7 +38,10 @@ export const useArchive = (props = {}) => {
     goPrev,
   });
 
+  const __typename = edges?.length > 0 ? edges[0]?.node?.__typename : null;
+
   return {
+    __typename,
     edges: edges === null ? [] : edges,
     loading,
     error,
