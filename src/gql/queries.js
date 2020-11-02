@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 
 export const QuerySingle = (fragments) => gql`
   query SingleHook($uri: String!) {
-    __typename
     nodeByUri(uri: $uri) {
+      __typename
       ... on Post {
         ...postInfo
       }
