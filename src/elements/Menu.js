@@ -111,16 +111,17 @@ export const MenuSkeleton = ({ error, skullColor: color, ...props }) => {
 /**
  * Child item that loops to created the nested menu.
  */
-const ChildItem = ({ menuItem = {}, level, location, ...props }) => {
+const ChildItem = ({ menuItem, level, location, ...props }) => {
   const { components } = useComponents();
 
-  const {
-    childItems = { nodes: [] },
-    cssClasses = [],
-    connectedNode: connection = { node: {} },
-  } = menuItem;
-  const { nodes: children = [] } = childItems;
-  const { node: connectedNode } = connection;
+  const { childItems, connectedNode: connection } = menuItem || {};
+  let { cssClasses } = menuItem || {};
+  let { nodes: children } = childItems || {};
+  let { node: connectedNode } = connection || {};
+
+  cssClasses = cssClasses || [];
+  children = children || [];
+  connectedNode = connectedNode || {};
 
   const hasChildren = children.length > 0;
   const localLevel = level ? level + 1 : 1;
