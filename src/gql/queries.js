@@ -3,13 +3,7 @@ import { gql } from "@apollo/client";
 export const QuerySingle = (fragments) => gql`
   query SingleHook($uri: String!) {
     nodeByUri(uri: $uri) {
-      __typename
-      ... on Post {
-        ...postInfo
-      }
-      ... on Page {
-        ...pageInfo
-      }
+      ${fragments.LiteralNode}
     }
   }
   ${fragments.FragmentPostSeo}
@@ -22,19 +16,25 @@ export const QuerySingle = (fragments) => gql`
 export const QuerySingleById = (fragments) => gql`
   query SingleByIdHook($databaseId: ID!) {
     contentNode(id: $databaseId, idType: DATABASE_ID) {
-      ...contentInfo
-      ... on Post {
-        ...postInfo
-      }
-      ... on Page {
-        ...pageInfo
-      }
+      ${fragments.LiteralContentNode}
     }
   }
   ${fragments.FragmentPostSeo}
   ${fragments.FragmentTaxSeo}
   ${fragments.FragmentCategory}
-  ${fragments.FragmentContentNode}
+  ${fragments.FragmentPost}
+  ${fragments.FragmentPage}
+`;
+
+export const QueryPreview = (fragments) => gql`
+  query PreviewHook($databaseId: ID!) {
+    contentNode(id: $databaseId, idType: DATABASE_ID, asPreview: true) {
+      ${fragments.LiteralContentNode}
+    }
+  }
+  ${fragments.FragmentPostSeo}
+  ${fragments.FragmentTaxSeo}
+  ${fragments.FragmentCategory}
   ${fragments.FragmentPost}
   ${fragments.FragmentPage}
 `;

@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
-import { Loading, Suspense } from "./elements";
+import { Suspense } from "./elements";
 
 const Login = lazy(() =>
   import("./Login").then((module) => ({ default: module.Login })),
@@ -19,11 +19,11 @@ const Category = lazy(() =>
 );
 
 const Preview = lazy(() =>
-  import("./Preview").then((module) => ({ default: module.Preview })),
+  import("./single").then((module) => ({ default: module.Preview })),
 );
 
 const Single = lazy(() =>
-  import("./Single").then((module) => ({ default: module.Single })),
+  import("./single").then((module) => ({ default: module.Single })),
 );
 
 export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
@@ -39,35 +39,35 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
           "/rp/:key/:login",
         ]}
       >
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Login />
         </Suspense>
       </Route>
 
       <Route exact path="/search">
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Search />
         </Suspense>
       </Route>
       <Route exact path={`/${blog}`}>
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Archive />
         </Suspense>
       </Route>
       <Route path={`/${category}/:slug`}>
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Category />
         </Suspense>
       </Route>
 
       <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Preview />
         </Suspense>
       </Route>
 
       <Route path="*">
-        <Suspense fallback={<Loading />}>
+        <Suspense>
           <Single />
         </Suspense>
       </Route>

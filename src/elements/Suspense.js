@@ -1,6 +1,7 @@
 import React, { Suspense as Source, useState, useEffect } from "react";
+import { Loading } from "./Loading";
 
-export const Suspense = (props) => {
+export const Suspense = ({ fallback = <Loading />, ...props }) => {
   const [isFront, setIsFront] = useState(false);
 
   useEffect(() => {
@@ -13,5 +14,5 @@ export const Suspense = (props) => {
     return null;
   }
 
-  return <Source {...props} />;
+  return <Source {...{ fallback }} {...props} />;
 };

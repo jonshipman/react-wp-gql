@@ -53,6 +53,8 @@ export const FragmentPost = gql`
     excerpt
     content
     dateFormatted
+    isRestricted
+    isPreview
     seo {
       ...seoPostInfo
     }
@@ -132,3 +134,15 @@ export const FragmentMenuItem = gql`
     }
   }
 `;
+
+export const LiteralContentNode = `
+  __typename
+  ... on Post {
+    ...postInfo
+  }
+  ... on Page {
+    ...pageInfo
+  }
+`;
+
+export const LiteralNode = LiteralContentNode;

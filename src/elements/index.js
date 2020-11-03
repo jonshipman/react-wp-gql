@@ -14,7 +14,6 @@ export * from "./Permissions";
 export * from "./PostContent";
 export * from "./SearchForm";
 export * from "./Seo";
-export * from "./SingleRender";
 export * from "./Skeleton";
 export * from "./Suspense";
 export * from "./Title";

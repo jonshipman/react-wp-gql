@@ -7,4 +7,3 @@ export * from "./usePagination";
 export * from "./useQueries";
 export * from "./useRenderer";
 export * from "./useSearch";
-export * from "./useSingle";
