@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
@@ -71,28 +71,46 @@ export const SingleCategoryListItem = ({ uri, name, children }) => {
 };
 
 export const SinglePageRender = ({ node, className = "mv4", wrap }) => {
-  const { content } = node;
+  const { content, title } = node;
   const { components } = useComponents();
   const RenderWrapper = wrap ? wrap : components.PageWidth;
 
   return (
-    <RenderWrapper {...{ className }}>
-      <components.PostContent>{content}</components.PostContent>
-    </RenderWrapper>
+    <div>
+      <components.Title>{title}</components.Title>
+
+      <RenderWrapper {...{ className }}>
+        <components.PostContent>{content}</components.PostContent>
+      </RenderWrapper>
+    </div>
   );
 };
 
 export const SinglePostRender = ({ node, className = "mv4", wrap }) => {
-  const { content } = node;
+  const { content, categories } = node;
 
   const { components } = useComponents();
   const RenderWrapper = wrap ? wrap : components.PageWidth;
 
-  return (
-    <RenderWrapper {...{ className }}>
-      <SinglePostMeta {...{ node }} />
+  const CategoryName = useMemo(() => {
+    let _c = "Blog";
 
-      <components.PostContent>{content}</components.PostContent>
-    </RenderWrapper>
+    if (categories && categories.edges) {
+      _c = categories.edges[0]?.node?.name;
+    }
+
+    return _c;
+  }, [categories]);
+
+  return (
+    <div>
+      <components.Title heading="div">{CategoryName}</components.Title>
+
+      <RenderWrapper {...{ className }}>
+        <SinglePostMeta {...{ node }} />
+
+        <components.PostContent>{content}</components.PostContent>
+      </RenderWrapper>
+    </div>
   );
 };

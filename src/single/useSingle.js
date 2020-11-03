@@ -60,19 +60,22 @@ const SingleRender = ({
   wrap,
   skullColor,
 }) => {
-  const { content } = node;
+  const { content, title, name } = node;
 
   const { components } = useComponents();
   const RenderWrapper = wrap ? wrap : components.PageWidth;
 
   return (
-    <RenderWrapper {...{ className }}>
-      {loading ? (
-        <components.SkullPage color={skullColor} />
-      ) : (
-        <components.PostContent>{content}</components.PostContent>
-      )}
-    </RenderWrapper>
+    <div>
+      <components.Title>{title || name}</components.Title>
+      <RenderWrapper {...{ className }}>
+        {loading ? (
+          <components.SkullPage color={skullColor} />
+        ) : (
+          <components.PostContent>{content}</components.PostContent>
+        )}
+      </RenderWrapper>
+    </div>
   );
 };
 
