@@ -75,6 +75,7 @@ export const FragmentPage = gql`
     title
     content
     pageTemplate
+    uri
     seo {
       ...seoPostInfo
     }
