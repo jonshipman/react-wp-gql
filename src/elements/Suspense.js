@@ -11,7 +11,7 @@ export const Suspense = ({ fallback = <Loading />, ...props }) => {
   }, []);
 
   if (!isFront) {
-    return props?.children || null;
+    return null;
   }
 
   return <Source {...{ fallback }} {...props} />;
