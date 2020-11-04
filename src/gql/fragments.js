@@ -145,5 +145,3 @@ export const LiteralContentNode = `
     ...pageInfo
   }
 `;
-
-export const LiteralNode = LiteralContentNode;

@@ -52,6 +52,10 @@ export const PopulateFragments = (passed = {}) => {
     }
   });
 
+  if (!fragments.LiteralNode) {
+    fragments.LiteralNode = fragments.LiteralContentNode;
+  }
+
   return fragments;
 };
 
