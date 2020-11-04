@@ -19,7 +19,10 @@ export const MenuItem = (props) => {
   } = props;
 
   return (
-    <li className={`menu-item level-${level} ${className}`} {..._props}>
+    <li
+      className={`menu-item level-${level || "1"} ${className || ""}`}
+      {..._props}
+    >
       {children}
     </li>
   );
