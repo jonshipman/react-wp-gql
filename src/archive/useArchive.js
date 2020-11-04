@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
 import { useQuery } from "@apollo/client";
 
 import { NodeContext } from "../Context";
@@ -29,20 +29,9 @@ export const useArchive = (props) => {
     ...queryProps,
   });
 
-  const [edges, pageInfo, __typename] = useMemo(() => {
-    let _e = [];
-    let _p = {};
-    let _t = "";
-
-    if (data) {
-      const _q = data[field];
-      ({ edges: _e, pageInfo: _p } = _q || {});
-
-      _t = _e?.length > 0 ? _e[0]?.node?.__typename : null;
-    }
-
-    return [_e, _p, _t];
-  }, [data, field]);
+  const edges = data ? data[field]?.edges : [];
+  const pageInfo = data ? data[field]?.pageInfo : {};
+  const __typename = data ? data[field]?.edges[0]?.node?.__typename : null;
 
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
     pageInfo,
@@ -71,25 +60,15 @@ export const useArchive = (props) => {
 export const useArchiveCardRenderer = (__typename) => {
   const { components } = useComponents();
 
-  return useMemo(() => {
-    let _r = components.ArchiveCard;
-    if (__typename && components[`Archive${__typename}Card`]) {
-      _r = components[`Archive${__typename}Card`];
-    }
-
-    return _r;
-  }, [__typename, components]);
+  return __typename && components[`Archive${__typename}Card`]
+    ? components[`Archive${__typename}Card`]
+    : components.ArchiveCard;
 };
 
 export const useArchiveRenderer = (__typename) => {
   const { components } = useComponents();
 
-  return useMemo(() => {
-    let _c = components.PageWidth;
-    if (__typename && components[`Archive${__typename}Render`]) {
-      _c = components[`Archive${__typename}Render`];
-    }
-
-    return _c;
-  }, [__typename, components]);
+  return __typename && components[`Archive${__typename}Render`]
+    ? components[`Archive${__typename}Render`]
+    : components.PageWidth;
 };

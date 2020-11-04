@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
@@ -10,30 +10,21 @@ export const useSingle = (props = {}) => {
   const { databaseId, uri: passedUri, asPreview, ...queryProps } = props;
   const { pathname: uri } = useLocation();
 
-  const [query, key, variables] = useMemo(() => {
-    let _q = queries.QuerySingle;
-    let _k = "nodeByUri";
-    const _v = {};
+  const query = !!databaseId
+    ? asPreview
+      ? queries.QueryPreview
+      : queries.QuerySingleById
+    : queries.QuerySingle;
 
-    if (databaseId) {
-      _k = "contentNode";
-      _v.databaseId = databaseId;
+  const key = !!databaseId ? "contentNode" : "nodeByUri";
 
-      if (asPreview) {
-        _q = queries.QueryPreview;
-      } else {
-        _q = queries.QuerySingleById;
-      }
-    } else {
-      if (passedUri) {
-        _v.uri = passedUri !== "/" ? passedUri.replace(/\/+$/, "") : passedUri;
-      } else {
-        _v.uri = uri !== "/" ? uri.replace(/\/+$/, "") : uri;
-      }
-    }
-
-    return [_q, _k, _v];
-  }, [databaseId, passedUri, queries, asPreview]);
+  const variables = { databaseId };
+  if (!!passedUri) {
+    variables.uri =
+      passedUri !== "/" ? passedUri.replace(/\/+$/, "") : passedUri;
+  } else {
+    variables.uri = uri !== "/" ? uri.replace(/\/+$/, "") : uri;
+  }
 
   const { data, loading, error } = useQuery(query, {
     variables,
@@ -41,9 +32,7 @@ export const useSingle = (props = {}) => {
     ...queryProps,
   });
 
-  const node = useMemo(() => {
-    return data ? data[key] || {} : {};
-  }, [key, data]);
+  const node = data ? data[key] || {} : {};
 
   return {
     node,
@@ -82,18 +71,15 @@ const SingleRender = ({
 export const useSingleRenderer = (node) => {
   const { components } = useComponents();
 
-  return useMemo(() => {
-    const ret = [];
+  const ret = [];
+  ret.push(node?.uri ? node.uri : "");
+  ret.push(node?.seo ? node.seo : {});
 
-    ret.push(node?.uri ? node.uri : "");
-    ret.push(node?.seo ? node.seo : {});
+  ret.push(
+    node.__typename && components[`Single${node.__typename}Render`]
+      ? components[`Single${node.__typename}Render`]
+      : SingleRender,
+  );
 
-    let _r = SingleRender;
-    if (node.__typename && components[`Single${node.__typename}Render`]) {
-      _r = components[`Single${node.__typename}Render`];
-    }
-    ret.push(_r);
-
-    return ret;
-  }, [node, components]);
+  return ret;
 };

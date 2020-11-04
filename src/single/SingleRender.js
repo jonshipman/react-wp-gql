@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useComponents } from "../hooks/useComponents";
@@ -92,15 +92,8 @@ export const SinglePostRender = ({ node, className = "mv4", wrap }) => {
   const { components } = useComponents();
   const RenderWrapper = wrap ? wrap : components.PageWidth;
 
-  const CategoryName = useMemo(() => {
-    let _c = "Blog";
-
-    if (categories && categories.edges) {
-      _c = categories.edges[0]?.node?.name;
-    }
-
-    return _c;
-  }, [categories]);
+  const CategoryName =
+    categories && categories.edges ? categories.edges[0]?.node?.name : "Blog";
 
   return (
     <div>

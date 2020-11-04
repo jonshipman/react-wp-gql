@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 export const getPageInfo = (
   pageInfo = {
@@ -25,21 +25,17 @@ export const usePagination = (perPage = 10) => {
   const [cursor, setCursor] = useState();
   const [direction, setDirection] = useState();
 
-  const variables = useMemo(() => {
-    const _v = {};
+  const variables = {};
 
-    if (!direction) {
-      _v.first = perPage;
-    } else if (direction < 0) {
-      _v.last = perPage;
-      _v.before = cursor;
-    } else if (direction > 0) {
-      _v.first = perPage;
-      _v.after = cursor;
-    }
-
-    return _v;
-  }, [direction, cursor, perPage]);
+  if (!direction) {
+    variables.first = perPage;
+  } else if (direction < 0) {
+    variables.last = perPage;
+    variables.before = cursor;
+  } else if (direction > 0) {
+    variables.first = perPage;
+    variables.after = cursor;
+  }
 
   const goNext = useCallback(
     (endCursor) => {

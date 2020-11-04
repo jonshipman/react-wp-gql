@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 
 import { NodeContext } from "../Context";
 import {
@@ -37,6 +37,7 @@ export const Archive = ({
   title = "Blog",
   wrap: WrapProp,
   query,
+  field,
   variables,
   skip,
   ssr,
@@ -56,31 +57,18 @@ export const Archive = ({
     hasNextPage,
     next,
     prev,
-  } = useArchive({ query, variables, skip, ssr, perPage });
+  } = useArchive({ query, variables, skip, ssr, perPage, field });
 
   const DefaultWrapper = useArchiveRenderer(__typename);
   const Wrapper = WrapProp || DefaultWrapper;
 
-  let seoTitle = title;
-  if (siteName) {
-    seoTitle = `${title} - ${siteName}`;
+  let seo = {};
+  if (seoProp) {
+    seo = seoProp;
+  } else {
+    seo.title = siteName ? `${title} - ${siteName}` : title;
+    seo.canonical = uri;
   }
-
-  const seo = useMemo(() => {
-    let _s = {};
-
-    if (seoProp) {
-      _s = seoProp;
-    } else {
-      _s.title = title;
-      if (siteName) {
-        _s.title = `${title} - ${siteName}`;
-      }
-      _s.canonical = uri;
-    }
-
-    return _s;
-  }, [siteName, title, uri, seoProp]);
 
   const PaginationProps = {
     hasPreviousPage,
