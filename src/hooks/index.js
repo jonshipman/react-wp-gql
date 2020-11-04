@@ -3,4 +3,3 @@ export * from "./useHeartbeat";
 export * from "./useMenu";
 export * from "./usePagination";
 export * from "./useQueries";
-export * from "./useRenderer";
