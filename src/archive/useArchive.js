@@ -1,15 +1,16 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { useQuery } from "@apollo/client";
 
 import { NodeContext } from "../Context";
 import {
+  useComponents,
   usePagination,
   getPageInfo,
   useNavigation,
   useQueries,
 } from "../hooks";
 
-export const useArchive = (props = {}) => {
+export const useArchive = (props) => {
   const { perPage } = useContext(NodeContext);
   const { queries } = useQueries();
 
@@ -19,18 +20,30 @@ export const useArchive = (props = {}) => {
     perPage: perPageProp,
     field = "posts",
     ...queryProps
-  } = props;
+  } = props || {};
   const { variables, goNext, goPrev } = usePagination(perPageProp || perPage);
 
-  const { data = {}, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(QUERY, {
     variables: { ...variables, ...propVariables },
     errorPolicy: "all",
     ...queryProps,
   });
 
-  const queryObject = data[field] || {};
+  const [edges, pageInfo, __typename] = useMemo(() => {
+    let _e = [];
+    let _p = {};
+    let _t = "";
 
-  const { edges = [], pageInfo = {} } = queryObject;
+    if (data) {
+      const _q = data[field];
+      ({ edges: _e, pageInfo: _p } = _q || {});
+
+      _t = _e?.length > 0 ? _e[0]?.node?.__typename : null;
+    }
+
+    return [_e, _p, _t];
+  }, [data, field]);
+
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
     pageInfo,
   );
@@ -42,11 +55,9 @@ export const useArchive = (props = {}) => {
     goPrev,
   });
 
-  const __typename = edges?.length > 0 ? edges[0]?.node?.__typename : null;
-
   return {
     __typename,
-    edges: edges === null ? [] : edges,
+    edges,
     loading,
     error,
     next,
@@ -55,4 +66,30 @@ export const useArchive = (props = {}) => {
     hasPreviousPage,
     data,
   };
+};
+
+export const useArchiveCardRenderer = (__typename) => {
+  const { components } = useComponents();
+
+  return useMemo(() => {
+    let _r = components.ArchiveCard;
+    if (__typename && components[`Archive${__typename}Card`]) {
+      _r = components[`Archive${__typename}Card`];
+    }
+
+    return _r;
+  }, [__typename, components]);
+};
+
+export const useArchiveRenderer = (__typename) => {
+  const { components } = useComponents();
+
+  return useMemo(() => {
+    let _c = components.PageWidth;
+    if (__typename && components[`Archive${__typename}Render`]) {
+      _c = components[`Archive${__typename}Render`];
+    }
+
+    return _c;
+  }, [__typename, components]);
 };

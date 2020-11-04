@@ -3,15 +3,12 @@ import { Link } from "react-router-dom";
 
 import { useComponents } from "../hooks";
 
-export const ArchiveCard = ({
-  databaseId = 0,
-  uri,
-  title,
-  dateFormatted,
-  excerpt,
-  content,
-}) => {
+export const ArchiveCard = (props) => {
+  const { databaseId = 0, uri, title, dateFormatted, excerpt, content } =
+    props || {};
+
   const { components } = useComponents();
+
   const body = excerpt || content;
 
   return (

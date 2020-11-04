@@ -1,38 +1,43 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 
-import { NodeContext } from "../Context";
-import { useComponents } from "../hooks";
-import { useSearch } from "./useSearch";
+import { useComponents, useQueries } from "../hooks";
+import { Archive } from "./Archive";
 
-export const Search = ({ uri = "/search", title = "Search" }) => {
+const SearchRender = ({
+  className,
+  children,
+  edges,
+  loading,
+  filter,
+  setFilter,
+}) => {
   const { components } = useComponents();
-  const { siteName = "" } = useContext(NodeContext);
-
-  const { edges, loading, error, filter, setFilter, ...props } = useSearch();
-
-  let Render = () => (
-    <components.ArchiveRender {...{ edges, loading, error }} {...props} />
-  );
-
-  if (!loading && edges.length < 1) {
-    if (filter.length < 3) {
-      Render = () => <components.NoSearchResults />;
-    }
-  }
-
-  let seoTitle = title;
-  if (siteName) {
-    seoTitle = `${title} - ${siteName}`;
-  }
 
   return (
-    <React.Fragment>
-      <components.Seo title={seoTitle} canonical={uri} />
-
-      <components.Title>{title}</components.Title>
-      <components.SearchForm {...{ setFilter, filter }} />
-
-      <Render />
-    </React.Fragment>
+    <components.PageWidth {...{ className }}>
+      <components.SearchForm {...{ filter, setFilter }} />
+      {!loading && edges.length === 0 && filter.length < 3 ? (
+        <components.NoSearchResults />
+      ) : (
+        children
+      )}
+    </components.PageWidth>
   );
+};
+
+export const Search = ({ uri = "/search", title = "Search" }) => {
+  const [filter, setFilter] = useState("");
+  const { queries } = useQueries();
+
+  const props = {
+    uri,
+    title,
+    filter,
+    setFilter,
+    query: queries.QuerySearch,
+    variables: { filter },
+    skip: filter.length < 3,
+  };
+
+  return <Archive wrap={SearchRender} {...props} />;
 };

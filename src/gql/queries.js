@@ -81,10 +81,19 @@ export const QueryHeartbeat = () => gql`
   }
 `;
 
-export const QueryCategories = (fragments) => gql`
-  query CategoryHook(
-    $filter: String!
-    $id: ID!
+export const QueryCategory = (fragments) => gql`
+  query Category($pathname: ID!) {
+    category(id: $pathname, idType: URI) {
+      ...categoryInfo
+    }
+  }
+  ${fragments.FragmentTaxSeo}
+  ${fragments.FragmentCategory}
+`;
+
+export const QueryCategoryPosts = (fragments) => gql`
+  query CategoryPosts(
+    $pathname: String!
     $first: Int
     $last: Int
     $after: String
@@ -95,7 +104,7 @@ export const QueryCategories = (fragments) => gql`
       last: $last
       after: $after
       before: $before
-      where: { categoryName: $filter, status: PUBLISH, hasPassword: false }
+      where: { categoryName: $pathname, status: PUBLISH, hasPassword: false }
     ) {
       pageInfo {
         ...edgePageInfo
@@ -105,9 +114,6 @@ export const QueryCategories = (fragments) => gql`
           ...postInfo
         }
       }
-    }
-    category(id: $id, idType: SLUG) {
-      ...categoryInfo
     }
   }
   ${fragments.FragmentPostSeo}

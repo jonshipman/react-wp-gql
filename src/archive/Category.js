@@ -1,29 +1,39 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 
-import { useCategory } from "./useCategory";
-import { useComponents } from "../hooks";
+import { useQueries } from "../hooks";
+import { Archive } from "./Archive";
 
 export const Category = () => {
-  const { components } = useComponents();
+  const { queries } = useQueries();
+  const { pathname } = useLocation();
 
-  const {
-    category: { name, uri, seo = {} },
-    edges,
-    loading,
-    error,
-    ...props
-  } = useCategory();
+  const { data } = useQuery(queries.QueryCategory, {
+    errorPolicy: "all",
+    variables: { pathname },
+  });
 
-  return (
-    <React.Fragment>
-      <components.Seo title={seo.title} canonical={uri} />
+  const [title, seo] = useMemo(() => {
+    let _r = [];
 
-      <components.Title>{name}</components.Title>
-      {error || (!loading && edges.length < 1) ? (
-        <components.ErrorRouting {...{ loading, error }} />
-      ) : (
-        <components.ArchiveRender {...{ edges, loading }} {...props} />
-      )}
-    </React.Fragment>
-  );
+    if (data) {
+      _r.push(data.category?.name);
+      _r.push(data.category?.seo);
+    } else {
+      _r.push("Category");
+    }
+
+    return _r;
+  }, [data]);
+
+  const props = {
+    query: queries.QueryCategoryPosts,
+    variables: { pathname },
+    uri: pathname,
+    title,
+    seo,
+  };
+
+  return <Archive {...props} />;
 };
