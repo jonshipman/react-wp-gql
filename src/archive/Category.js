@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useCategory } from "./hooks/useCategory";
-import { useComponents } from "./hooks/useComponents";
+import { useCategory } from "./useCategory";
+import { useComponents } from "../hooks";
 
 export const Category = () => {
   const { components } = useComponents();

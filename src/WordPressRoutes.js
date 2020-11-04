@@ -7,15 +7,15 @@ const Login = lazy(() =>
 );
 
 const Search = lazy(() =>
-  import("./Search").then((module) => ({ default: module.Search })),
+  import("./archive").then((module) => ({ default: module.Search })),
 );
 
 const Archive = lazy(() =>
-  import("./Archive").then((module) => ({ default: module.Archive })),
+  import("./archive").then((module) => ({ default: module.Archive })),
 );
 
 const Category = lazy(() =>
-  import("./Category").then((module) => ({ default: module.Category })),
+  import("./archive").then((module) => ({ default: module.Category })),
 );
 
 const Preview = lazy(() =>

@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 import { useArchive } from "./useArchive";
-import { useQueries } from "./useQueries";
+import { useQueries } from "../hooks";
 
 export const useCategory = () => {
   const { queries } = useQueries();

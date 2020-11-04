@@ -3,8 +3,7 @@ import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
 import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 
 export * from "./ApolloSetup";
-export * from "./Archive";
-export * from "./Category";
+export * from "./archive";
 export * from "./Context";
 export * from "./functions";
 export * from "./gql";
@@ -12,7 +11,6 @@ export * from "./handlers";
 export * from "./hooks";
 export * from "./Login";
 export * from "./Provider";
-export * from "./Search";
 export * from "./single";
 export * from "./WordPressRoutes";
 export * from "./hooks/auth";

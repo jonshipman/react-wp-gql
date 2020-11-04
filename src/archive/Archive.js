@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import { NodeContext } from "./Context";
-import { useArchive } from "./hooks/useArchive";
-import { useComponents } from "./hooks/useComponents";
+import { NodeContext } from "../Context";
+import { useArchive } from "./useArchive";
+import { useComponents } from "../hooks";
 
 export const Archive = ({ uri = "/blog", title = "Blog" }) => {
   const { components } = useComponents();

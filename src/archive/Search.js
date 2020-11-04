@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import { NodeContext } from "./Context";
-import { useComponents } from "./hooks/useComponents";
-import { useSearch } from "./hooks/useSearch";
+import { NodeContext } from "../Context";
+import { useComponents } from "../hooks";
+import { useSearch } from "./useSearch";
 
 export const Search = ({ uri = "/search", title = "Search" }) => {
   const { components } = useComponents();

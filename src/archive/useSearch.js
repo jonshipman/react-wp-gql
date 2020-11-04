@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 
 import { NodeContext } from "../Context";
-import { useQueries } from "./useQueries";
+import { useQueries } from "../hooks";
 import { useArchive } from "./useArchive";
 
 export const useSearch = () => {

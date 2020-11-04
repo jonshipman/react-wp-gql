@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useComponents } from "../hooks/useComponents";
-import { useRenderer } from "../hooks/useRenderer";
+import { useRenderer } from "../hooks";
 
 export const ArchiveRender = ({
   __typename,

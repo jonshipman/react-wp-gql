@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useComponents } from "../hooks/useComponents";
+import { useComponents } from "../hooks";
 
 export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   const { components } = useComponents();

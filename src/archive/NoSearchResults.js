@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useComponents } from "../hooks/useComponents";
+import { useComponents } from "../hooks";
 
 export const NoSearchResults = () => {
   const { components } = useComponents();

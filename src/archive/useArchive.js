@@ -2,8 +2,12 @@ import { useContext } from "react";
 import { useQuery } from "@apollo/client";
 
 import { NodeContext } from "../Context";
-import { usePagination, getPageInfo, useNavigation } from "./usePagination";
-import { useQueries } from "./useQueries";
+import {
+  usePagination,
+  getPageInfo,
+  useNavigation,
+  useQueries,
+} from "../hooks";
 
 export const useArchive = (props = {}) => {
   const { perPage } = useContext(NodeContext);

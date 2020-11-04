@@ -7,14 +7,16 @@ import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
 import * as Elements from "./elements";
 import * as Singles from "./single";
+import * as Archives from "./archive";
 
 export const DefaultComponents = {
+  ...Archives,
+  ...Elements,
   ...Login,
+  ...Singles,
   ClockIcon,
   FolderIcon,
   SearchIcon,
-  ...Singles,
-  ...Elements,
 };
 
 export const Populate = ({ components, fragments, queries, mutations }) => {

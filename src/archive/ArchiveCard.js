@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { useComponents } from "../hooks/useComponents";
+import { useComponents } from "../hooks";
 
 export const ArchiveCard = ({
   databaseId = 0,
