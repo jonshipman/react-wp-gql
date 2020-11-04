@@ -1,30 +1,9 @@
-import React, { lazy } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { Suspense } from "./elements";
 
-const Login = lazy(() =>
-  import("./Login").then((module) => ({ default: module.Login })),
-);
-
-const Search = lazy(() =>
-  import("./archive").then((module) => ({ default: module.Search })),
-);
-
-const Archive = lazy(() =>
-  import("./archive").then((module) => ({ default: module.Archive })),
-);
-
-const Category = lazy(() =>
-  import("./archive").then((module) => ({ default: module.Category })),
-);
-
-const Preview = lazy(() =>
-  import("./single").then((module) => ({ default: module.Preview })),
-);
-
-const Single = lazy(() =>
-  import("./single").then((module) => ({ default: module.Single })),
-);
+import { Login } from "./Login";
+import { Search, Archive, Category } from "./archive";
+import { Single, Preview } from "./single";
 
 export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
   return (
@@ -39,37 +18,25 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
           "/rp/:key/:login",
         ]}
       >
-        <Suspense>
-          <Login />
-        </Suspense>
+        <Login />
       </Route>
 
       <Route exact path="/search">
-        <Suspense>
-          <Search />
-        </Suspense>
+        <Search />
       </Route>
       <Route exact path={`/${blog}`}>
-        <Suspense>
-          <Archive />
-        </Suspense>
+        <Archive />
       </Route>
       <Route path={`/${category}/:slug`}>
-        <Suspense>
-          <Category />
-        </Suspense>
+        <Category />
       </Route>
 
       <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
-        <Suspense>
-          <Preview />
-        </Suspense>
+        <Preview />
       </Route>
 
       <Route path="*">
-        <Suspense>
-          <Single />
-        </Suspense>
+        <Single />
       </Route>
     </Switch>
   );
