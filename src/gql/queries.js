@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const QuerySingle = (fragments) => gql`
   query SingleHook($uri: String!) {
-    nodeByUri(uri: $uri) {
+    node: nodeByUri(uri: $uri) {
       ${fragments.LiteralNode}
     }
   }
@@ -15,7 +15,7 @@ export const QuerySingle = (fragments) => gql`
 
 export const QuerySingleById = (fragments) => gql`
   query SingleByIdHook($databaseId: ID!) {
-    contentNode(id: $databaseId, idType: DATABASE_ID) {
+    node: contentNode(id: $databaseId, idType: DATABASE_ID) {
       ${fragments.LiteralContentNode}
     }
   }
@@ -82,36 +82,28 @@ export const QueryHeartbeat = () => gql`
 `;
 
 export const QueryCategory = (fragments) => gql`
-  query Category($pathname: ID!) {
-    category(id: $pathname, idType: URI) {
-      ...categoryInfo
-    }
-  }
-  ${fragments.FragmentTaxSeo}
-  ${fragments.FragmentCategory}
-`;
-
-export const QueryCategoryPosts = (fragments) => gql`
   query CategoryPosts(
-    $pathname: String!
+    $pathname: ID!
     $first: Int
     $last: Int
     $after: String
     $before: String
   ) {
-    posts(
-      first: $first
-      last: $last
-      after: $after
-      before: $before
-      where: { categoryName: $pathname, status: PUBLISH, hasPassword: false }
-    ) {
-      pageInfo {
-        ...edgePageInfo
-      }
-      edges {
-        node {
-          ...postInfo
+    archive: category(id: $pathname, idType: URI) {
+      posts(
+        first: $first
+        last: $last
+        after: $after
+        before: $before
+        where: { status: PUBLISH, hasPassword: false }
+      ) {
+        pageInfo {
+          ...edgePageInfo
+        }
+        edges {
+          node {
+            ...postInfo
+          }
         }
       }
     }

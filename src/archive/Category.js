@@ -18,8 +18,8 @@ export const Category = () => {
   const seo = data ? data.category?.seo : null;
 
   const props = {
-    query: queries.QueryCategoryPosts,
-    variables: { pathname },
+    query: queries.QueryCategory,
+    variables: { pathname, id: pathname },
     uri: pathname,
     title,
     seo,

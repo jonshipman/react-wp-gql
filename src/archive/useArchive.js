@@ -18,7 +18,6 @@ export const useArchive = (props) => {
     query: QUERY = queries.QueryArchive,
     variables: propVariables = {},
     perPage: perPageProp,
-    field = "posts",
     ...queryProps
   } = props || {};
   const { variables, goNext, goPrev } = usePagination(perPageProp || perPage);
@@ -29,9 +28,17 @@ export const useArchive = (props) => {
     ...queryProps,
   });
 
-  const edges = data ? data[field]?.edges || [] : [];
-  const pageInfo = data ? data[field]?.pageInfo || {} : {};
-  const __typename = data ? data[field]?.edges[0]?.node?.__typename : null;
+  let edges, pageInfo, __typename;
+
+  if (data && data.archive) {
+    edges = data.archive.posts?.edges || [];
+    pageInfo = data.archive.posts?.pageInfo || {};
+    __typename = data.archive.posts?.edges[0]?.node?.__typename || null;
+  } else {
+    edges = data ? data.posts?.edges || [] : [];
+    pageInfo = data ? data.posts?.pageInfo || {} : {};
+    __typename = data ? data.posts?.edges[0]?.node?.__typename : null;
+  }
 
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
     pageInfo,

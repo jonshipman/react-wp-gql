@@ -3,12 +3,11 @@ import React from "react";
 import { useComponents } from "../hooks/useComponents";
 import { useSingle, useSingleRenderer } from "./useSingle";
 
-export const Single = ({ wrap, query, field, variables, skip, ssr }) => {
+export const Single = ({ wrap, query, variables, skip, ssr }) => {
   const { components } = useComponents();
 
   const { node, loading, error } = useSingle({
     query,
-    field,
     variables,
     skip,
     ssr,

@@ -12,7 +12,6 @@ export const useSingle = (props) => {
     uri: passedUri,
     asPreview,
     query: queryProp,
-    field,
     variables: varProp = {},
     skip,
     ssr,
@@ -26,8 +25,6 @@ export const useSingle = (props) => {
     : queryProp
     ? queryProp
     : queries.QuerySingle;
-
-  const key = !!databaseId ? "contentNode" : field ? field : "nodeByUri";
 
   const variables = { databaseId, ...varProp };
 
@@ -45,7 +42,7 @@ export const useSingle = (props) => {
     ssr,
   });
 
-  const node = data ? data[key] || {} : {};
+  const node = data ? data.node || {} : {};
 
   return {
     node,

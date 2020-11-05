@@ -107,7 +107,6 @@ export const Archive = ({
   entries: entriesComponent,
   columns,
   query,
-  field,
   variables,
   skip,
   ssr,
@@ -127,7 +126,7 @@ export const Archive = ({
     hasNextPage,
     next,
     prev,
-  } = useArchive({ query, variables, skip, ssr, perPage, field });
+  } = useArchive({ query, variables, skip, ssr, perPage });
 
   const DefaultWrapper = useArchiveRenderer(__typename);
   const Wrapper = WrapProp || DefaultWrapper;
