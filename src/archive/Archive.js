@@ -119,6 +119,8 @@ export const Archive = ({
 
   const {
     __typename,
+    title: titleData,
+    seo: seoData,
     edges,
     loading,
     error,
@@ -132,7 +134,9 @@ export const Archive = ({
   const Wrapper = WrapProp || DefaultWrapper;
 
   let seo = {};
-  if (seoProp) {
+  if (seoData) {
+    seo = seoData;
+  } else if (seoProp) {
     seo = seoProp;
   } else {
     seo.title = siteName ? `${title} - ${siteName}` : title;
@@ -152,7 +156,7 @@ export const Archive = ({
         <meta name="robots" content="noindex" />
       </components.Seo>
 
-      <components.Title>{title}</components.Title>
+      <components.Title>{titleData || title}</components.Title>
 
       <Wrapper
         className="mv4 archive"

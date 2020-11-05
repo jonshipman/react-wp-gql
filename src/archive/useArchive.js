@@ -28,12 +28,14 @@ export const useArchive = (props) => {
     ...queryProps,
   });
 
-  let edges, pageInfo, __typename;
+  let edges, pageInfo, __typename, title, seo;
 
   if (data && data.archive) {
     edges = data.archive.posts?.edges || [];
     pageInfo = data.archive.posts?.pageInfo || {};
     __typename = data.archive.posts?.edges[0]?.node?.__typename || null;
+    title = data.archive.name;
+    seo = data.archive.seo;
   } else {
     edges = data ? data.posts?.edges || [] : [];
     pageInfo = data ? data.posts?.pageInfo || {} : {};
@@ -53,6 +55,8 @@ export const useArchive = (props) => {
 
   return {
     __typename,
+    title,
+    seo,
     edges,
     loading,
     error,

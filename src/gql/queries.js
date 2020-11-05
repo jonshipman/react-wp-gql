@@ -90,6 +90,7 @@ export const QueryCategory = (fragments) => gql`
     $before: String
   ) {
     archive: category(id: $pathname, idType: URI) {
+      ...categoryInfo
       posts(
         first: $first
         last: $last
