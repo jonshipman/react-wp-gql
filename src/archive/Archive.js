@@ -43,7 +43,13 @@ const CardRender = (props) => {
   return <Render {...props} />;
 };
 
-const ArchiveRender = ({ entriesComponent, columns = 1, loading, edges }) => {
+const ArchiveRender = ({
+  card: cardProp,
+  entriesComponent,
+  columns = 1,
+  loading,
+  edges,
+}) => {
   const EntriesWrap = entriesComponent
     ? entriesComponent
     : columns > 1
@@ -70,20 +76,22 @@ const ArchiveRender = ({ entriesComponent, columns = 1, loading, edges }) => {
 
   const rows = columns * 5;
 
+  const Card = cardProp ? cardProp : CardRender;
+
   return (
     <EntriesWrap>
       {loading ? (
         <React.Fragment>
           {Array.from(new Array(rows)).map((_, i) => (
             <CardWrap key={`card-loading-${i}`}>
-              <CardRender />
+              <Card />
             </CardWrap>
           ))}
         </React.Fragment>
       ) : (
         edges.map(({ node }) => (
           <CardWrap key={node.id}>
-            <CardRender {...node} />
+            <Card {...node} />
           </CardWrap>
         ))
       )}
@@ -95,6 +103,7 @@ export const Archive = ({
   uri = "/blog",
   title = "Blog",
   wrap: WrapProp,
+  card,
   entries: entriesComponent,
   columns,
   query,
@@ -164,7 +173,9 @@ export const Archive = ({
           </div>
         ) : (
           <React.Fragment>
-            <ArchiveRender {...{ columns, entriesComponent, loading, edges }} />
+            <ArchiveRender
+              {...{ card, columns, entriesComponent, loading, edges }}
+            />
             <components.Pagination {...PaginationProps} />
           </React.Fragment>
         )}
