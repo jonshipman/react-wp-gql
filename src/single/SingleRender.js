@@ -80,7 +80,7 @@ export const SinglePageRender = ({ node, className = "mv4", wrap }) => {
       <components.Title>{title}</components.Title>
 
       <RenderWrapper {...{ className }}>
-        <components.PostContent>{content}</components.PostContent>
+        {content && <components.PostContent>{content}</components.PostContent>}
       </RenderWrapper>
     </div>
   );
