@@ -8,6 +8,34 @@ import {
 } from "./useArchive";
 import { useComponents } from "../hooks";
 
+const Entries = ({ children }) => {
+  return <div className="entries">{children}</div>;
+};
+
+const EntriesColumns = ({ children }) => {
+  return (
+    <div className="entries flex-ns items-center-ns flex-wrap-ns nl2 nr2 nt2 nb2">
+      {children}
+    </div>
+  );
+};
+
+const TwoColumn = ({ children }) => {
+  return <div className="w-100 pa2 w-50-ns">{children}</div>;
+};
+
+const ThreeColumn = ({ children }) => {
+  return <div className="w-100 pa2 w-50-m w-third-l">{children}</div>;
+};
+
+const FourColumn = ({ children }) => {
+  return <div className="w-100 pa2 w-50-m w-25-l">{children}</div>;
+};
+
+const FiveColumn = ({ children }) => {
+  return <div className="w-100 pa2 w-50-m w-20-l">{children}</div>;
+};
+
 const CardRender = (props) => {
   const __typename = props?.__typename;
 
@@ -15,20 +43,51 @@ const CardRender = (props) => {
   return <Render {...props} />;
 };
 
-const ArchiveRender = ({ loading, edges }) => {
+const ArchiveRender = ({ entriesComponent, columns = 1, loading, edges }) => {
+  const EntriesWrap = entriesComponent
+    ? entriesComponent
+    : columns > 1
+    ? EntriesColumns
+    : Entries;
+
+  let CardWrap = "div";
+
+  switch (columns) {
+    case 2:
+      CardWrap = TwoColumn;
+      break;
+    case 3:
+      CardWrap = ThreeColumn;
+      break;
+    case 4:
+      CardWrap = FourColumn;
+      break;
+    case 5:
+      CardWrap = FiveColumn;
+    default:
+      break;
+  }
+
+  const rows = columns * 5;
+
   return (
-    <div className="entries">
+    <EntriesWrap>
       {loading ? (
         <React.Fragment>
-          <CardRender />
-          <CardRender />
-          <CardRender />
-          <CardRender />
+          {Array.from(new Array(rows)).map((_, i) => (
+            <CardWrap key={`card-loading-${i}`}>
+              <CardRender />
+            </CardWrap>
+          ))}
         </React.Fragment>
       ) : (
-        edges.map(({ node }) => <CardRender key={node.id} {...node} />)
+        edges.map(({ node }) => (
+          <CardWrap key={node.id}>
+            <CardRender {...node} />
+          </CardWrap>
+        ))
       )}
-    </div>
+    </EntriesWrap>
   );
 };
 
@@ -36,6 +95,8 @@ export const Archive = ({
   uri = "/blog",
   title = "Blog",
   wrap: WrapProp,
+  entries: entriesComponent,
+  columns,
   query,
   field,
   variables,
@@ -103,7 +164,7 @@ export const Archive = ({
           </div>
         ) : (
           <React.Fragment>
-            <ArchiveRender {...{ loading, edges }} />
+            <ArchiveRender {...{ columns, entriesComponent, loading, edges }} />
             <components.Pagination {...PaginationProps} />
           </React.Fragment>
         )}
