@@ -29,8 +29,8 @@ export const useArchive = (props) => {
     ...queryProps,
   });
 
-  const edges = data ? data[field]?.edges : [];
-  const pageInfo = data ? data[field]?.pageInfo : {};
+  const edges = data ? data[field]?.edges || [] : [];
+  const pageInfo = data ? data[field]?.pageInfo || {} : {};
   const __typename = data ? data[field]?.edges[0]?.node?.__typename : null;
 
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
