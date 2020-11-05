@@ -145,3 +145,10 @@ export const LiteralContentNode = `
     ...pageInfo
   }
 `;
+
+// LiteralNode is joined with LiteralContentNode in Defaults.js
+export const LiteralNode = `
+  ... on Category {
+    ...categoryInfo
+  }
+`;
