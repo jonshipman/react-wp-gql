@@ -3,9 +3,16 @@ import React from "react";
 import { useComponents } from "../hooks/useComponents";
 import { useSingle, useSingleRenderer } from "./useSingle";
 
-export const Single = () => {
-  const { node, loading, error } = useSingle();
+export const Single = ({ wrap, query, field, variables, skip, ssr }) => {
   const { components } = useComponents();
+
+  const { node, loading, error } = useSingle({
+    query,
+    field,
+    variables,
+    skip,
+    ssr,
+  });
 
   const [uri, seo, RenderComponent] = useSingleRenderer(node);
 
@@ -17,7 +24,7 @@ export const Single = () => {
     <article className={`single post-${node?.databaseId || "0"}`}>
       <components.Seo {...{ uri }} {...seo} />
 
-      <RenderComponent {...{ node, loading, error }} />
+      <RenderComponent {...{ wrap, node, loading, error }} />
     </article>
   );
 };

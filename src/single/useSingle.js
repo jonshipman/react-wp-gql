@@ -4,21 +4,33 @@ import { useQuery } from "@apollo/client";
 
 import { useComponents, useQueries } from "../hooks";
 
-export const useSingle = (props = {}) => {
+export const useSingle = (props) => {
   const { queries } = useQueries();
 
-  const { databaseId, uri: passedUri, asPreview, ...queryProps } = props;
+  const {
+    databaseId,
+    uri: passedUri,
+    asPreview,
+    query: queryProp,
+    field,
+    variables: varProp = {},
+    skip,
+    ssr,
+  } = props || {};
   const { pathname: uri } = useLocation();
 
   const query = !!databaseId
     ? asPreview
       ? queries.QueryPreview
       : queries.QuerySingleById
+    : queryProp
+    ? queryProp
     : queries.QuerySingle;
 
-  const key = !!databaseId ? "contentNode" : "nodeByUri";
+  const key = !!databaseId ? "contentNode" : field ? field : "nodeByUri";
 
-  const variables = { databaseId };
+  const variables = { databaseId, ...varProp };
+
   if (!!passedUri) {
     variables.uri =
       passedUri !== "/" ? passedUri.replace(/\/+$/, "") : passedUri;
@@ -29,7 +41,8 @@ export const useSingle = (props = {}) => {
   const { data, loading, error } = useQuery(query, {
     variables,
     errorPolicy: "all",
-    ...queryProps,
+    skip,
+    ssr,
   });
 
   const node = data ? data[key] || {} : {};
