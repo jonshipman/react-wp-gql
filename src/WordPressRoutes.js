@@ -30,11 +30,11 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
       </Route>
 
       <Route exact path={`/${blog}`}>
-        <Node query={queries.QueryArchive} title="Blog" />
+        <Node query={queries.QueryArchive} title="Blog" isArchive />
       </Route>
 
       <Route path={`/${category}/:slug`}>
-        <Node query={queries.QueryCategory} title="Category" />
+        <Node query={queries.QueryCategory} title="Category" isArchive />
       </Route>
 
       <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
