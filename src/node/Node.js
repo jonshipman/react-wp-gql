@@ -47,14 +47,16 @@ export const Node = ({
   const RenderComponent = useNodeRenderer(__typename, isArchive);
 
   const seo = node.seo || {
-    title: siteName
-      ? node.title
-        ? `${node.title} - ${siteName}`
-        : `${titleProp} - ${siteName}`
-      : node.title
-      ? node.title
-      : titleProp,
+    title: !!titleProp ? titleProp : !!node.title ? node.title : node.name,
   };
+
+  if (siteName && !node.seo) {
+    seo.title = `${seo.title} - ${siteName}`;
+  }
+
+  if (!titleProp && loading && !node.seo) {
+    seo.title = siteName ? `... - ${siteName}` : "...";
+  }
 
   const uri = node.uri || pathname;
 
