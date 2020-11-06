@@ -6,16 +6,18 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   const { components } = useComponents();
 
   return (
-    <div className="search flex-l items-center-l mv4">
+    <div className="search flex mv4">
       <components.FormGroup
-        className="flex-auto-l mb0-l"
+        className="flex-auto"
         type="search"
         value={filter}
         placeholder="Search by name and content"
         onChange={(v) => setFilter(v)}
         onEnter={(v) => setFilter(v)}
       />
-      <components.SearchIcon width={24} className="ml3 mb2 db pointer" />
+      <div className="ml3">
+        <components.SearchIcon width={24} className="db pointer" />
+      </div>
     </div>
   );
 };

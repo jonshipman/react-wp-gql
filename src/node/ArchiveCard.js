@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import { useComponents } from "../hooks";
 
 export const ArchiveCard = (props) => {
-  const { databaseId = 0, uri, title, dateFormatted, excerpt, content } =
-    props || {};
+  const {
+    databaseId = 0,
+    uri,
+    title,
+    dateFormatted,
+    excerpt,
+    content,
+    loading,
+  } = props || {};
 
   const { components } = useComponents();
 
@@ -19,12 +26,18 @@ export const ArchiveCard = (props) => {
         <Link to={uri || "/"} className="primary no-underline">
           {title ? title : <components.SkullLine className="mw6 w-100" />}
         </Link>
-        <div className="posted fr-ns mt2 mt0-ns f6">
-          <components.ClockIcon className="v-mid mr2" width={12} height={12} />
-          <span>
-            {dateFormatted ? dateFormatted : <components.SkullWord />}
-          </span>
-        </div>
+        {loading || dateFormatted ? (
+          <div className="posted fr-ns mt2 mt0-ns f6">
+            <components.ClockIcon
+              className="v-mid mr2"
+              width={12}
+              height={12}
+            />
+            <span>
+              {dateFormatted ? dateFormatted : <components.SkullWord />}
+            </span>
+          </div>
+        ) : null}
       </h2>
 
       {body ? (

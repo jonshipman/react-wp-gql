@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 
-import { useComponents, useQueries } from "../hooks";
-import { Archive } from "./Archive";
+import { useComponents, useQueries } from "./hooks";
+import { Node } from "./node/Node";
 
 const SearchRender = ({
   className,
   children,
-  edges,
+  edges: edgesProp,
   loading,
   filter,
   setFilter,
 }) => {
   const { components } = useComponents();
+  const edges = edgesProp ? edgesProp || [] : [];
 
   return (
     <components.PageWidth {...{ className }}>
@@ -25,19 +26,19 @@ const SearchRender = ({
   );
 };
 
-export const Search = ({ uri = "/search", title = "Search" }) => {
+export const Search = ({ title = "Search" }) => {
   const [filter, setFilter] = useState("");
   const { queries } = useQueries();
 
   const props = {
-    uri,
+    isArchive: true,
     title,
-    filter,
-    setFilter,
     query: queries.QuerySearch,
     variables: { filter },
     skip: filter.length < 3,
+    filter,
+    setFilter,
   };
 
-  return <Archive wrap={SearchRender} {...props} />;
+  return <Node wrap={SearchRender} {...props} />;
 };

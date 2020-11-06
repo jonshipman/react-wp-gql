@@ -2,10 +2,14 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { Login } from "./Login";
-import { Search, Archive, Category } from "./archive";
-import { Single, Preview } from "./single";
+import { Preview } from "./Preview";
+import { Node } from "./node/Node";
+import { useQueries } from "./hooks";
+import { Search } from "./Search";
 
 export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
+  const { queries } = useQueries();
+
   return (
     <Switch>
       <Route
@@ -24,11 +28,13 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
       <Route exact path="/search">
         <Search />
       </Route>
+
       <Route exact path={`/${blog}`}>
-        <Archive />
+        <Node query={queries.QueryArchive} title="Blog" />
       </Route>
+
       <Route path={`/${category}/:slug`}>
-        <Category />
+        <Node query={queries.QueryCategory} title="Category" />
       </Route>
 
       <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
@@ -36,7 +42,7 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
       </Route>
 
       <Route path="*">
-        <Single />
+        <Node />
       </Route>
     </Switch>
   );

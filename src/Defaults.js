@@ -6,14 +6,12 @@ import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
 import * as Elements from "./elements";
-import * as Singles from "./single";
-import * as Archives from "./archive";
+import * as Nodes from "./node";
 
 export const DefaultComponents = {
-  ...Archives,
+  ...Nodes,
   ...Elements,
   ...Login,
-  ...Singles,
   ClockIcon,
   FolderIcon,
   SearchIcon,
