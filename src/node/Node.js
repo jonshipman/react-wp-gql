@@ -6,6 +6,7 @@ import { useNode, useNodeRenderer } from "./useNode";
 
 export const Node = ({
   isArchive: isArchiveProp,
+  perPage,
   title: titleProp,
   columns = 1,
   wrap,
@@ -26,6 +27,7 @@ export const Node = ({
     variables,
     skip,
     ssr,
+    perPage,
   });
 
   const {
