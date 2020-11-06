@@ -2,6 +2,10 @@
   padding-left: 0;
   list-style: none;
 
+  .current-item {
+    color: $primary;
+  }
+
   .menu-item {
     display: block;
     position: relative;
