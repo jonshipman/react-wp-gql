@@ -30,6 +30,20 @@ const schema = {
   },
 };
 
+export const LeadFormGroup = ({ id, onChange, onError, form, ...props }) => {
+  const { components } = useComponents();
+
+  return (
+    <components.FormGroup
+      {...{ id }}
+      value={form[id]}
+      onChange={(value) => onChange(value, id)}
+      help={onError(id)}
+      {...props}
+    />
+  );
+};
+
 export const LeadForm = ({
   children,
   className,
@@ -76,7 +90,7 @@ export const LeadForm = ({
     submitted,
   });
 
-  const GroupProps = {};
+  const GroupProps = { onChange, onError, form, children };
 
   if (groupClassName) {
     GroupProps.replaceClass = true;
@@ -93,55 +107,35 @@ export const LeadForm = ({
         {message && (
           <div className="error-message red fw7 f6 mb3">{message}</div>
         )}
-        <components.FormGroup
-          className={groupClassName}
+        <LeadFormGroup
           placeholder="Your Name"
           id="yourName"
-          value={form.yourName}
-          onChange={(value) => onChange(value, "yourName")}
-          help={onError("yourName")}
+          className={groupClassName}
           {...GroupProps}
-        >
-          {children}
-        </components.FormGroup>
+        />
         <div className="nl2 nr2">
-          <components.FormGroup
+          <LeadFormGroup
             type="email"
             className={`${groupClassName || ""} w-50-l fl-l ph2`}
             placeholder="Your Email"
             id="email"
-            value={form.email}
-            onChange={(value) => onChange(value, "email")}
-            help={onError("email")}
             {...GroupProps}
-          >
-            {children}
-          </components.FormGroup>
-          <components.FormGroup
+          />
+          <LeadFormGroup
             type="tel"
-            className={`${groupClassName || ""} w-50-l fl-l ph2`}
             placeholder="Your Phone"
             id="phone"
-            value={form.phone}
-            onChange={(value) => onChange(value, "phone")}
-            help={onError("phone")}
+            className={`${groupClassName || ""} w-50-l fl-l ph2`}
             {...GroupProps}
-          >
-            {children}
-          </components.FormGroup>
+          />
         </div>
-        <components.FormGroup
-          className={groupClassName}
+        <LeadFormGroup
           placeholder="Message"
           type="textarea"
           id="message"
-          value={form.message}
-          onChange={(value) => onChange(value, "message")}
-          help={onError("message")}
+          className={groupClassName}
           {...GroupProps}
-        >
-          {children}
-        </components.FormGroup>
+        />
       </div>
       <div
         className={`button-wrap tr ${groupClassName || ""}`}
