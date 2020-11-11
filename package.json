@@ -1,12 +1,12 @@
 {
-  "name": "react-boilerplate-nodes",
-  "version": "0.5.0",
+  "name": "react-wp-gql",
+  "version": "0.5.1",
   "description": "WordPress Rendering and Routing for WP-GraphQL",
   "author": "jonshipman",
   "license": "Apache",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonshipman/react-boilerplate-nodes.git"
+    "url": "git+https://github.com/jonshipman/react-wp-gql.git"
   },
   "files": [
     "scss",
