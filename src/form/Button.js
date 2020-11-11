@@ -72,12 +72,13 @@ let Button = (
     disabled,
     style = {},
     className = defaultClassName,
-    Loading = DefaultLoading,
+    Loading,
     ...props
   },
   ref,
 ) => {
   const { components } = useComponents();
+  const LoadingComponent = Loading ? Loading : components.Loading;
 
   if (loading) {
     return (
@@ -93,7 +94,7 @@ let Button = (
           {...{ className }}
           {...props}
         />
-        <components.Loading className="ml3" />
+        <LoadingComponent className="ml3" />
       </div>
     );
   }
