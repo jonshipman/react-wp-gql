@@ -5,6 +5,7 @@ import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 export * from "./ApolloSetup";
 export * from "./Context";
 export * from "./elements";
+export * from "./form";
 export * from "./functions";
 export * from "./gql";
 export * from "./handlers";

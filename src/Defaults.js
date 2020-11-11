@@ -7,11 +7,15 @@ import * as DefaultQueries from "./gql/queries";
 import * as Login from "./Login";
 import * as Elements from "./elements";
 import * as Nodes from "./node";
+import { FormGroup, Button, FormError } from "./form";
 
 export const DefaultComponents = {
   ...Nodes,
   ...Elements,
   ...Login,
+  FormGroup,
+  Button,
+  FormError,
   ClockIcon,
   FolderIcon,
   SearchIcon,
