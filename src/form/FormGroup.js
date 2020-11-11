@@ -191,7 +191,7 @@ let FormGroup = (
     if (onCheck) {
       onCheck(isValid, idProp, props.value, valid);
     }
-  }, [onCheck, isValid, idProp, props.value, valid]);
+  }, [isValid, idProp, props.value, valid]);
 
   if (children) {
     React.Children.forEach(children, (element) => {
