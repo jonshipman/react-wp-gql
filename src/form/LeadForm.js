@@ -63,7 +63,7 @@ export const LeadForm = ({
     (validity, field, value, valid) => {
       setErrors((existing) => ({
         ...existing,
-        [field]: value === undefined ? valid(value) : validity,
+        [field]: value === undefined ? valid(value || "") : validity,
       }));
     },
     [setErrors],
