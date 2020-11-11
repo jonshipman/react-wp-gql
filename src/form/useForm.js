@@ -124,8 +124,10 @@ export const useForm = ({
 
   const onError = (field) => {
     if (errors[field]) {
-      return <components.FormError>{schema[field].text}</components.FormError>;
+      return <components.FormError>{errors[field]}</components.FormError>;
     }
+
+    return null;
   };
 
   return { Check, onChange, onError };
