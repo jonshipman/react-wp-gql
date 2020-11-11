@@ -1,30 +1,55 @@
-# react-boilerplate-nodes
+# react-wp-gql
 
-> Hooks and Components for rendering single.php and archive.php in a typical WP install.
+> WordPress Rendering and Routing for WP-GraphQL.
 
-[![NPM](https://img.shields.io/npm/v/react-boilerplate-nodes.svg)](https://www.npmjs.com/package/react-boilerplate-nodes) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+![GitHub](https://img.shields.io/github/license/jonshipman/react-wp-gql) ![GitHub last commit](https://img.shields.io/github/last-commit/jonshipman/react-wp-gql)
 
 ## Install
 
 ```bash
-npm install --save react-boilerplate-nodes
+yarn add https://github.com/jonshipman/react-wp-gql
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+// React
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import { WordPressRoutes, NodeProvider } from "react-boilerplate-nodes";
+import { FormGroup } from "react-boilerplate-leadform";
+import { FRONTEND_URL } from "./config";
+import { Header, Footer, Main } from "./layout";
+import { Home } from "./home";
+import * as queries from "./gql/queries";
+import "./app.scss";
 
-import MyComponent from 'react-boilerplate-nodes'
-import 'react-boilerplate-nodes/dist/index.css'
+const nodeProps = {
+  FRONTEND_URL,
+  queries,
+  components: {
+    FormGroup,
+  },
+};
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+export const App = () => (
+  <NodeProvider {...nodeProps}>
+    <Header />
+    <Main>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+
+        <WordPressRoutes />
+      </Switch>
+    </Main>
+    <Footer />
+  </NodeProvider>
+);
+
 ```
 
 ## License
 
-MIT © [jonshipman](https://github.com/jonshipman)
+Apache 2.0 © [jonshipman](https://github.com/jonshipman)
