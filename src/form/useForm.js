@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { useComponents } from "../hooks";
+import { useRecaptcha } from "./useRecaptcha";
 
 const QUERY = gql`
   query LeadForm {
@@ -17,26 +17,8 @@ const QUERY = gql`
 `;
 
 const DefaultMutation = gql`
-  mutation DefaultForm(
-    $clientMutationId: String!
-    $wpNonce: String!
-    $gToken: String
-    $yourName: String
-    $email: String!
-    $phone: String!
-    $message: String
-  ) {
-    defaultFormMutation(
-      input: {
-        clientMutationId: $clientMutationId
-        wpNonce: $wpNonce
-        gToken: $gToken
-        yourName: $yourName
-        email: $email
-        phone: $phone
-        message: $message
-      }
-    ) {
+  mutation DefaultForm($input: DefaultFormMutationInput!) {
+    defaultFormMutation(input: $input) {
       clientMutationId
       success
       errorMessage
@@ -44,14 +26,40 @@ const DefaultMutation = gql`
   }
 `;
 
-export const useFormData = (formName) => {
+export const useForm = ({
+  name: formName,
+  setForm,
+  recaptchaTrigger: trigger,
+  mutation = DefaultMutation,
+  onCompleted,
+}) => {
   const [nonce, setNonce] = useState("");
-  const { data = {}, loading, error } = useQuery(QUERY, {
+
+  const [
+    mutate,
+    { error: mutationError, loading: mutationLoading },
+  ] = useMutation(mutation, {
+    onCompleted,
+    errorPolicy: "all",
+  });
+
+  const { data, loading: queryLoading, error: queryError } = useQuery(QUERY, {
     errorPolicy: "all",
     ssr: false,
+    skip: !formName,
   });
-  const { formData = {} } = data;
-  const { wpNonce = [], recatchaSiteKey = "" } = formData;
+
+  const { wpNonce = [], recatchaSiteKey: recaptchaSiteKey = "" } =
+    data?.formData || {};
+
+  const loading = queryLoading || mutationLoading;
+  const error = queryError || mutationError;
+
+  const [completed, setCompleted] = useState(false);
+  const { token } = useRecaptcha({
+    trigger,
+    key: recaptchaSiteKey,
+  });
 
   useEffect(() => {
     if (formName) {
@@ -63,104 +71,65 @@ export const useFormData = (formName) => {
     }
   }, [wpNonce, formName, setNonce]);
 
-  return { nonce, recaptchaSiteKey: recatchaSiteKey, loading, error };
-};
-
-export const useForm = ({
-  schema = {},
-  form,
-  setForm,
-  submitted = () => {},
-}) => {
-  const { components } = useComponents();
-  const [errors, setErrors] = useState({});
-
-  const Check = () => {
-    const newForm = {};
-
-    Object.keys(schema).forEach((key) => {
-      if (form[key] === undefined) {
-        newForm[key] = "";
-      }
-    });
-
-    if (Object.keys(newForm).length > 0) {
-      setForm((existing) => ({ ...existing, ...newForm }));
-    }
-
-    // Loop over the check + newForm for errors
-    const _form = { ...form, ...newForm };
-    const _errors = {};
-    Object.keys(_form).forEach((key) => {
-      if (schema[key] && !schema[key].valid(_form[key])) {
-        _errors[key] = schema[key].text;
-      }
-    });
-
-    if (Object.keys(_errors).length > 0) {
-      setErrors(_errors);
-    } else {
-      submitted({
-        form,
-      });
-    }
-  };
-
   const onChange = (value, field) => {
-    if (schema[field] && !schema[field].valid(value) && value !== undefined) {
-      setErrors((previous) => ({ ...previous, [field]: schema[field].text }));
-    } else {
-      setErrors((previous) => {
-        if (previous[field]) {
-          delete previous[field];
-        }
-
-        return previous;
-      });
-    }
-
     setForm((existing) => ({ ...existing, [field]: value }));
   };
 
-  const onError = (field) => {
-    if (errors[field]) {
-      return <components.FormError>{errors[field]}</components.FormError>;
-    }
+  const check = (errors) => {
+    setForm((form) => {
+      Object.keys(errors).forEach((key) => {
+        if (form[key] === undefined) {
+          form[key] = "";
+        }
+      });
 
-    return null;
+      return form;
+    });
+
+    return Object.values(errors).filter((x) => !x).length;
   };
 
-  return { Check, onChange, onError };
-};
-
-export const useLeadFormMutation = ({
-  token,
-  nonce,
-  mutation = DefaultMutation,
-  onCompleted,
-}) => {
-  const [mutate, { error, loading }] = useMutation(mutation, {
-    onCompleted,
-    errorPolicy: "all",
-  });
-
   const submitted = useCallback(
-    ({ form }) => {
+    (form) => {
       const clientMutationId =
         Math.random().toString(36).substring(2) +
         new Date().getTime().toString(36);
+
+      const input = {
+        clientMutationId,
+        gToken: token,
+        wpNonce: nonce,
+        ...form,
+      };
+
       mutate({
         variables: {
-          clientMutationId,
-          gToken: token,
-          wpNonce: nonce,
-          ...form,
+          input,
         },
       });
     },
     [mutate, token, nonce],
   );
 
+  return {
+    submitted,
+    check,
+    nonce,
+    recaptchaSiteKey,
+    loading,
+    error,
+    onChange,
+    token,
+    completed,
+    setCompleted,
+    mutationLoading,
+    mutationError,
+    queryLoading,
+    queryError,
+  };
+};
+
+export const useLeadFormMutation = ({ token, nonce, onCompleted }) => {
   return {
     loading,
     error,

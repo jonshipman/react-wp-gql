@@ -1,4 +1,12 @@
-import React, { forwardRef, useContext, createContext } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  createContext,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
+import { useComponents } from "../hooks";
 
 const CheckboxContext = createContext({});
 
@@ -147,10 +155,26 @@ let Input = (
 Input = forwardRef(Input);
 
 let FormGroup = (
-  { className = "", replaceClass, help, label, children, id: idProp, ...props },
+  {
+    className = "",
+    replaceClass,
+    help,
+    valid: validProp = true,
+    error = "Required.",
+    onCheck,
+    label,
+    children,
+    id: idProp,
+    ...props
+  },
   ref,
 ) => {
+  const { components } = useComponents();
   const id = `${idProp}-${Math.random().toString(36).substr(2, 9)}`;
+
+  const valid = useMemo(() => {
+    return validProp instanceof Function ? validProp : () => validProp;
+  }, [validProp]);
 
   const InputComponent = Input;
   let InputProps = { id, ...props };
@@ -158,6 +182,16 @@ let FormGroup = (
   let LabelProps = { htmlFor: id };
 
   const CheckboxComponents = { CheckboxGroup, CheckboxLabel, CheckboxField };
+
+  const isValid = useMemo(() => {
+    return props.value === undefined || valid(props.value);
+  }, [valid, props.value]);
+
+  useEffect(() => {
+    if (onCheck) {
+      onCheck(isValid, idProp, props.value, valid);
+    }
+  }, [onCheck, isValid, idProp, props.value, valid]);
 
   if (children) {
     React.Children.forEach(children, (element) => {
@@ -203,7 +237,12 @@ let FormGroup = (
       <div {...FormGroupProps}>
         {label && <LabelComponent {...LabelProps}>{label}</LabelComponent>}
         <InputComponent {...InputProps} {...{ ref }} />
-        {help}
+        <div>
+          {!isValid && error ? (
+            <components.FormError>{error}</components.FormError>
+          ) : null}
+        </div>
+        <div>{help}</div>
       </div>
     </CheckboxContext.Provider>
   );

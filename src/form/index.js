@@ -6,3 +6,4 @@ export * from "./useForm";
 export * from "./useRecaptcha";
 export * from "./FormGroup";
 export * from "./Button";
+export * from "./Valid";

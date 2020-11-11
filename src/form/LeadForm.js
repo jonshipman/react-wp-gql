@@ -1,44 +1,15 @@
-import React, { useState } from "react";
-import { useRecaptcha } from "./useRecaptcha";
-import { useFormData, useLeadFormMutation, useForm } from "./useForm";
-import { isEmail, isPhone } from "./functions";
+import React, { useCallback, useMemo, useState } from "react";
+import { useLeadFormMutation, useForm } from "./useForm";
 import { useComponents } from "../hooks";
+import { Valid } from "./Valid";
 
-const schema = {
-  yourName: {
-    valid: function (v) {
-      return v !== "";
-    },
-    text: "You must include a name.",
-  },
-  email: {
-    valid: function (v) {
-      return isEmail(v);
-    },
-    text: "You must include a email.",
-  },
-  phone: {
-    valid: function (v) {
-      return isPhone(v);
-    },
-    text: "Invalid phone.",
-  },
-  message: {
-    valid: function () {
-      return true;
-    },
-  },
-};
-
-export const LeadFormGroup = ({ id, onChange, onError, form, ...props }) => {
+export const LeadFormGroup = ({ id, onChange, form, ...props }) => {
   const { components } = useComponents();
-
   return (
     <components.FormGroup
       {...{ id }}
       value={form[id]}
       onChange={(value) => onChange(value, id)}
-      help={onError(id)}
       {...props}
     />
   );
@@ -52,45 +23,64 @@ export const LeadForm = ({
   submitionMessage = "Form submitted. Thank you for your submission.",
   buttonLabel = "Submit",
   loading: loadingProp,
+  formName = "default",
   mutation,
 }) => {
   const { components } = useComponents();
-
   const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
   const [message, setMessage] = useState();
-  const { recaptchaSiteKey, nonce } = useFormData("default");
-  const [completed, setCompleted] = useState(false);
-  const { token } = useRecaptcha({
-    trigger: isEmail(form.email),
-    key: recaptchaSiteKey,
-  });
 
-  const { submitted, loading: mutateLoading } = useLeadFormMutation({
-    token,
-    nonce,
-    mutation,
-    onCompleted: (data = {}) => {
-      const { defaultFormMutation = {} } = data;
-      const { errorMessage, success } = defaultFormMutation;
+  const onCompleted = (data) => {
+    const { errorMessage, success } = data?.defaultFormMutation || {};
 
-      if (success) {
-        setCompleted(true);
-      } else {
-        setMessage(errorMessage);
-      }
-    },
-  });
+    if (success) {
+      setCompleted(true);
+      setMessage(null);
+    } else {
+      setMessage(errorMessage);
+    }
+  };
 
-  const loading = mutateLoading || loadingProp;
-
-  const { Check, onChange, onError } = useForm({
-    form,
-    setForm,
-    schema,
+  const {
+    check,
+    onChange,
+    completed,
+    setCompleted,
     submitted,
+    mutationLoading,
+  } = useForm({
+    name: formName,
+    onCompleted,
+    setForm,
+    recaptchaTrigger: Valid.Email(form.email),
+    mutation,
   });
 
-  const GroupProps = { onChange, onError, form, children };
+  const loading = mutationLoading || loadingProp;
+
+  const onCheck = useCallback(
+    (validity, field, value, valid) => {
+      setErrors((existing) => ({
+        ...existing,
+        [field]: value === undefined ? valid(value) : validity,
+      }));
+    },
+    [setErrors],
+  );
+
+  const ButtonClick = () => {
+    check(errors) === 0
+      ? submitted(form)
+      : setMessage("Check all required fields.");
+  };
+
+  const GroupProps = {
+    onChange,
+    form,
+    children,
+    onCheck,
+  };
 
   if (groupClassName) {
     GroupProps.replaceClass = true;
@@ -108,31 +98,37 @@ export const LeadForm = ({
           <div className="error-message red fw7 f6 mb3">{message}</div>
         )}
         <LeadFormGroup
-          placeholder="Your Name"
           id="yourName"
+          placeholder="Your Name"
+          valid={Valid.NotEmptyString}
+          error="You must include a name."
           className={groupClassName}
           {...GroupProps}
         />
         <div className="nl2 nr2">
           <LeadFormGroup
-            type="email"
-            className={`${groupClassName || ""} w-50-l fl-l ph2`}
-            placeholder="Your Email"
             id="email"
+            placeholder="Your Email"
+            type="email"
+            valid={Valid.Email}
+            error="You must include a email."
+            className={`${groupClassName || ""} w-50-l fl-l ph2`}
             {...GroupProps}
           />
           <LeadFormGroup
-            type="tel"
-            placeholder="Your Phone"
             id="phone"
+            placeholder="Your Phone"
+            type="tel"
+            error="Invalid phone."
+            valid={Valid.Phone}
             className={`${groupClassName || ""} w-50-l fl-l ph2`}
             {...GroupProps}
           />
         </div>
         <LeadFormGroup
+          id="message"
           placeholder="Message"
           type="textarea"
-          id="message"
           className={groupClassName}
           {...GroupProps}
         />
@@ -143,8 +139,9 @@ export const LeadForm = ({
       >
         <components.Button
           {...{ loading }}
+          disabled={completed}
           className={buttonClassName}
-          onClick={Check}
+          onClick={ButtonClick}
         >
           {buttonLabel}
         </components.Button>
