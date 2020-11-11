@@ -27,6 +27,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
+    "prepare": "webpack",
     "precommit": "lint-staged"
   },
   "peerDependencies": {
