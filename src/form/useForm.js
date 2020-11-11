@@ -98,7 +98,7 @@ export const useForm = ({
     });
 
     if (Object.keys(_errors).length > 0) {
-      setErrors((previous) => ({ ...previous, ..._errors }));
+      setErrors(_errors);
     } else {
       submitted({
         form,
