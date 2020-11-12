@@ -119,15 +119,17 @@ export const LeadForm = ({
           <div className="error-message red fw7 f6 mb3">{message}</div>
         )}
         <GroupWrap>
-          <div>
+          <React.Fragment>
             {!!children ? (
-              React.Children.toArray(children).map((child) => {
-                return React.cloneElement(
-                  child,
-                  { ...child.props, ...GroupProps },
-                  child.props.children,
-                );
-              })
+              <React.Fragment>
+                {React.Children.toArray(children).map((child) => {
+                  return React.cloneElement(
+                    child,
+                    { ...child.props, ...GroupProps },
+                    child.props.children,
+                  );
+                })}
+              </React.Fragment>
             ) : (
               <React.Fragment>
                 <LeadFormGroup
@@ -167,7 +169,7 @@ export const LeadForm = ({
                 />
               </React.Fragment>
             )}
-          </div>
+          </React.Fragment>
         </GroupWrap>
       </div>
       <div
