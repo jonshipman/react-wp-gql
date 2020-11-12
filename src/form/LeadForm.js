@@ -31,6 +31,7 @@ export const LeadForm = ({
   mutationPayloadKey = "defaultFormMutation",
   form: formProp,
   mutation,
+  formError = "Check all required fields.",
   groupWrap: GroupWrap = FormGroups,
 }) => {
   const { components } = useComponents();
@@ -85,9 +86,7 @@ export const LeadForm = ({
   );
 
   const ButtonClick = () => {
-    check(errors) === 0
-      ? submitted(form)
-      : setMessage("Check all required fields.");
+    check(errors) === 0 ? submitted(form) : setMessage(formError);
   };
 
   const GroupProps = {
