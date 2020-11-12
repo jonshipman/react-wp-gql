@@ -104,6 +104,7 @@ let Input = (
     onEnter = () => {},
     className = "b--light-silver br0 bb-1 bl-0 br-0 bt-0 pl2 pb2 flex-auto bg-transparent",
     loading,
+    options,
     ...props
   },
   ref,
@@ -118,8 +119,8 @@ let Input = (
       props.children = (
         <React.Fragment>
           {props.placeholder && <option value="">{props.placeholder}</option>}
-          {props.options &&
-            props.options.map((option) => (
+          {options &&
+            options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -136,6 +137,7 @@ let Input = (
     case "radio":
       Type = Checkbox;
       width = "auto";
+      props.options = options;
       break;
     default:
       break;
