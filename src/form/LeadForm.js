@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "./useForm";
 import { useComponents } from "../hooks";
 import { Valid } from "./Valid";
@@ -15,6 +15,10 @@ export const LeadFormGroup = ({ id, onChange, form, ...props }) => {
   );
 };
 
+const FormGroups = ({ children }) => {
+  return <div className="form-groups">{children}</div>;
+};
+
 export const LeadForm = ({
   children,
   className,
@@ -24,15 +28,26 @@ export const LeadForm = ({
   buttonLabel = "Submit",
   loading: loadingProp,
   formName = "default",
+  mutationPayloadKey = "defaultFormMutation",
+  form: formProp,
   mutation,
+  groupWrap: GroupWrap = FormGroups,
 }) => {
   const { components } = useComponents();
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState();
 
+  useEffect(() => {
+    if (formProp && Object.keys(formProp).length !== 0) {
+      setForm((x) => ({ ...x, ...formProp }));
+    }
+  }, [formProp]);
+
   const onCompleted = (data) => {
-    const { errorMessage, success } = data?.defaultFormMutation || {};
+    const { errorMessage, success } = data
+      ? data[mutationPayloadKey] || {}
+      : {};
 
     if (success) {
       setCompleted(true);
@@ -78,7 +93,6 @@ export const LeadForm = ({
   const GroupProps = {
     onChange,
     form,
-    children,
     onCheck,
   };
 
@@ -97,41 +111,55 @@ export const LeadForm = ({
         {message && (
           <div className="error-message red fw7 f6 mb3">{message}</div>
         )}
-        <LeadFormGroup
-          id="yourName"
-          placeholder="Your Name"
-          valid={Valid.NotEmptyString}
-          error="You must include a name."
-          className={groupClassName}
-          {...GroupProps}
-        />
-        <div className="nl2 nr2">
-          <LeadFormGroup
-            id="email"
-            placeholder="Your Email"
-            type="email"
-            valid={Valid.Email}
-            error="You must include a email."
-            className={`${groupClassName || ""} w-50-l fl-l ph2`}
-            {...GroupProps}
-          />
-          <LeadFormGroup
-            id="phone"
-            placeholder="Your Phone"
-            type="tel"
-            error="Invalid phone."
-            valid={Valid.Phone}
-            className={`${groupClassName || ""} w-50-l fl-l ph2`}
-            {...GroupProps}
-          />
-        </div>
-        <LeadFormGroup
-          id="message"
-          placeholder="Message"
-          type="textarea"
-          className={groupClassName}
-          {...GroupProps}
-        />
+        <GroupWrap>
+          {!!children ? (
+            React.Children.toArray(children).map((child) => {
+              return React.cloneElement(
+                child,
+                { ...child.props, ...GroupProps },
+                child.props.children,
+              );
+            })
+          ) : (
+            <React.Fragment>
+              <LeadFormGroup
+                id="yourName"
+                placeholder="Your Name"
+                valid={Valid.NotEmptyString}
+                error="You must include a name."
+                className={groupClassName}
+                {...GroupProps}
+              />
+              <div className="nl2 nr2">
+                <LeadFormGroup
+                  id="email"
+                  placeholder="Your Email"
+                  type="email"
+                  valid={Valid.Email}
+                  error="You must include a email."
+                  className={`${groupClassName || ""} w-50-l fl-l ph2`}
+                  {...GroupProps}
+                />
+                <LeadFormGroup
+                  id="phone"
+                  placeholder="Your Phone"
+                  type="tel"
+                  error="Invalid phone."
+                  valid={Valid.Phone}
+                  className={`${groupClassName || ""} w-50-l fl-l ph2`}
+                  {...GroupProps}
+                />
+              </div>
+              <LeadFormGroup
+                id="message"
+                placeholder="Message"
+                type="textarea"
+                className={groupClassName}
+                {...GroupProps}
+              />
+            </React.Fragment>
+          )}
+        </GroupWrap>
       </div>
       <div
         className={`button-wrap tr ${groupClassName || ""}`}
