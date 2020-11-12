@@ -120,14 +120,18 @@ export const LeadForm = ({
         )}
         <GroupWrap>
           {!!children ? (
-            React.Children.toArray(children).map((child) => {
+            React.Children.toArray(children).map((child, index) => {
               const replacement = React.cloneElement(
                 child,
-                { ...child.props, ...GroupProps },
+                {
+                  ...child.props,
+                  ...GroupProps,
+                  key: `leadform-render-${index}`,
+                },
                 child.props.children,
               );
 
-              return <React.Fragment>{replacement}</React.Fragment>;
+              return replacement;
             })
           ) : (
             <React.Fragment>
