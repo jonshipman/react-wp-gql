@@ -119,9 +119,9 @@ export const LeadForm = ({
           <div className="error-message red fw7 f6 mb3">{message}</div>
         )}
         <GroupWrap>
-          <React.Fragment>
+          <div>
             {!!children ? (
-              <React.Fragment>
+              <div>
                 {React.Children.toArray(children).map((child) => {
                   return React.cloneElement(
                     child,
@@ -129,9 +129,9 @@ export const LeadForm = ({
                     child.props.children,
                   );
                 })}
-              </React.Fragment>
+              </div>
             ) : (
-              <React.Fragment>
+              <div>
                 <LeadFormGroup
                   id="yourName"
                   placeholder="Your Name"
@@ -167,9 +167,9 @@ export const LeadForm = ({
                   className={groupClassName}
                   {...GroupProps}
                 />
-              </React.Fragment>
+              </div>
             )}
-          </React.Fragment>
+          </div>
         </GroupWrap>
       </div>
       <div
