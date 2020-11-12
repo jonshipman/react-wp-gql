@@ -32,6 +32,7 @@ export const LeadForm = ({
   form: formProp,
   mutation,
   formError,
+  errorAction,
   groupWrap: GroupWrap = FormGroups,
 }) => {
   const { components } = useComponents();
@@ -86,9 +87,14 @@ export const LeadForm = ({
   );
 
   const ButtonClick = () => {
-    check(errors) === 0 && !formError
-      ? submitted(form)
-      : setMessage(formError || "Check all required fields.");
+    if (check(errors) === 0 && !formError) {
+      submitted(form);
+    } else {
+      setMessage(formError || "Check all required fields.");
+      if (errorAction) {
+        errorAction(errors);
+      }
+    }
   };
 
   const GroupProps = {
