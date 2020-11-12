@@ -31,9 +31,9 @@
     "precommit": "lint-staged"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.1.4",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "@apollo/client": "^3.2.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
