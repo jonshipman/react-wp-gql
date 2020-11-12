@@ -4,7 +4,8 @@ import React, {
   createContext,
   useMemo,
   useEffect,
-  useCallback,
+  useState,
+  useRef,
 } from "react";
 import { useComponents } from "../hooks";
 
@@ -154,6 +155,46 @@ let Input = (
 };
 Input = forwardRef(Input);
 
+/**
+ * Uses a setTimeout debounce to avoid costly validity renders
+ */
+const useValidityDelay = ({ validProp, value, onCheck, idProp }) => {
+  const valid = useMemo(() => {
+    return validProp instanceof Function ? validProp : () => validProp;
+  }, [validProp]);
+
+  const [wait, setWait] = useState(false);
+  const waitTimeout = useRef();
+  useEffect(() => {
+    clearTimeout(waitTimeout.current);
+
+    setWait(true);
+    waitTimeout.current = setTimeout(() => {
+      setWait(false);
+    }, 80);
+
+    return () => {
+      clearTimeout(waitTimeout.current);
+    };
+  }, [waitTimeout]);
+
+  const isValid = useMemo(() => {
+    if (wait) {
+      return value === undefined || !validProp instanceof Function;
+    }
+
+    return value === undefined || valid(value);
+  }, [validProp, valid, value, wait]);
+
+  useEffect(() => {
+    if (onCheck) {
+      onCheck(isValid, idProp, value, valid);
+    }
+  }, [isValid, idProp, value, valid]);
+
+  return isValid;
+};
+
 let FormGroup = (
   {
     className = "",
@@ -175,9 +216,12 @@ let FormGroup = (
     [idProp],
   );
 
-  const valid = useMemo(() => {
-    return validProp instanceof Function ? validProp : () => validProp;
-  }, [validProp]);
+  const isValid = useValidityDelay({
+    validProp,
+    value: props.value,
+    onCheck,
+    idProp,
+  });
 
   const InputComponent = Input;
   let InputProps = { id, ...props };
@@ -185,16 +229,6 @@ let FormGroup = (
   let LabelProps = { htmlFor: id };
 
   const CheckboxComponents = { CheckboxGroup, CheckboxLabel, CheckboxField };
-
-  const isValid = useMemo(() => {
-    return props.value === undefined || valid(props.value);
-  }, [valid, props.value]);
-
-  useEffect(() => {
-    if (onCheck) {
-      onCheck(isValid, idProp, props.value, valid);
-    }
-  }, [isValid, idProp, props.value, valid]);
 
   if (children) {
     React.Children.forEach(children, (element) => {
