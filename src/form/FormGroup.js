@@ -170,7 +170,10 @@ let FormGroup = (
   ref,
 ) => {
   const { components } = useComponents();
-  const id = `${idProp}-${Math.random().toString(36).substr(2, 9)}`;
+  const id = useMemo(
+    () => `${idProp}-${Math.random().toString(36).substr(2, 9)}`,
+    [idProp],
+  );
 
   const valid = useMemo(() => {
     return validProp instanceof Function ? validProp : () => validProp;
