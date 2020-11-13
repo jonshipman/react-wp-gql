@@ -128,11 +128,3 @@ export const useForm = ({
     queryError,
   };
 };
-
-export const useLeadFormMutation = ({ token, nonce, onCompleted }) => {
-  return {
-    loading,
-    error,
-    submitted,
-  };
-};

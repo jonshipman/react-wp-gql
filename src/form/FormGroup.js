@@ -192,6 +192,7 @@ const useValidityDelay = ({ validProp, value, onCheck, idProp }) => {
     if (onCheck) {
       onCheck(isValid, idProp, value, valid);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValid, idProp, value, valid]);
 
   return isValid;
