@@ -60,22 +60,26 @@ let Checkbox = (
 
   return (
     <CheckboxComponents.CheckboxGroup {...{ ref }}>
-      {options.map(({ value: oValue, label: oLabel }) => (
-        <CheckboxComponents.CheckboxLabel
-          htmlFor={`${id}-${oValue}`}
-          key={`${id}-${oValue}`}
-        >
-          <span>
-            <CheckboxComponents.CheckboxField
-              id={`${id}-${oValue}`}
-              value={`${oValue}`}
-              checked={`${value}` === `${oValue}`}
-              {...props}
-            />
-          </span>
-          <span>{` ${oLabel}`}</span>
-        </CheckboxComponents.CheckboxLabel>
-      ))}
+      {options.map(({ value: _oV, label: oLabel }) => {
+        const oValue = _oV.replace(/[\W_]+/g, "").toLowerCase();
+        return (
+          <CheckboxComponents.CheckboxLabel
+            htmlFor={`${id}-${oValue}`}
+            key={`${id}-${oValue}`}
+          >
+            <span>
+              <CheckboxComponents.CheckboxField
+                name={id}
+                id={`${id}-${oValue}`}
+                value={`${_oV}`}
+                checked={`${value}` === `${_oV}`}
+                {...props}
+              />
+            </span>
+            <span>{` ${oLabel}`}</span>
+          </CheckboxComponents.CheckboxLabel>
+        );
+      })}
     </CheckboxComponents.CheckboxGroup>
   );
 };
