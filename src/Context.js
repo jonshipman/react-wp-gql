@@ -5,5 +5,4 @@ export const NodeContext = createContext({
   fragments: {},
   queries: {},
   mutations: {},
-  FRONTEND_URL: "",
 });

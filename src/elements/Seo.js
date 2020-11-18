@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-
-import { NodeContext } from "../Context";
 
 export const BreadcrumbList = (crumbs) => {
   const schema = {
@@ -35,7 +33,6 @@ export const Seo = ({
   breadcrumbs = [],
   children,
 }) => {
-  const { FRONTEND_URL = "" } = useContext(NodeContext);
   const canonical = canonicalProp || uri;
   const description = description || metaDesc;
 
@@ -44,10 +41,7 @@ export const Seo = ({
       {title && <title>{title}</title>}
       {description && <meta name="description" content={description} />}
       {canonical && (
-        <link
-          rel="canonical"
-          href={`${FRONTEND_URL}${canonical.replace(/\/$/, "")}`}
-        />
+        <link rel="canonical" href={`${canonical.replace(/\/$/, "")}`} />
       )}
 
       {breadcrumbs.length > 0 && (
