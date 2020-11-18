@@ -7,7 +7,7 @@ export const MutationLogin = () => gql`
     $password: String!
     $clientMutationId: String!
   ) {
-    loginCookies(
+    login(
       input: {
         clientMutationId: $clientMutationId
         login: $username

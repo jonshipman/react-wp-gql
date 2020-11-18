@@ -80,7 +80,7 @@ export const FragmentPost = gql`
     title
     excerpt
     content
-    dateFormatted
+    date
     isRestricted
     isPreview
     seo {
@@ -103,7 +103,6 @@ export const FragmentPage = gql`
     uri
     title
     content
-    pageTemplate
     seo {
       ${LiteralSeo}
     }
