@@ -1,5 +1,4 @@
 import {
-  ApolloProvider,
   ApolloClient,
   InMemoryCache,
   HttpLink,
@@ -27,20 +26,19 @@ const authAfterware = new ApolloLink((operation, forward) => {
 export const ApolloSetup = ({
   gqlUrl,
   links = [],
-  cache = {},
+  cache: cacheProp,
   clientProps = {},
 }) => {
   // Create the HttpLink for the ApolloClient
   const link = new HttpLink({
     uri: gqlUrl,
-    credentials: "include",
   });
+
+  const cache = cacheProp ? cacheProp : new InMemoryCache();
 
   return new ApolloClient({
     link: from([authAfterware, ...links, link]),
-    cache: new InMemoryCache(cache).restore(window.__APOLLO_STATE__ || null),
+    cache,
     ...clientProps,
   });
 };
-
-export { ApolloProvider };
