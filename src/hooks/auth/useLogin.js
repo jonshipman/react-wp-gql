@@ -37,16 +37,13 @@ export const useLogin = ({ setMessage = () => {} }) => {
   }, [error, setMessage]);
 
   const onCompleted = useCallback(
-    (data = {}) => {
-      const { loginCookies = {} } = data;
-      if (null === loginCookies) {
-        setMessage("Incorrect password");
-      } else {
-        const { status } = loginCookies;
+    (data) => {
+      const status = data ? data.login?.status || false : false;
 
-        if (status === "SUCCESS") {
-          loggedIn();
-        }
+      if (status === "SUCCESS") {
+        loggedIn();
+      } else {
+        setMessage(status || "Incorrect password");
       }
     },
     [loggedIn],
