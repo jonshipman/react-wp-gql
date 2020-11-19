@@ -36,6 +36,7 @@ export const MenuItemAnchor = ({
   href,
   spanClassName = "",
   to,
+  location,
   ...props
 }) => {
   const { level = 1, onClick = () => {} } = props;
@@ -46,6 +47,7 @@ export const MenuItemAnchor = ({
     level,
     href,
     to,
+    location,
     source,
     className: `link-inner ${spanClassName}`,
   };
