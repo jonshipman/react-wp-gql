@@ -78,7 +78,7 @@ export const Node = ({
           <meta name="robots" content="noindex" />
         </components.Seo>
 
-        <components.Title>{titleProp || node.name}</components.Title>
+        <components.Title>{node.name || titleProp}</components.Title>
 
         <Wrapper
           className="mv4 archive"
