@@ -61,7 +61,7 @@ export const QueryCategory = (fragments) => gql`
     $before: String
   ) {
     node: category(id: $pathname, idType: URI) {
-      ...categoryInfo
+      ...CategoryFragment
       posts(
         first: $first
         last: $last
