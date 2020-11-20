@@ -155,7 +155,7 @@ const ChildItem = ({ menuItem, level, location, ...props }) => {
   ) {
     anchorProps.href = menuItem.url;
   } else {
-    anchorProps.to = menuItem.url.replace(/^.*\/\/[^\/]+/, "");
+    anchorProps.to = menuItem.url.replace(/^.*\/\/[^/]+/, "");
   }
 
   if (hasChildren) {
