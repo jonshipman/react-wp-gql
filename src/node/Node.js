@@ -5,6 +5,7 @@ import { useComponents } from "../hooks";
 import { useNode, useNodeRenderer } from "./useNode";
 
 export const Node = ({
+  databaseId,
   isArchive: isArchiveProp,
   perPage,
   title: titleProp,
@@ -28,6 +29,7 @@ export const Node = ({
     skip,
     ssr,
     perPage,
+    databaseId,
   });
 
   const {

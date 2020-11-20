@@ -15,7 +15,7 @@ export const useNode = (props) => {
   const { queries } = useQueries();
 
   const {
-    databaseId,
+    databaseId: idProp,
     uri: passedUri,
     perPage: perPageProp,
     query: queryProp,
@@ -23,7 +23,10 @@ export const useNode = (props) => {
     skip,
     ssr,
   } = props || {};
-  const { pathname: uri } = useLocation();
+  const { pathname: uri, search } = useLocation();
+  const previewId = new URLSearchParams(search).get("p");
+
+  const databaseId = previewId || idProp;
 
   const { variables: varPaged, goNext, goPrev } = usePagination(
     perPageProp || perPage,

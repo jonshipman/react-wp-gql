@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 
 import { Login } from "./Login";
-import { Preview } from "./Preview";
 import { Node } from "./node/Node";
 import { useQueries } from "./hooks";
 import { Search } from "./Search";
@@ -41,10 +40,6 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
           title="Category"
           isArchive
         />
-      </Route>
-
-      <Route path="/_preview/:parentId/:revisionId/:type/:status/:nonce">
-        <Preview />
       </Route>
 
       <Route path="*">
