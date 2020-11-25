@@ -1,4 +1,16 @@
 import { gql } from "@apollo/client";
+import { CreatePaginationQuery } from "./CreatePaginationQuery";
+import { FragmentCategory, FragmentPage, FragmentPost } from "./fragments";
+
+const ContentNodes = `
+  __typename
+  ... on Post {
+    ...PostFragment
+  }
+  ... on Page {
+    ...PageFragment
+  }
+`;
 
 export const QueryNodeByUri = (fragments) => gql`
   query Node(
@@ -9,19 +21,26 @@ export const QueryNodeByUri = (fragments) => gql`
     $before: String
   ) {
     node: nodeByUri(uri: $uri) {
-      ${fragments.LiteralNode}
+      ${ContentNodes}
+      ... on Category {
+        ...CategoryFragment
+        ${CreatePaginationQuery("posts", "...PostFragment")}
+      }
     }
   }
-  ${fragments.ContentNodeFragments}
+  ${fragments.FragmentCategory || FragmentCategory}
+  ${fragments.FragmentPage || FragmentPage}
+  ${fragments.FragmentPost || FragmentPost}
 `;
 
 export const QueryContentNodeById = (fragments) => gql`
   query ContentNodeId($databaseId: ID!) {
     node: contentNode(id: $databaseId, idType: DATABASE_ID) {
-      ${fragments.LiteralContentNode}
+      ${ContentNodes}
     }
   }
-  ${fragments.ContentNodeFragments}
+  ${fragments.FragmentPage || FragmentPage}
+  ${fragments.FragmentPost || FragmentPost}
 `;
 
 export const QuerySearch = (fragments) => gql`
@@ -32,24 +51,10 @@ export const QuerySearch = (fragments) => gql`
     $after: String
     $before: String
   ) {
-    posts: contentNodes(
-      first: $first
-      last: $last
-      after: $after
-      before: $before
-      where: { search: $filter, status: PUBLISH, hasPassword: false }
-    ) {
-      edges {
-        node {
-          ${fragments.LiteralContentNode}
-        }
-      }
-      pageInfo {
-        ${fragments.LiteralPageInfo}
-      }
-    }
+    ${CreatePaginationQuery("contentNodes", ContentNodes)}
   }
-  ${fragments.ContentNodeFragments}
+  ${fragments.FragmentPage || FragmentPage}
+  ${fragments.FragmentPost || FragmentPost}
 `;
 
 export const QueryCategory = (fragments) => gql`
@@ -62,47 +67,17 @@ export const QueryCategory = (fragments) => gql`
   ) {
     node: category(id: $pathname, idType: URI) {
       ...CategoryFragment
-      posts(
-        first: $first
-        last: $last
-        after: $after
-        before: $before
-        where: { status: PUBLISH, hasPassword: false }
-      ) {
-        edges {
-          node {
-            ...PostFragment
-          }
-        }
-        pageInfo {
-          ${fragments.LiteralPageInfo}
-        }
-      }
+      ${CreatePaginationQuery("posts", "...PostFragment")}
     }
   }
-  ${fragments.FragmentCategory}
-  ${fragments.FragmentPost}
+  ${fragments.FragmentCategory || FragmentCategory}
+  ${fragments.FragmentPost || FragmentPost}
 `;
 
 export const QueryArchive = (fragments) => gql`
   query Archive($first: Int, $last: Int, $after: String, $before: String) {
-    posts(
-      first: $first
-      last: $last
-      after: $after
-      before: $before
-      where: { status: PUBLISH, hasPassword: false }
-    ) {
-      edges {
-        node {
-          ...PostFragment
-        }
-      }
-      pageInfo {
-        ${fragments.LiteralPageInfo}
-      }
-    }
+    ${CreatePaginationQuery("posts", "...PostFragment")}
   }
-  ${fragments.FragmentCategory}
-  ${fragments.FragmentPost}
+  ${fragments.FragmentCategory || FragmentCategory}
+  ${fragments.FragmentPost || FragmentPost}
 `;

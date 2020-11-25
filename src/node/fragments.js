@@ -1,78 +1,14 @@
-import { gql } from "@apollo/client";
-
-export const LiteralPageInfo = `
-  endCursor
-  hasNextPage
-  hasPreviousPage
-  startCursor
-`;
-
-export const LiteralSeo = `
-  title
-  metaDesc
-  breadcrumbs {
-    url
-    text
-  }
-`;
-
-export const CreatePaginationQuery = (
-  field,
-  fragment,
-  where = "status: PUBLISH, hasPassword: false",
-) => {
-  return `
-    posts: ${field}(
-      first: $first
-      last: $last
-      after: $after
-      before: $before
-      where: { ${where} }
-    ) {
-      edges {
-        node {
-          ${fragment}
-        }
-      }
-      pageInfo {
-        ${LiteralPageInfo}
-      }
-    }
-  `;
-};
-
-export const LiteralContentNode = `
-  __typename
-  ... on Post {
-    ...PostFragment
-  }
-  ... on Page {
-    ...PageFragment
-  }
-`;
-
-// LiteralNode is joined with LiteralContentNode in Defaults.js
-export const LiteralNode = `
-  ... on Category {
-    ...CategoryFragment
-    ${CreatePaginationQuery("posts", "...PostFragment")}
-  }
-`;
-
-export const FragmentCategory = gql`
+export const FragmentCategory = `
   fragment CategoryFragment on Category {
     id
     databaseId
     slug
     name
     uri
-    seo {
-      ${LiteralSeo}
-    }
   }
 `;
 
-export const FragmentPost = gql`
+export const FragmentPost = `
   fragment PostFragment on Post {
     id
     databaseId
@@ -83,9 +19,6 @@ export const FragmentPost = gql`
     date
     isRestricted
     isPreview
-    seo {
-      ${LiteralSeo}
-    }
     categories(first: 5) {
       edges {
         node {
@@ -96,21 +29,12 @@ export const FragmentPost = gql`
   }
 `;
 
-export const FragmentPage = gql`
+export const FragmentPage = `
   fragment PageFragment on Page {
     id
     databaseId
     uri
     title
     content
-    seo {
-      ${LiteralSeo}
-    }
   }
-`;
-
-export const ContentNodeFragments = gql`
-  ${FragmentCategory}
-  ${FragmentPost}
-  ${FragmentPage}
 `;

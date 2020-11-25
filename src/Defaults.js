@@ -54,8 +54,6 @@ export const PopulateFragments = (passed = {}) => {
     }
   });
 
-  fragments.LiteralNode = `${fragments.LiteralContentNode} ${fragments.LiteralNode}`;
-
   return fragments;
 };
 

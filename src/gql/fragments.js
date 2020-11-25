@@ -1,30 +1,28 @@
-import { gql } from "@apollo/client";
-
 export * from "../node/fragments";
 
-export const FragmentMenuItemLevel3 = gql`
-  fragment menuItemLevel3 on MenuItem {
+export const FragmentMenuItemLevel3 = `
+  fragment MenuItemLevel3Fragment on MenuItem {
     childItems {
       nodes {
-        ...menuItemInfo
+        ...MenuItemFragment
       }
     }
   }
 `;
 
-export const FragmentMenuItemLevel2 = gql`
-  fragment menuItemLevel2 on MenuItem {
+export const FragmentMenuItemLevel2 = `
+  fragment MenuItemLevel2Fragment on MenuItem {
     childItems {
       nodes {
-        ...menuItemInfo
-        ...menuItemLevel3
+        ...MenuItemFragment
+        ...MenuItemLevel3Fragment
       }
     }
   }
 `;
 
-export const FragmentMenuItem = gql`
-  fragment menuItemInfo on MenuItem {
+export const FragmentMenuItem = `
+  fragment MenuItemFragment on MenuItem {
     id
     databaseId
     parentId
