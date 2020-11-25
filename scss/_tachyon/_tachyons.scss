@@ -42,6 +42,13 @@
     }
   }
 
+  .hover-bg-#{$classBase} {
+    &:focus,
+    &:hover {
+      background-color: $color;
+    }
+  }
+
   .stroke-#{$classBase} {
     stroke: $color;
   }
