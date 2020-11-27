@@ -21,7 +21,7 @@ export const QueryMenu = (fragments) => gql`
   ${fragments.FragmentMenuItemLevel3 || FragmentMenuItemLevel3}
 `;
 
-export const QueryIsLoggedIn = gql`
+export const QueryIsLoggedIn = () => gql`
   query IsLoggedIn {
     isLoggedIn
   }
