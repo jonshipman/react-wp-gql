@@ -97,15 +97,16 @@ export const SinglePostRender = ({
                   </components.SingleCategoryListItem>
                 </ul>
               ) : (
-                categories?.edges?.length > 0 &&
-                categories.edges.map((category) => (
-                  <ul className="list pl0 dib" key={category.id}>
-                    <components.SingleCategoryListItem
-                      key={category.node.id}
-                      {...category.node}
-                    />
+                categories?.edges?.length > 0 && (
+                  <ul className="list pl0 dib">
+                    {categories.edges.map((category) => (
+                      <components.SingleCategoryListItem
+                        key={category.node.id}
+                        {...category.node}
+                      />
+                    ))}
                   </ul>
-                ))
+                )
               )}
             </div>
           </div>
