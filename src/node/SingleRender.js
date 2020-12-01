@@ -57,7 +57,7 @@ export const SinglePostRender = ({
 
   return (
     <React.Fragment>
-      <components.Title>{pageTitle}</components.Title>
+      <components.Title wrap="div">{pageTitle}</components.Title>
       <article className={`single post-${databaseId}`}>
         <RenderWrapper {...{ className }} {...props}>
           <h1 className="f2 fw4 mb4">
