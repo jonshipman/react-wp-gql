@@ -1,22 +1,16 @@
 import React, { forwardRef, useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NodeContext } from "../Context";
-import { useQueries } from "../hooks";
 
 import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
 import { useNode } from "../node";
 
 const MenuPreload = ({ to: uri }) => {
-  const { queries } = useQueries();
   const { usePreload = () => {} } = useContext(NodeContext);
   const { node } = useNode({ uri });
 
   usePreload({ uri, node });
-
-  if (node?.isPostsPage) {
-    useNode({ query: queries.QueryArchive });
-  }
 
   return null;
 };
