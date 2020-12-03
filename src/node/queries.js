@@ -1,6 +1,11 @@
 import { gql } from "@apollo/client";
 import { CreatePaginationQuery } from "./CreatePaginationQuery";
-import { FragmentCategory, FragmentPage, FragmentPost } from "./fragments";
+import {
+  FragmentCategory,
+  FragmentPage,
+  FragmentPost,
+  FragmentContentType,
+} from "./fragments";
 
 const ContentNodes = `
   __typename
@@ -24,10 +29,13 @@ export const QueryNodeByUri = (fragments) => gql`
       ${ContentNodes}
       ... on Category {
         ...CategoryFragment
-        ${CreatePaginationQuery("posts", "...PostFragment")}
+      }
+      ... on ContentType {
+        ...ContentTypeFragment
       }
     }
   }
+  ${fragments.FragmentContentType || FragmentContentType}
   ${fragments.FragmentCategory || FragmentCategory}
   ${fragments.FragmentPage || FragmentPage}
   ${fragments.FragmentPost || FragmentPost}
@@ -54,30 +62,5 @@ export const QuerySearch = (fragments) => gql`
     ${CreatePaginationQuery("contentNodes", ContentNodes)}
   }
   ${fragments.FragmentPage || FragmentPage}
-  ${fragments.FragmentPost || FragmentPost}
-`;
-
-export const QueryCategory = (fragments) => gql`
-  query CategoryPosts(
-    $pathname: ID!
-    $first: Int
-    $last: Int
-    $after: String
-    $before: String
-  ) {
-    node: category(id: $pathname, idType: URI) {
-      ...CategoryFragment
-      ${CreatePaginationQuery("posts", "...PostFragment")}
-    }
-  }
-  ${fragments.FragmentCategory || FragmentCategory}
-  ${fragments.FragmentPost || FragmentPost}
-`;
-
-export const QueryArchive = (fragments) => gql`
-  query Archive($first: Int, $last: Int, $after: String, $before: String) {
-    ${CreatePaginationQuery("posts", "...PostFragment")}
-  }
-  ${fragments.FragmentCategory || FragmentCategory}
   ${fragments.FragmentPost || FragmentPost}
 `;

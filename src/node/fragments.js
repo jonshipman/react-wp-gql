@@ -1,3 +1,5 @@
+import { CreatePaginationQuery } from "./CreatePaginationQuery";
+
 export const FragmentCategory = `
   fragment CategoryFragment on Category {
     id
@@ -5,6 +7,7 @@ export const FragmentCategory = `
     slug
     name
     uri
+    ${CreatePaginationQuery("posts", "...PostFragment")}
   }
 `;
 
@@ -22,7 +25,11 @@ export const FragmentPost = `
     categories(first: 5) {
       edges {
         node {
-          ...CategoryFragment
+          id
+          databaseId
+          slug
+          name
+          uri
         }
       }
     }
@@ -36,5 +43,12 @@ export const FragmentPage = `
     uri
     title
     content
+  }
+`;
+
+export const FragmentContentType = `
+  fragment ContentTypeFragment on ContentType {
+    id
+    ${CreatePaginationQuery("contentNodes", "... on Post {...PostFragment}")}
   }
 `;

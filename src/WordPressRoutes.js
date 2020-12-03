@@ -3,13 +3,9 @@ import { Switch, Route, useLocation } from "react-router-dom";
 
 import { Login } from "./Login";
 import { Node } from "./node/Node";
-import { useQueries } from "./hooks";
 import { Search } from "./Search";
 
 export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
-  const { queries } = useQueries();
-  const { pathname } = useLocation();
-
   return (
     <Switch>
       <Route
@@ -30,16 +26,11 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
       </Route>
 
       <Route exact path={`/${blog}`}>
-        <Node query={queries.QueryArchive} title="Blog" isArchive />
+        <Node title="Blog" isArchive />
       </Route>
 
       <Route path={`/${category}/:slug`}>
-        <Node
-          query={queries.QueryCategory}
-          variables={{ pathname }}
-          title="Category"
-          isArchive
-        />
+        <Node title="Category" isArchive />
       </Route>
 
       <Route path="*">

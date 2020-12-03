@@ -1,8 +1,25 @@
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef, useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { NodeContext } from "../Context";
+import { useQueries } from "../hooks";
 
 import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
+import { useNode } from "../node";
+
+const MenuPreload = ({ to: uri }) => {
+  const { queries } = useQueries();
+  const { usePreload = () => {} } = useContext(NodeContext);
+  const { node } = useNode({ uri });
+
+  usePreload({ uri, node });
+
+  if (node?.isPostsPage) {
+    useNode({ query: queries.QueryArchive });
+  }
+
+  return null;
+};
 
 export const LinkInner = ({ className = "link-inner", children }) => {
   return <span className={className}>{children}</span>;
@@ -39,6 +56,7 @@ export const MenuItemAnchor = ({
   location,
   ...props
 }) => {
+  const [entered, setEntered] = useState(false);
   const { level = 1, onClick = () => {} } = props;
   const { components } = useComponents();
   const className = `menu-item-anchor ${classNameProp}`;
@@ -52,12 +70,17 @@ export const MenuItemAnchor = ({
     className: `link-inner ${spanClassName}`,
   };
 
+  const onMouseEnter = () => {
+    setEntered(true);
+  };
+
   const navLinkProps = {
     exact: true,
     to,
     onClick,
     className,
     activeClassName: "current-item",
+    onMouseEnter,
   };
 
   return (
@@ -72,6 +95,7 @@ export const MenuItemAnchor = ({
 
       {to && (
         <NavLink {...navLinkProps}>
+          {entered && <MenuPreload {...{ to }} />}
           <components.LinkInner {...innerProps}>
             {children}
           </components.LinkInner>
