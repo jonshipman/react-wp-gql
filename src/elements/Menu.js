@@ -6,11 +6,8 @@ import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
 import { useNode } from "../node";
 
-const MenuPreload = ({ to: uri }) => {
-  const { usePreload = () => {} } = useContext(NodeContext);
-  const { node } = useNode({ uri });
-
-  usePreload({ uri, node });
+const MenuPreload = ({ uri }) => {
+  useNode({ uri });
 
   return null;
 };
@@ -50,6 +47,7 @@ export const MenuItemAnchor = ({
   location,
   ...props
 }) => {
+  const { Preload } = useContext(NodeContext);
   const [entered, setEntered] = useState(false);
   const { level = 1, onClick = () => {} } = props;
   const { components } = useComponents();
@@ -89,7 +87,8 @@ export const MenuItemAnchor = ({
 
       {to && (
         <NavLink {...navLinkProps}>
-          {entered && <MenuPreload {...{ to }} />}
+          {entered && <MenuPreload uri={to} />}
+          {entered && !!Preload && <Preload uri={to} />}
           <components.LinkInner {...innerProps}>
             {children}
           </components.LinkInner>
