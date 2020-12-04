@@ -1,6 +1,6 @@
 {
   "name": "react-wp-gql",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "WordPress Rendering and Routing for WP-GraphQL",
   "author": "jonshipman",
   "license": "Apache",
@@ -26,8 +26,8 @@
   "main": "dist/react-wordpress.min.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack",
-    "prepare": "webpack",
+    "build": "webpack --config webpack.prod.js",
+    "prepare": "webpack --config webpack.prod.js",
     "precommit": "lint-staged"
   },
   "peerDependencies": {
@@ -55,7 +55,8 @@
     "url-loader": "^4.1.1",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.4.0"
   },
   "dependencies": {
     "phone": "^2.4.17",
