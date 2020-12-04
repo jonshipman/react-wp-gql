@@ -6,10 +6,12 @@ import React, {
   useEffect,
   useState,
   useRef,
+  useCallback,
 } from "react";
 import { useComponents } from "../hooks";
 
 const CheckboxContext = createContext({});
+const FormGroupContext = createContext({});
 
 const keyGeneration = ({ loading = false }) => {
   return loading ? `loading` : `loaded`;
@@ -61,7 +63,7 @@ let Checkbox = (
   return (
     <CheckboxComponents.CheckboxGroup {...{ ref }}>
       {options.map(({ value: _oV, label: oLabel }) => {
-        const oValue = _oV.replace(/[\W_]+/g, "").toLowerCase();
+        const oValue = `${_oV}`.replace(/[\W_]+/g, "").toLowerCase();
         return (
           <CheckboxComponents.CheckboxLabel
             htmlFor={`${id}-${oValue}`}
@@ -98,11 +100,20 @@ export const Label = ({
   );
 };
 
+const usePreviousValue = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return ref.current;
+};
+
 let Input = (
   {
     width = 100,
     id,
-    value = "",
+    value,
     type = "text",
     onChange = () => {},
     onEnter = () => {},
@@ -113,6 +124,8 @@ let Input = (
   },
   ref,
 ) => {
+  const previousValue = usePreviousValue(value);
+  const { setIsValid, validProp } = useContext(FormGroupContext);
   let Type = "input";
 
   switch (type) {
@@ -142,16 +155,36 @@ let Input = (
       Type = Checkbox;
       width = "auto";
       props.options = options;
+      props.type = type;
       break;
     default:
+      props.type = type;
       break;
   }
 
   className = `${className} w-${width}`;
 
+  const ValidityCheck = useCallback(
+    (currentValue) => {
+      if (validProp instanceof Function) {
+        setIsValid(validProp(currentValue));
+      } else {
+        setIsValid(validProp);
+      }
+    },
+    [setIsValid, validProp],
+  );
+
+  useEffect(() => {
+    if (previousValue !== value) {
+      ValidityCheck(value);
+    }
+  }, [previousValue, value, ValidityCheck]);
+
   return (
     <Type
-      {...{ ref, id, type, value, className }}
+      {...{ ref, id, type, className }}
+      value={value || ""}
       onKeyDown={(e) => e.key === "Enter" && onEnter()}
       onChange={(e) => onChange(e.currentTarget.value)}
       key={keyGeneration({ loading })}
@@ -160,47 +193,6 @@ let Input = (
   );
 };
 Input = forwardRef(Input);
-
-/**
- * Uses a setTimeout debounce to avoid costly validity renders
- */
-const useValidityDelay = ({ validProp, value, onCheck, idProp }) => {
-  const valid = useMemo(() => {
-    return validProp instanceof Function ? validProp : () => validProp;
-  }, [validProp]);
-
-  const [wait, setWait] = useState(false);
-  const waitTimeout = useRef();
-  useEffect(() => {
-    clearTimeout(waitTimeout.current);
-
-    setWait(true);
-    waitTimeout.current = setTimeout(() => {
-      setWait(false);
-    }, 80);
-
-    return () => {
-      clearTimeout(waitTimeout.current);
-    };
-  }, [waitTimeout]);
-
-  const isValid = useMemo(() => {
-    if (wait) {
-      return value === undefined || !validProp instanceof Function;
-    }
-
-    return value === undefined || valid(value);
-  }, [validProp, valid, value, wait]);
-
-  useEffect(() => {
-    if (onCheck) {
-      onCheck(isValid, idProp, value, valid);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isValid, idProp, value, valid]);
-
-  return isValid;
-};
 
 let FormGroup = (
   {
@@ -217,18 +209,13 @@ let FormGroup = (
   },
   ref,
 ) => {
+  const [isValid, setIsValid] = useState(true);
+
   const { components } = useComponents();
   const id = useMemo(
     () => `${idProp}-${Math.random().toString(36).substr(2, 9)}`,
     [idProp],
   );
-
-  const isValid = useValidityDelay({
-    validProp,
-    value: props.value,
-    onCheck,
-    idProp,
-  });
 
   const InputComponent = Input;
   let InputProps = { id, ...props };
@@ -277,18 +264,20 @@ let FormGroup = (
   }
 
   return (
-    <CheckboxContext.Provider value={CheckboxComponents}>
-      <div {...FormGroupProps}>
-        {label && <LabelComponent {...LabelProps}>{label}</LabelComponent>}
-        <InputComponent {...InputProps} {...{ ref }} />
-        <div>
-          {!isValid && error ? (
-            <components.FormError>{error}</components.FormError>
-          ) : null}
+    <FormGroupContext.Provider value={{ isValid, validProp, setIsValid }}>
+      <CheckboxContext.Provider value={CheckboxComponents}>
+        <div {...FormGroupProps}>
+          {label && <LabelComponent {...LabelProps}>{label}</LabelComponent>}
+          <InputComponent {...InputProps} {...{ ref }} />
+          <div>
+            {!isValid && error ? (
+              <components.FormError>{error}</components.FormError>
+            ) : null}
+          </div>
+          <div>{help}</div>
         </div>
-        <div>{help}</div>
-      </div>
-    </CheckboxContext.Provider>
+      </CheckboxContext.Provider>
+    </FormGroupContext.Provider>
   );
 };
 
