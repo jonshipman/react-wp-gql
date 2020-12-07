@@ -118,8 +118,10 @@ let Input = (
     onChange = () => {},
     onEnter = () => {},
     className = "b--light-silver br0 bb-1 bl-0 br-0 bt-0 pl2 pb2 flex-auto bg-transparent",
+    onCheck,
     loading,
     options,
+    idProp,
     ...props
   },
   ref,
@@ -166,13 +168,20 @@ let Input = (
 
   const ValidityCheck = useCallback(
     (currentValue) => {
+      let v;
       if (validProp instanceof Function) {
-        setIsValid(validProp(currentValue));
+        v = validProp(currentValue);
       } else {
-        setIsValid(validProp);
+        v = validProp;
       }
+
+      if (onCheck) {
+        onCheck({ id: idProp, valid: v, value });
+      }
+
+      setIsValid(v);
     },
-    [setIsValid, validProp],
+    [setIsValid, validProp, value, idProp],
   );
 
   useEffect(() => {
@@ -194,14 +203,38 @@ let Input = (
 };
 Input = forwardRef(Input);
 
+const InitHandlingComponent = ({ id, onInit }) => {
+  const [hasRun, setHasRun] = useState(false);
+
+  useEffect(() => {
+    if (!hasRun) {
+      setHasRun(true);
+      onInit({ id });
+    }
+  }, [onInit, id, hasRun]);
+
+  return null;
+};
+
+const ErrorHandlingComponent = ({ onError, id, value }) => {
+  useEffect(() => {
+    if (onError) {
+      onError({ id, value });
+    }
+  }, [onError, id, value]);
+
+  return null;
+};
+
 let FormGroup = (
   {
     className = "",
     replaceClass,
     help,
+    onError,
+    onInit,
     valid: validProp = true,
     error = "Required.",
-    onCheck,
     label,
     children,
     id: idProp,
@@ -218,7 +251,7 @@ let FormGroup = (
   );
 
   const InputComponent = Input;
-  let InputProps = { id, ...props };
+  let InputProps = { id, idProp, ...props };
   const LabelComponent = Label;
   let LabelProps = { htmlFor: id };
 
@@ -266,14 +299,16 @@ let FormGroup = (
   return (
     <FormGroupContext.Provider value={{ isValid, validProp, setIsValid }}>
       <CheckboxContext.Provider value={CheckboxComponents}>
+        {!!onInit && <InitHandlingComponent {...{ onInit }} id={idProp} />}
         <div {...FormGroupProps}>
           {label && <LabelComponent {...LabelProps}>{label}</LabelComponent>}
           <InputComponent {...InputProps} {...{ ref }} />
-          <div>
-            {!isValid && error ? (
+          {!isValid && error ? (
+            <div>
+              <ErrorHandlingComponent {...{ onError, id: idProp, ...props }} />
               <components.FormError>{error}</components.FormError>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
           <div>{help}</div>
         </div>
       </CheckboxContext.Provider>
