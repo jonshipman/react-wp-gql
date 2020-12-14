@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useQueries } from "../useQueries";
 
 const LoggedInContext = createContext({});
