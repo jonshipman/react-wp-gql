@@ -16,6 +16,9 @@ export const MutationLogin = () => gql`
     ) {
       clientMutationId
       status
+      viewer {
+        capabilities
+      }
     }
   }
 `;
