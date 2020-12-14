@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { NodeContext } from "../../Context";
 import {
+  setRedirect,
   getRedirect,
   removeRedirect as DefaultRemoveRedirect,
 } from "../../functions";
@@ -23,7 +24,15 @@ export const useLogin = ({ setMessage = () => {} }) => {
     if (isLoggedIn) {
       if (loginRedirect) {
         removeRedirect();
-        history.push(loginRedirect);
+
+        if (
+          loginRedirect.includes("/wp-admin") ||
+          loginRedirect.indexOf("/") !== 0
+        ) {
+          window.location.href = loginRedirect;
+        } else {
+          history.push(loginRedirect);
+        }
       } else {
         history.push("/");
       }
@@ -39,6 +48,11 @@ export const useLogin = ({ setMessage = () => {} }) => {
   const onCompleted = useCallback(
     (data) => {
       const status = data ? data.login?.status || false : false;
+      const capabilities = data ? data.login?.viewer?.capabilities || [] : [];
+
+      if (capabilities.includes("manage_options")) {
+        setRedirect("/wp-admin/index.php");
+      }
 
       if (status === "SUCCESS") {
         loggedIn();
