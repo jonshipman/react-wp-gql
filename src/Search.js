@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NodeContext } from "./Context";
 
 import { useComponents, useQueries } from "./hooks";
@@ -31,10 +31,19 @@ export const Search = ({ title = "Search" }) => {
   const [filter, setFilter] = useState();
   const { queries } = useQueries();
   const { search } = useContext(NodeContext);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => (isMounted.current = false);
+  }, []);
 
   if (!!search?.current) {
     search.current.updateSearch = (value) => {
-      setFilter(value);
+      if (isMounted.current) {
+        setFilter(value);
+      }
     };
   }
 
