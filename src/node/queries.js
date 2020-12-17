@@ -59,7 +59,11 @@ export const QuerySearch = (fragments) => gql`
     $after: String
     $before: String
   ) {
-    ${CreatePaginationQuery("contentNodes", ContentNodes)}
+    ${CreatePaginationQuery(
+      "contentNodes",
+      ContentNodes,
+      "status: PUBLISH, search: $filter",
+    )}
   }
   ${fragments.FragmentPage || FragmentPage}
   ${fragments.FragmentPost || FragmentPost}
