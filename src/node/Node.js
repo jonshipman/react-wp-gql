@@ -82,7 +82,7 @@ export const Node = ({
           <meta name="robots" content="noindex" />
         </components.Seo>
 
-        <components.Title>{title}</components.Title>
+        {loading || title ? <components.Title>{title}</components.Title> : null}
 
         <Wrapper
           className="rwg--node-archive"
