@@ -1,11 +1,15 @@
 import React from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import { Login } from "./Login";
 import { Node } from "./node/Node";
 import { Search } from "./Search";
 
-export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
+export const WordPressRoutes = ({
+  category = "category",
+  blog = "blog",
+  blogTitle = "Blog",
+}) => {
   return (
     <Switch>
       <Route
@@ -26,7 +30,7 @@ export const WordPressRoutes = ({ category = "category", blog = "blog" }) => {
       </Route>
 
       <Route exact path={`/${blog}`}>
-        <Node title="Blog" isArchive />
+        <Node title={blogTitle} isArchive />
       </Route>
 
       <Route path={`/${category}/:slug`}>
