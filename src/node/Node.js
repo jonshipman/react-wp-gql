@@ -50,8 +50,10 @@ export const Node = ({
 
   const RenderComponent = useNodeRenderer(__typename, isArchive);
 
+  const title = !!titleProp ? titleProp : node.title || node.name;
+
   const seo = node.seo || {
-    title: !!titleProp ? titleProp : !!node.title ? node.title : node.name,
+    title,
   };
 
   if (siteName && !node.seo) {
@@ -80,7 +82,7 @@ export const Node = ({
           <meta name="robots" content="noindex" />
         </components.Seo>
 
-        <components.Title>{node.name || titleProp}</components.Title>
+        <components.Title>{title}</components.Title>
 
         <Wrapper
           className="rwg--node-archive"
