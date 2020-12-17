@@ -52,9 +52,11 @@ export const Node = ({
 
   const title = !!titleProp ? titleProp : node.title || node.name;
 
-  const seo = node.seo || {
-    title,
-  };
+  const seo = node.seo || {};
+
+  if (title && !node.seo) {
+    seo.title = title;
+  }
 
   if (siteName && !node.seo) {
     seo.title = `${seo.title} - ${siteName}`;
