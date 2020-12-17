@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { NodeContext } from "./Context";
 
 import { useComponents, useQueries } from "./hooks";
 import { Node } from "./node/Node";
@@ -17,7 +18,7 @@ const SearchRender = ({
   return (
     <components.PageWidth {...{ className }}>
       <components.SearchForm {...{ filter, setFilter }} />
-      {!loading && edges.length === 0 && filter.length < 3 ? (
+      {!loading && edges.length === 0 && (filter || "").length < 3 ? (
         <components.NoSearchResults />
       ) : (
         children
@@ -27,15 +28,22 @@ const SearchRender = ({
 };
 
 export const Search = ({ title = "Search" }) => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState();
   const { queries } = useQueries();
+  const { search } = useContext(NodeContext);
+
+  if (!!search?.current) {
+    search.current.updateSearch = (value) => {
+      setFilter(value);
+    };
+  }
 
   const props = {
     isArchive: true,
     title,
     query: queries.QuerySearch,
-    variables: { filter },
-    skip: filter.length < 3,
+    variables: { filter: filter || "" },
+    skip: (filter || "").length < 3,
     filter,
     setFilter,
   };

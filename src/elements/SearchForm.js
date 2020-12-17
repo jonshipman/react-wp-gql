@@ -1,9 +1,15 @@
-import React from "react";
-
+import React, { useCallback } from "react";
 import { useComponents } from "../hooks";
 
 export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
   const { components } = useComponents();
+
+  const updateSearch = useCallback(
+    (value) => {
+      setFilter(value);
+    },
+    [setFilter],
+  );
 
   return (
     <div className="rwg--sch-frm search">
@@ -13,10 +19,10 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
           type="search"
           value={filter}
           placeholder="Search by name and content"
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={(e) => updateSearch(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              setFilter(e.target.value);
+              updateSearch(e.target.value);
             }
           }}
         />
