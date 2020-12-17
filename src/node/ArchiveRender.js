@@ -6,27 +6,23 @@ const Entries = ({ children }) => {
 };
 
 const EntriesColumns = ({ children }) => {
-  return (
-    <div className="entries flex-ns items-center-ns flex-wrap-ns nl2 nr2 nt2 nb2">
-      {children}
-    </div>
-  );
+  return <div className="rwg--node-ent-col">{children}</div>;
 };
 
 const TwoColumn = ({ children }) => {
-  return <div className="w-100 pa2 w-50-ns">{children}</div>;
+  return <div className="rwg--node-2-col">{children}</div>;
 };
 
 const ThreeColumn = ({ children }) => {
-  return <div className="w-100 pa2 w-50-m w-third-l">{children}</div>;
+  return <div className="rwg--node-3-col">{children}</div>;
 };
 
 const FourColumn = ({ children }) => {
-  return <div className="w-100 pa2 w-50-m w-25-l">{children}</div>;
+  return <div className="rwg--node-4-col">{children}</div>;
 };
 
 const FiveColumn = ({ children }) => {
-  return <div className="w-100 pa2 w-50-m w-20-l">{children}</div>;
+  return <div className="rwg--node-5-col">{children}</div>;
 };
 
 const CardRender = (props) => {

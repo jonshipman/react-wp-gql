@@ -1,0 +1,17 @@
+&--title {
+  margin: 0;
+  line-height: solid;
+  padding-top: $spacing-large;
+  padding-bottom: $spacing-large;
+
+  > span {
+    font-size: $font-size-4;
+    font-weight: 400;
+    display: block;
+  }
+
+  .skull {
+    width: 100%;
+    max-width: $max-width-6;
+  }
+}

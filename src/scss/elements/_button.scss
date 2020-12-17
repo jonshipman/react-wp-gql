@@ -1,0 +1,48 @@
+$btn-trans: background-color 0.15s ease-in-out, color 0.15s ease-in;
+$btn-secondary: #f4f4f4 !default;
+
+&--btn {
+  cursor: pointer;
+  text-decoration: none;
+  transition: $btn-trans;
+  border-radius: $border-radius-2;
+  padding-top: $spacing-small;
+  padding-bottom: $spacing-small;
+  padding-right: $spacing-large;
+  padding-left: $spacing-large;
+  color: $btn-secondary;
+  background-color: $primary;
+  border: 0;
+
+  &:hover,
+  &:focus {
+    transition: $btn-trans;
+    background-color: $secondary;
+    color: $btn-secondary;
+  }
+
+  &-loading {
+    margin-left: $spacing-medium;
+  }
+
+  &-wrap-db {
+    display: flex;
+  }
+
+  &-wrap-dib {
+    display: inline-flex;
+  }
+
+  &.db {
+    display: block;
+  }
+  &.dib {
+    display: inline-block;
+  }
+  &.flex {
+    display: flex;
+  }
+  &.inline-flex {
+    display: inline-flex;
+  }
+}

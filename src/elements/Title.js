@@ -13,13 +13,9 @@ let Title = (
   return (
     <div className={`bg-near-white ${className}`} {...props}>
       <components.PageWidth>
-        <Wrap className="title ma0 lh-solid pv4">
+        <Wrap className="rwg--title">
           <span className="f4 fw4 db" {...{ ref }}>
-            {children ? (
-              children
-            ) : (
-              <components.SkullLine className="w-100 mw6" />
-            )}
+            {children ? children : <components.SkullLine />}
           </span>
         </Wrap>
       </components.PageWidth>

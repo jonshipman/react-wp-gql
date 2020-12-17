@@ -29,6 +29,22 @@ export const Logout = () => {
   return null;
 };
 
+const Input = ({ className, onChange: onChangeProp, onEnter, ...props }) => {
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" && onEnter) {
+      onEnter(e.target.value);
+    }
+  };
+
+  const onChange = (e) => onChangeProp(e.target.value);
+
+  return (
+    <div {...{ className }}>
+      <input className="rwg--input" {...{ onKeyDown, onChange }} {...props} />
+    </div>
+  );
+};
+
 export const LoginRender = ({ setMessage }) => {
   const { components } = useComponents();
   const [state, setState] = useState({
@@ -45,16 +61,16 @@ export const LoginRender = ({ setMessage }) => {
   if (!isLoggedIn && !isLoggedInLoading) {
     return (
       <div>
-        <components.FormGroup
-          className="f4"
+        <Input
+          className="rwg--login-group"
           value={username}
           onChange={(username) => setState((p) => ({ ...p, username }))}
           onEnter={() => login(username, password)}
           placeholder="Username or Email Address"
         />
 
-        <components.FormGroup
-          className="f4"
+        <Input
+          className="rwg--login-group"
           value={password}
           onChange={(password) => setState((p) => ({ ...p, password }))}
           onEnter={() => login(username, password)}
@@ -62,7 +78,7 @@ export const LoginRender = ({ setMessage }) => {
           placeholder="Password"
         />
 
-        <div className="db tc">
+        <div className="rwg--login-button">
           <components.Button
             {...{ loading }}
             onClick={() => login(username, password)}
@@ -71,17 +87,11 @@ export const LoginRender = ({ setMessage }) => {
           </components.Button>
         </div>
 
-        <div className="mt3 tc tl-l flex-l justify-between-l">
-          <Link
-            to="/forgot-password"
-            className="forgot-password no-underline primary"
-          >
+        <div className="rwg--login-links">
+          <Link to="/forgot-password" className="forgot-password">
             Forgot Password
           </Link>
-          <Link
-            to="/register"
-            className="register-for-account db mt3 mt0-l no-underline primary"
-          >
+          <Link to="/register" className="register-for-account">
             Sign up for an Account
           </Link>
         </div>
@@ -130,15 +140,15 @@ export const ForgotPasswordRender = ({ setMessage }) => {
 
   return (
     <div>
-      <components.FormGroup
-        className="f4"
+      <Input
+        className="rwg--login-group"
         value={username}
         onChange={(username) => setState((p) => ({ ...p, username }))}
         onEnter={() => mutation({ variables: state })}
         placeholder="Username"
       />
 
-      <div className="db tc">
+      <div className="rwg--login-button">
         <components.Button
           {...{ loading }}
           onClick={() => mutation({ variables: state })}
@@ -191,16 +201,16 @@ export const RegisterRender = ({ setMessage }) => {
 
   return (
     <div>
-      <components.FormGroup
-        className="f4"
+      <Input
+        className="rwg--login-group"
         value={username}
         onChange={(username) => setState((p) => ({ ...p, username }))}
         onEnter={() => mutate({ variables: state })}
         placeholder="Username"
       />
 
-      <components.FormGroup
-        className="f4"
+      <Input
+        className="rwg--login-group"
         value={email}
         onChange={(email) => setState((p) => ({ ...p, email }))}
         onEnter={() => mutate({ variables: state })}
@@ -208,7 +218,7 @@ export const RegisterRender = ({ setMessage }) => {
         placeholder="Email"
       />
 
-      <div className="db tc">
+      <div className="rwg--login-button">
         <components.Button
           {...{ loading }}
           onClick={() => mutate({ variables: state })}
@@ -265,16 +275,16 @@ export const ResetPasswordRender = ({ setMessage }) => {
 
   return (
     <div>
-      <div className="mb2">Enter Your New Password:</div>
+      <div className="rwg--login-msg">Enter Your New Password:</div>
 
-      <components.FormGroup
-        className="f4"
+      <Input
+        className="rwg--login-group"
         value={password}
         onChange={(password) => setState((p) => ({ ...p, password }))}
         onEnter={() => mutation({ variables: state })}
       />
 
-      <div className="db tc">
+      <div className="rwg--login-button">
         <components.Button
           {...{ loading }}
           onClick={() => mutation({ variables: state })}
@@ -289,7 +299,7 @@ export const ResetPasswordRender = ({ setMessage }) => {
 };
 
 export const BackToLogin = () => (
-  <Link to="/login" className="db tr mt3 no-underline primary">
+  <Link to="/login" className="rwg--login-back">
     &lt; Back to Login
   </Link>
 );
@@ -308,7 +318,7 @@ export const LoginPage = () => {
       <h1>Login</h1>
 
       <div
-        className="message mb3"
+        className="rwg--login-msg"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: message }}
       />
@@ -336,7 +346,7 @@ export const Login = ({ wrap }) => {
   const Wrap = wrap ? wrap : components.PageWidth;
 
   return (
-    <Wrap className="login">
+    <Wrap className="rwg--login">
       <LoggedInProvider>
         <Switch>
           <Route exact path="/logout">

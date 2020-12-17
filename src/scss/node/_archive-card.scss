@@ -1,0 +1,41 @@
+&-card {
+  border-color: $near-white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: $spacing-large;
+  margin-top: $spacing-large;
+  margin-bottom: $spacing-large;
+
+  & &-heading {
+    margin-top: 0;
+
+    &-link {
+      color: $primary;
+      text-decoration: none;
+    }
+
+    .skull {
+      max-width: $max-width-6;
+      width: 100%;
+    }
+  }
+
+  & &-date {
+    margin-top: $spacing-small;
+    font-size: $font-size-6;
+
+    @media #{$breakpoint-not-small} {
+      float: right;
+      margin-top: 0;
+    }
+  }
+
+  .post-content {
+    margin-top: $spacing-large;
+    margin-bottom: $spacing-large;
+  }
+
+  &-btn-wrap {
+    text-align: right;
+  }
+}

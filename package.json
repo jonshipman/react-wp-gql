@@ -1,6 +1,6 @@
 {
   "name": "react-wp-gql",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "WordPress Rendering and Routing for WP-GraphQL",
   "author": "jonshipman",
   "license": "Apache",
@@ -59,7 +59,6 @@
     "webpack-merge": "^5.4.0"
   },
   "dependencies": {
-    "react-helmet": "^6.1.0",
-    "tachyons-sass": "^4.9.5"
+    "react-helmet": "^6.1.0"
   }
 }

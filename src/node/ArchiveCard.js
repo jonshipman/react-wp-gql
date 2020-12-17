@@ -12,15 +12,13 @@ export const ArchiveCard = (props) => {
   const body = excerpt || content;
 
   return (
-    <article
-      className={`content blog-entry b--near-white bb pb4 mv4 post-${databaseId}`}
-    >
-      <h2 className="mt0">
-        <Link to={uri || "/"} className="primary no-underline">
-          {title ? title : <components.SkullLine className="mw6 w-100" />}
+    <article className={`rwg--node-card post-${databaseId}`}>
+      <h2 className="rwg--node-card-heading">
+        <Link to={uri || "/"} className="rwg--node-card-heading-link">
+          {title ? title : <components.SkullLine />}
         </Link>
         {loading || date ? (
-          <div className="posted fr-ns mt2 mt0-ns f6">
+          <div className="rwg--node-card-date">
             <components.ClockIcon
               className="v-mid mr2"
               width={12}
@@ -32,14 +30,12 @@ export const ArchiveCard = (props) => {
       </h2>
 
       {body ? (
-        <components.PostContent className="mv4" trim>
-          {body}
-        </components.PostContent>
+        <components.PostContent trim>{body}</components.PostContent>
       ) : (
         <components.SkullParagraph />
       )}
 
-      <div className="tr">
+      <div className="rwg--node-card-btn-wrap">
         {uri ? (
           <components.Button to={uri} type={3}>
             Read more

@@ -6,15 +6,15 @@ export const Pagination = ({ hasNextPage, hasPreviousPage, prev, next }) => {
   const { components } = useComponents();
 
   return (
-    <div className="pagination cf mv4">
+    <div className="rwg--paged pagination">
       {hasPreviousPage && (
-        <components.Button className="fl" onClick={prev}>
+        <components.Button className="prev" onClick={prev}>
           Previous
         </components.Button>
       )}
 
       {hasNextPage && (
-        <components.Button className="fr" onClick={next}>
+        <components.Button className="next" onClick={next}>
           Next
         </components.Button>
       )}

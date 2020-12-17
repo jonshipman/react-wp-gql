@@ -1,49 +1,13 @@
-/**
- * Root Imports and Theming
- */
-@import "~tachyons-sass/tachyons.scss";
+$primary: #586f7c !default;
+$secondary: #f4f4f9 !default;
 
-$primary: $green !default;
-$secondary: $blue !default;
-
-@import "./_tachyon/tachyons.scss";
+@import "./_variables.scss";
+@import "./_defaults.scss";
+@import "./_menu.scss";
 @import "./_animations.scss";
 
-@include tachyons-color-gen("primary", $primary);
-@include tachyons-color-gen("secondary", $secondary);
-
-@include tachyons-prop(".pre-line") {
-  white-space: pre-line;
+.rwg {
+  @import "./_login.scss";
+  @import "./node/style.scss";
+  @import "./elements/style.scss";
 }
-
-@include tachyons-prop(".hover-underline") {
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-@for $i from 1 to 10 {
-  @include tachyons-prop(".col-#{$i}") {
-    columns: $i;
-  }
-}
-
-@for $i from 1 to 10 {
-  @include tachyons-prop(".clamp-#{$i}") {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: $i;
-    -webkit-box-orient: vertical;
-  }
-}
-
-/**
- * Defaults
- */
-
-@import "./_defaults.scss";
-
-/**
- * General purpose, theme specific styles
- */

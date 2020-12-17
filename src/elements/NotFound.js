@@ -1,17 +1,13 @@
 import React from "react";
 
-import { useComponents } from "../hooks/useComponents";
-
 export const NotFound = () => {
-  const { components } = useComponents();
-
   return (
-    <div className="content post-not-found">
-      <h1 className="content--title tc">
-        <span className="content--title-inner">404: Page Not Found</span>
+    <div className="rwg--no-fnd post-not-found">
+      <h1 className="title">
+        <span className="title-inner">404: Page Not Found</span>
       </h1>
 
-      <div className="content--body tc">
+      <div className="body">
         <h2>Sorry, this page could not be found.</h2>
         <p>
           The page you are looking for doesn't exist, no longer exists or has

@@ -1,6 +1,10 @@
 import React from "react";
 
-export const SkullLine = ({ className = "", color = "light-gray" }) => {
+export const SkullLine = ({
+  className: classNameProp = "",
+  color = "light-gray",
+}) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
       <div className="relative z-1" aria-hidden="true">
@@ -16,7 +20,11 @@ export const SkullLine = ({ className = "", color = "light-gray" }) => {
   );
 };
 
-export const SkullWord = ({ className = "", color = "light-gray" }) => {
+export const SkullWord = ({
+  className: classNameProp = "",
+  color = "light-gray",
+}) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div className={`dib ${className}`}>
       <div className="dib relative z-1" aria-hidden="true">
@@ -32,7 +40,11 @@ export const SkullWord = ({ className = "", color = "light-gray" }) => {
   );
 };
 
-export const SkullButton = ({ className, color = "light-gray" }) => {
+export const SkullButton = ({
+  className: classNameProp = "",
+  color = "light-gray",
+}) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
       <div
@@ -45,7 +57,11 @@ export const SkullButton = ({ className, color = "light-gray" }) => {
   );
 };
 
-export const SkullParagraph = ({ className = "mb2", color = "light-gray" }) => {
+export const SkullParagraph = ({
+  className: classNameProp = "mb2",
+  color = "light-gray",
+}) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
       <SkullLine {...{ color }} />
@@ -56,7 +72,11 @@ export const SkullParagraph = ({ className = "mb2", color = "light-gray" }) => {
   );
 };
 
-export const SkullImage = ({ className, color = "light-gray" }) => {
+export const SkullImage = ({
+  className: classNameProp = "",
+  color = "light-gray",
+}) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
       <div
@@ -67,7 +87,8 @@ export const SkullImage = ({ className, color = "light-gray" }) => {
   );
 };
 
-export const SkullPage = ({ className }) => {
+export const SkullPage = ({ className: classNameProp = "" }) => {
+  const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
       <SkullParagraph />

@@ -1,0 +1,49 @@
+&--login {
+  &-group {
+    font-size: $font-size-4;
+  }
+
+  &-button {
+    display: block;
+    text-align: center;
+  }
+
+  &-msg {
+    margin-bottom: $spacing-small;
+  }
+
+  &-back {
+    margin-top: $spacing-medium;
+    text-align: center;
+    display: block;
+    text-align: right;
+    margin-top: $spacing-medium;
+    text-decoration: none;
+    color: $primary;
+  }
+
+  &-links {
+    margin-top: $spacing-medium;
+    text-align: center;
+
+    a {
+      text-decoration: none;
+      color: $primary;
+
+      &.register-for-account {
+        display: block;
+        margin-top: $spacing-medium;
+
+        @media #{$breakpoint-large} {
+          margin-top: 0;
+        }
+      }
+    }
+
+    @media #{$breakpoint-large} {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

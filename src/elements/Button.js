@@ -1,9 +1,6 @@
 import React, { forwardRef } from "react";
 import { Link } from "react-router-dom";
-import { useComponents } from "../hooks";
-
-const defaultClassName =
-  "pointer link bg-animate hover-bg-secondary br2 ph4 pv2 white bg-primary bn";
+import { Loading } from "./Loading";
 
 const ButtonRender = ({
   children,
@@ -71,21 +68,25 @@ let Button = (
     loading,
     disabled,
     style = {},
-    className = defaultClassName,
-    Loading,
+    className: classNameProp,
+    Loading: LoadingProp,
     ...props
   },
   ref,
 ) => {
-  const { components } = useComponents();
-  const LoadingComponent = Loading ? Loading : components.Loading;
+  const LoadingComponent = LoadingProp ? LoadingProp : Loading;
+
+  const baseClassName = "rwg--btn";
+  const className = `${baseClassName} ${classNameProp || ""}`;
 
   if (loading) {
     return (
       <div
         className={`${
-          className?.includes("db") ? "flex" : "inline-flex"
-        } justify-between items-center`}
+          className?.includes("db")
+            ? `${baseClassName}-wrap-db`
+            : `${baseClassName}-wrap-dib`
+        } ${baseClassName}-wrap`}
       >
         <ButtonRender
           forwardedRef={ref}
@@ -94,7 +95,7 @@ let Button = (
           {...{ className }}
           {...props}
         />
-        <LoadingComponent className="ml3" />
+        <LoadingComponent className="rwg--btn-loading" />
       </div>
     );
   }

@@ -83,17 +83,17 @@ export const Node = ({
         <components.Title>{node.name || titleProp}</components.Title>
 
         <Wrapper
-          className="mv4 archive"
+          className="rwg--node-archive"
           {...{ edges, loading, error, __typename, node, data }}
           {...props}
         >
           {error ? (
             <components.ErrorRouting {...{ loading, error, wrap: "div" }} />
           ) : edges?.length === 0 && !loading ? (
-            <div className="archive-nothing-found">
+            <div className="rwg--archive-nothing-found">
               <div>Nothing found.</div>
               <div
-                className="dn"
+                className="rwg--node-no-show"
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: `<!-- status-code-404 -->` }}
               />

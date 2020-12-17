@@ -8,7 +8,7 @@ export const Loading = ({ color, ...props }) => {
 
   return (
     <span {...props}>
-      <span className="lds-ring">
+      <span className="rwg--loading">
         {Array.from(new Array(3)).map(() => (
           <span key={Math.random()} style={style} />
         ))}

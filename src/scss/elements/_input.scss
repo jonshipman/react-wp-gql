@@ -1,0 +1,31 @@
+&--input {
+  display: block;
+  width: 100%;
+  border-color: $light-silver;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: $spacing-small;
+  padding-bottom: $spacing-small;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  background-color: transparent;
+
+  &[type="radio"],
+  &[type="checkbox"] {
+    width: auto;
+    margin-right: $spacing-small;
+  }
+}
+
+&--label {
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: $spacing-small;
+  padding-left: $spacing-small;
+}
