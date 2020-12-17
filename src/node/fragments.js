@@ -49,7 +49,6 @@ export const FragmentPage = `
 export const FragmentContentType = `
   fragment ContentTypeFragment on ContentType {
     id
-    title: label
     ${CreatePaginationQuery("contentNodes", "... on Post {...PostFragment}")}
   }
 `;
