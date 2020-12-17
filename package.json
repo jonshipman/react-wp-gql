@@ -9,7 +9,7 @@
     "url": "git+https://github.com/jonshipman/react-wp-gql.git"
   },
   "files": [
-    "scss",
+    "src/scss",
     "dist"
   ],
   "keywords": [
