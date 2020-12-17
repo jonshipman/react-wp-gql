@@ -29,7 +29,12 @@ export const Logout = () => {
   return null;
 };
 
-const Input = ({ className, onChange: onChangeProp, onEnter, ...props }) => {
+const Input = ({
+  className: classNameProp = "",
+  onChange: onChangeProp,
+  onEnter,
+  ...props
+}) => {
   const onKeyDown = (e) => {
     if (e.key === "Enter" && onEnter) {
       onEnter(e.target.value);
@@ -37,6 +42,8 @@ const Input = ({ className, onChange: onChangeProp, onEnter, ...props }) => {
   };
 
   const onChange = (e) => onChangeProp(e.target.value);
+
+  const className = `rwg--ctrl ${classNameProp}`;
 
   return (
     <div {...{ className }}>

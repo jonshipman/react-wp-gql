@@ -7,7 +7,7 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
 
   return (
     <div className="rwg--sch-frm search">
-      <div className="sch-ctl">
+      <div className="rwg--sch-ctrl rwg--ctrl">
         <input
           className="rwg--input"
           type="search"
@@ -21,7 +21,7 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
           }}
         />
       </div>
-      <div className="sch-ico">
+      <div className="rwg--sch-ico">
         <components.SearchIcon width={24} />
       </div>
     </div>
