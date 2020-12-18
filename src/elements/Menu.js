@@ -134,7 +134,7 @@ export const MenuSkeleton = ({ error, skullColor: color, ...props }) => {
 /**
  * Child item that loops to created the nested menu.
  */
-const ChildItem = ({ menuItem, level, location, ...props }) => {
+const ChildItem = ({ menuItem, level, location, index, ...props }) => {
   const { components } = useComponents();
 
   const { childItems, connectedNode: connection } = menuItem || {};
@@ -152,6 +152,7 @@ const ChildItem = ({ menuItem, level, location, ...props }) => {
   const menuItemProps = {
     location,
     source: menuItem,
+    index,
   };
 
   const anchorProps = {
@@ -159,11 +160,13 @@ const ChildItem = ({ menuItem, level, location, ...props }) => {
     location,
     source: menuItem,
     onClick: props.onClick,
+    index,
   };
 
   const subMenuProps = {
     location,
     source: menuItem,
+    index,
   };
 
   if (
@@ -239,8 +242,10 @@ export const MenuRender = ({
         <components.MenuSkeleton {...props} />
       ) : (
         menuItems?.length > 0 &&
-        menuItems.map((menuItem) => {
-          return <ChildItem key={menuItem.id} {...{ menuItem }} {...props} />;
+        menuItems.map((menuItem, index) => {
+          return (
+            <ChildItem key={menuItem.id} {...{ menuItem, index }} {...props} />
+          );
         })
       )}
       {children}
