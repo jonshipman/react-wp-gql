@@ -11,10 +11,10 @@ let Title = (
   const Wrap = notHeading ? "div" : wrap;
 
   return (
-    <div className={`bg-near-white ${className}`} {...props}>
+    <div className={`rwg--title-wrap ${className}`} {...props}>
       <components.PageWidth>
         <Wrap className="rwg--title">
-          <span className="f4 fw4 db" {...{ ref }}>
+          <span {...{ ref }}>
             {children ? children : <components.SkullLine />}
           </span>
         </Wrap>
