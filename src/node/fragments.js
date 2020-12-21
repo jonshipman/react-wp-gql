@@ -52,3 +52,11 @@ export const FragmentContentType = `
     ${CreatePaginationQuery("contentNodes", "... on Post {...PostFragment}")}
   }
 `;
+
+export const FragmentUserArchive = `
+  fragment UserArchiveFragment on User {
+    id
+    name
+    ${CreatePaginationQuery("posts", "...PostFragment")}
+  }
+`;

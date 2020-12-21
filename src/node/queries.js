@@ -33,12 +33,16 @@ export const QueryNodeByUri = (fragments) => gql`
       ... on ContentType {
         ...ContentTypeFragment
       }
+      ... on User {
+        ...UserArchiveFragment
+      }
     }
   }
   ${fragments.FragmentContentType || FragmentContentType}
   ${fragments.FragmentCategory || FragmentCategory}
   ${fragments.FragmentPage || FragmentPage}
   ${fragments.FragmentPost || FragmentPost}
+  ${fragments.FragmentUserArchive || FragmentUserArchive}
 `;
 
 export const QueryContentNodeById = (fragments) => gql`
