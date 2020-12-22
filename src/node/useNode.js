@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import {
@@ -8,10 +7,11 @@ import {
   usePagination,
   useQueries,
 } from "../hooks";
-import { NodeContext } from "../Context";
+import { useNodeContext } from "../Context";
+import { useMemo } from "react";
 
 export const useNode = (props) => {
-  const { perPage } = useContext(NodeContext);
+  const { perPage } = useNodeContext();
   const { queries } = useQueries();
 
   const {
@@ -23,6 +23,7 @@ export const useNode = (props) => {
     skip,
     ssr,
   } = props || {};
+
   const { pathname: uri, search } = useLocation();
   const previewId = new URLSearchParams(search).get("p");
 
@@ -54,24 +55,26 @@ export const useNode = (props) => {
     ssr,
   });
 
-  const node = data ? data.node || {} : {};
-  let __typename = node.__typename;
-  let isArchive = !!node.posts;
+  const node = useMemo(() => (data ? data.node || {} : {}), [data]);
 
-  let edges, pageInfo, title, seo;
+  const { __typename, isArchive, edges, pageInfo, title, seo } = useMemo(() => {
+    const results = { __typename: node?.__typename, isArchive: !!node?.posts };
 
-  if (node.posts) {
-    edges = node.posts?.edges || [];
-    pageInfo = node.posts?.pageInfo || {};
-    __typename = node.posts?.edges[0]?.node?.__typename || null;
-    title = node.name;
-    seo = node.seo;
-  } else if (data && data.posts) {
-    edges = data ? data.posts?.edges || [] : [];
-    pageInfo = data ? data.posts?.pageInfo || {} : {};
-    __typename = data ? data.posts?.edges[0]?.node?.__typename : null;
-    isArchive = true;
-  }
+    if (!!node?.posts) {
+      results.edges = node?.posts?.edges || [];
+      results.pageInfo = node?.posts?.pageInfo || {};
+      results.__typename = node?.posts?.edges[0]?.node?.__typename || null;
+      results.title = node?.name;
+      results.seo = node?.seo;
+    } else if (!!data?.posts) {
+      results.edges = data?.posts?.edges || [];
+      results.pageInfo = data?.posts?.pageInfo || {};
+      results.__typename = data?.posts?.edges[0]?.node?.__typename || null;
+      results.isArchive = true;
+    }
+
+    return results;
+  }, [data, node]);
 
   const { endCursor, hasNextPage, hasPreviousPage, startCursor } = getPageInfo(
     pageInfo,
@@ -99,6 +102,8 @@ export const useNode = (props) => {
     node,
     pageInfo,
     prev,
+    seo,
+    title,
   };
 };
 

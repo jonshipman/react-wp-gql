@@ -1,9 +1,7 @@
-import { useContext } from "react";
-
-import { NodeContext } from "../Context";
+import { useNodeContext } from "../Context";
 
 export const useQueries = () => {
-  const { queries, fragments, mutations } = useContext(NodeContext);
+  const { queries, fragments, mutations } = useNodeContext();
 
   const executedQueries = {};
 

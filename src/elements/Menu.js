@@ -1,6 +1,6 @@
-import React, { forwardRef, useContext, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { NodeContext } from "../Context";
+import { useNodeContext } from "../Context";
 
 import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
@@ -47,7 +47,7 @@ export const MenuItemAnchor = ({
   location,
   ...props
 }) => {
-  const { Preload } = useContext(NodeContext);
+  const { Preload } = useNodeContext();
   const [entered, setEntered] = useState(false);
   const { level = 1, onClick = () => {} } = props;
   const { components } = useComponents();

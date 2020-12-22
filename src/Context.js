@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const NodeContext = createContext({
   components: {},
@@ -6,3 +6,5 @@ export const NodeContext = createContext({
   queries: {},
   mutations: {},
 });
+
+export const useNodeContext = () => useContext(NodeContext);

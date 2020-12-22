@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { NodeContext } from "./Context";
-
+import React, { useEffect, useRef, useState } from "react";
+import { useNodeContext } from "./Context";
 import { useComponents, useQueries } from "./hooks";
 import { Node } from "./node/Node";
 
@@ -30,7 +29,7 @@ const SearchRender = ({
 export const Search = ({ title = "Search" }) => {
   const [filter, setFilter] = useState();
   const { queries } = useQueries();
-  const { search } = useContext(NodeContext);
+  const { search } = useNodeContext();
   const isMounted = useRef(false);
 
   useEffect(() => {

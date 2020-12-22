@@ -15,6 +15,7 @@ export const CreatePaginationQuery = (
         node {
           ${fragment}
         }
+        cursor
       }
       pageInfo {
         endCursor

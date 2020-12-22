@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { NodeContext } from "../Context";
+import { NodeContext, useNodeContext } from "../Context";
 import { useComponents } from "../hooks";
 import { useNode, useNodeRenderer } from "./useNode";
 
@@ -9,7 +9,7 @@ export const Node = ({
   isArchive: isArchiveProp,
   perPage,
   title: titleProp,
-  columns = 1,
+  columns: columnsProp,
   wrap,
   card,
   entries,
@@ -21,7 +21,9 @@ export const Node = ({
 }) => {
   const { components } = useComponents();
   const { pathname } = useLocation();
-  const { siteName } = useContext(NodeContext);
+  const { siteName, archiveColumns } = useNodeContext();
+
+  const columns = columnsProp ? columnsProp : archiveColumns?.current || 1;
 
   const nodeUsed = useNode({
     query,

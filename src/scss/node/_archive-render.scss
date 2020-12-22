@@ -6,7 +6,7 @@
 
   @media #{$breakpoint-not-small} {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
 }

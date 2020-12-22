@@ -1,7 +1,7 @@
-import { useContext, useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { NodeContext } from "../../Context";
+import { useNodeContext } from "../../Context";
 import {
   setRedirect,
   getRedirect,
@@ -18,7 +18,7 @@ export const useLogin = ({ setMessage = () => {} }) => {
     loginRedirect = getRedirect(),
     removeRedirect = DefaultRemoveRedirect,
     onLoggedIn = () => {},
-  } = useContext(NodeContext);
+  } = useNodeContext();
 
   useEffect(() => {
     if (isLoggedIn) {
