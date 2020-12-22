@@ -1,11 +1,5 @@
 import { gql } from "@apollo/client";
 import { CreatePaginationQuery } from "./CreatePaginationQuery";
-import {
-  FragmentCategory,
-  FragmentPage,
-  FragmentPost,
-  FragmentContentType,
-} from "./fragments";
 
 const ContentNodes = `
   __typename
@@ -38,11 +32,11 @@ export const QueryNodeByUri = (fragments) => gql`
       }
     }
   }
-  ${fragments.FragmentContentType || FragmentContentType}
-  ${fragments.FragmentCategory || FragmentCategory}
-  ${fragments.FragmentPage || FragmentPage}
-  ${fragments.FragmentPost || FragmentPost}
-  ${fragments.FragmentUserArchive || FragmentUserArchive}
+  ${fragments.FragmentContentType}
+  ${fragments.FragmentCategory}
+  ${fragments.FragmentPage}
+  ${fragments.FragmentPost}
+  ${fragments.FragmentUserArchive}
 `;
 
 export const QueryContentNodeById = (fragments) => gql`
@@ -51,8 +45,8 @@ export const QueryContentNodeById = (fragments) => gql`
       ${ContentNodes}
     }
   }
-  ${fragments.FragmentPage || FragmentPage}
-  ${fragments.FragmentPost || FragmentPost}
+  ${fragments.FragmentPage}
+  ${fragments.FragmentPost}
 `;
 
 export const QuerySearch = (fragments) => gql`
@@ -69,6 +63,6 @@ export const QuerySearch = (fragments) => gql`
       "status: PUBLISH, search: $filter",
     )}
   }
-  ${fragments.FragmentPage || FragmentPage}
-  ${fragments.FragmentPost || FragmentPost}
+  ${fragments.FragmentPage}
+  ${fragments.FragmentPost}
 `;
