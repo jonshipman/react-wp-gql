@@ -238,7 +238,7 @@ export const MenuRender = ({
       style={{ touchAction: "pan-y" }}
     >
       {prepend}
-      {loading || props.error?.message ? (
+      {(!!loading && (menuItems || []).length === 0) || props.error?.message ? (
         <components.MenuSkeleton {...props} />
       ) : (
         menuItems?.length > 0 &&
