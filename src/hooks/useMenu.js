@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useMemo } from "react";
 import { useQueries } from "./useQueries";
 
 export const useMenu = (props = {}) => {
