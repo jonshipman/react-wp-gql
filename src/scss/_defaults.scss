@@ -41,10 +41,9 @@ svg {
 /**
 	* Interior CMS styles
 	*/
+@import "./_wordpress.scss";
 
 .post-content {
-  @import "./_wordpress.scss";
-
   p,
   h1,
   h2,
