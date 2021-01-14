@@ -153,6 +153,7 @@ const ChildItem = ({ menuItem, level, location, index, ...props }) => {
     location,
     source: menuItem,
     index,
+    className: "",
   };
 
   const anchorProps = {
