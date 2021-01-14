@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
-import { useQuery } from "@apollo/client";
 import {
   getPageInfo,
   useComponents,
   useNavigation,
   usePagination,
   useQueries,
+  useCachedQuery,
 } from "../hooks";
 import { useNodeContext } from "../Context";
 import { useMemo } from "react";
@@ -48,7 +48,9 @@ export const useNode = (props) => {
     variables.uri = uri !== "/" ? uri.replace(/\/+$/, "") : uri;
   }
 
-  const { data, loading, error } = useQuery(query, {
+  const key = `useNode_${JSON.stringify(variables)}`;
+
+  const { data, loading, error } = useCachedQuery(key, query, {
     errorPolicy: "all",
     variables,
     skip,

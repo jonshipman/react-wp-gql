@@ -19,7 +19,7 @@ export const SingleRender = ({
     <div>
       <components.Title>{title || name}</components.Title>
       <RenderWrapper {...{ className }} {...props}>
-        {loading ? (
+        {!!loading && !node?.content ? (
           <components.SkullPage color={skullColor} />
         ) : (
           <components.PostContent>{content}</components.PostContent>
