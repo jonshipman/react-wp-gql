@@ -8,7 +8,7 @@ export const useMenu = (props = {}) => {
   const variables = { location, parentId };
 
   const { data, loading, error } = useCachedQuery(
-    `useMenu_${location}`,
+    `Menu_${location}`,
     queries.QueryMenu,
     {
       variables,

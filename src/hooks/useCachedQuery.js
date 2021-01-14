@@ -1,5 +1,5 @@
+import { useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { useMemo } from "react";
 
 export const useCachedQuery = (key, ...props) => {
   const { data: queryData, ...results } = useQuery(...props);
