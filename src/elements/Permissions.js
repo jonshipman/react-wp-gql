@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { useQueries } from "../hooks/useQueries";
 
 export const Permissions = ({
+  wait,
   cap,
   children,
   fallback = null,
@@ -12,7 +13,7 @@ export const Permissions = ({
   ...props
 }) => {
   const { queries } = useQueries();
-  const { data } = useQuery(QUERY || queries.QueryPermissions, {
+  const { data, loading } = useQuery(QUERY || queries.QueryPermissions, {
     errorPolicy: "all",
   });
 
@@ -30,6 +31,10 @@ export const Permissions = ({
         return cloneElement(children, props);
       }
     }
+  }
+
+  if (wait && loading) {
+    return null;
   }
 
   if (fallback === null) {
