@@ -26,3 +26,13 @@ export const QueryIsLoggedIn = () => gql`
     isLoggedIn
   }
 `;
+
+export const QueryPermissions = () => gql`
+  query PermissionsQuery {
+    viewer {
+      id
+      databaseId
+      capabilities
+    }
+  }
+`;
