@@ -6,7 +6,7 @@ import { useComponents } from "../hooks/useComponents";
 import { useMenu } from "../hooks/useMenu";
 import { useNode } from "../node";
 
-const MenuPreload = ({ uri }) => {
+const DefaultPreload = ({ uri }) => {
   useNode({ uri });
 
   return null;
@@ -53,6 +53,8 @@ export const MenuItemAnchor = ({
   const { components } = useComponents();
   const className = `menu-item-anchor ${classNameProp}`;
 
+  const MenuPreload = !!Preload ? Preload : DefaultPreload;
+
   const innerProps = {
     level,
     href,
@@ -88,7 +90,6 @@ export const MenuItemAnchor = ({
       {to && (
         <NavLink {...navLinkProps}>
           {entered && <MenuPreload uri={to} />}
-          {entered && !!Preload && <Preload uri={to} />}
           <components.LinkInner {...innerProps}>
             {children}
           </components.LinkInner>
