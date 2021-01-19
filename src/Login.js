@@ -321,7 +321,7 @@ export const LoginPage = () => {
   }
 
   return (
-    <React.Fragment>
+    <div>
       <h1>Login</h1>
 
       <div
@@ -344,7 +344,7 @@ export const LoginPage = () => {
           <components.LoginRender {...{ setMessage }} />
         </Route>
       </Switch>
-    </React.Fragment>
+    </div>
   );
 };
 
