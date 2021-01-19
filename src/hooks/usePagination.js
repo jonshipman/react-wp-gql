@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 export const getPageInfo = (
   pageInfo = {
@@ -22,6 +23,9 @@ export const useNavigation = ({ goNext, endCursor, goPrev, startCursor }) => {
 };
 
 export const usePagination = (perPage = 10) => {
+  const { pathname } = useLocation();
+  const prevPathname = useRef();
+
   const [cursor, setCursor] = useState();
   const [direction, setDirection] = useState();
 
@@ -36,6 +40,12 @@ export const usePagination = (perPage = 10) => {
     variables.first = perPage;
     variables.after = cursor;
   }
+
+  useEffect(() => {
+    if (prevPathname.current !== pathname && !!cursor) {
+      setCursor(null);
+    }
+  }, [prevPathname, pathname, setCursor, cursor]);
 
   const goNext = useCallback(
     (endCursor) => {
@@ -54,6 +64,10 @@ export const usePagination = (perPage = 10) => {
     },
     [setDirection, setCursor],
   );
+
+  useEffect(() => {
+    prevPathname.current = pathname;
+  }, [prevPathname, pathname]);
 
   return {
     variables,
