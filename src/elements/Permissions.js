@@ -15,6 +15,7 @@ export const Permissions = ({
   const { queries } = useQueries();
   const { data, loading } = useQuery(QUERY || queries.QueryPermissions, {
     errorPolicy: "all",
+    fetchPolicy: "network-only",
   });
 
   if (data?.viewer?.capabilities?.length > 0) {
