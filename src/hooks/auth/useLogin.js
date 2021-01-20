@@ -18,6 +18,7 @@ export const useLogin = ({ setMessage = () => {} }) => {
     loginRedirect = getRedirect(),
     removeRedirect = DefaultRemoveRedirect,
     onLoggedIn = () => {},
+    permissions,
   } = useNodeContext();
 
   useEffect(() => {
@@ -59,8 +60,15 @@ export const useLogin = ({ setMessage = () => {} }) => {
       } else {
         setMessage(status || "Incorrect password");
       }
+
+      // Run a refetch for all the permissions.
+      permissions.current.refetch.forEach((s) => {
+        if (typeof s === "function") {
+          s();
+        }
+      });
     },
-    [loggedIn],
+    [loggedIn, permissions],
   );
 
   const [mutation, { error, loading }] = useMutation(mutations.MutationLogin, {

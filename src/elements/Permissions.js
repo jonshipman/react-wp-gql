@@ -1,7 +1,8 @@
-import { createElement, cloneElement } from "react";
+import { createElement, cloneElement, useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 import { useQueries } from "../hooks/useQueries";
+import { useNodeContext } from "../Context";
 
 export const Permissions = ({
   wait,
@@ -12,11 +13,32 @@ export const Permissions = ({
   query: QUERY,
   ...props
 }) => {
+  const { permissions } = useNodeContext();
+
   const { queries } = useQueries();
-  const { data, loading } = useQuery(QUERY || queries.QueryPermissions, {
-    errorPolicy: "all",
-    fetchPolicy: "network-only",
-  });
+  const { data, loading, refetch } = useQuery(
+    QUERY || queries.QueryPermissions,
+    {
+      errorPolicy: "all",
+      fetchPolicy: "network-only",
+    },
+  );
+
+  useEffect(() => {
+    const s = refetch;
+    permissions.current.refetch.push(s);
+
+    return () => {
+      const index = permissions.current.refetch.indexOf(s);
+      if (index > -1) {
+        permissions.current.refetch.splice(index, 1);
+      }
+    };
+  }, [permissions, refetch]);
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
 
   if (data?.viewer?.capabilities?.length > 0) {
     if (data.viewer.capabilities.includes(cap)) {
