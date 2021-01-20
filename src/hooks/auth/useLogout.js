@@ -10,8 +10,13 @@ export const useLogout = (props = {}) => {
   const { onLoggedOut = () => {} } = useNodeContext();
 
   const onCompleted = (...args) => {
+    // Changes the context of isLoggedIn.
     loggedOut();
+
+    // Runs any context onLoggedOut passed from app.
     onLoggedOut(...args);
+
+    // onCompleted prop passed to useLogout.
     onCompletedProp(...args);
   };
 
