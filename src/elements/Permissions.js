@@ -36,10 +36,6 @@ export const Permissions = ({
     };
   }, [permissions, refetch]);
 
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-
   if (data?.viewer?.capabilities?.length > 0) {
     if (data.viewer.capabilities.includes(cap)) {
       const others = cap.replace("_", "_others_");
