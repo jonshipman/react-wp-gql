@@ -14,10 +14,10 @@
     > .sub-menu {
       list-style: none;
       padding-left: 0;
-      background-color: $white;
       z-index: 1;
 
       @media #{$breakpoint-large} {
+        background-color: $white;
         opacity: 0;
         transition: opacity 0.15s ease-in;
         height: 0;
