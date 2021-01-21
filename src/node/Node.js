@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import { NodeContext, useNodeContext } from "../Context";
+import { useNodeContext } from "../Context";
 import { useComponents } from "../hooks";
 import { useNode, useNodeRenderer } from "./useNode";
 
