@@ -1,10 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNodeContext } from "../Context";
-
-import { useComponents } from "../hooks/useComponents";
-import { useMenu } from "../hooks/useMenu";
-import { useNode } from "../node";
+import { useComponents, useNode, useMenu } from "../hooks";
 
 const DefaultPreload = ({ uri }) => {
   useNode({ uri });

@@ -10,6 +10,7 @@ export * from "./hooks";
 export * from "./hooks/auth";
 export * from "./Login";
 export * from "./node/Node";
+export * from "./node/CreatePaginationQuery";
 export * from "./node";
 export * from "./Provider";
 export * from "./Search";
