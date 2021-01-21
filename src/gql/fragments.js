@@ -2,7 +2,7 @@ export * from "../node/fragments";
 
 export const FragmentMenuItemLevel3 = `
   fragment MenuItemLevel3Fragment on MenuItem {
-    childItems {
+    childItems(first:25) {
       nodes {
         ...MenuItemFragment
       }
@@ -12,7 +12,7 @@ export const FragmentMenuItemLevel3 = `
 
 export const FragmentMenuItemLevel2 = `
   fragment MenuItemLevel2Fragment on MenuItem {
-    childItems {
+    childItems(first: 50) {
       nodes {
         ...MenuItemFragment
         ...MenuItemLevel3Fragment
