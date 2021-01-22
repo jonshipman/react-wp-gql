@@ -1,8 +1,8 @@
-&-sin-ren {
+&-render {
   margin-top: $spacing-large;
   margin-bottom: $spacing-large;
 
-  &-cat-ls-itm {
+  .category-item {
     display: inline-block;
     margin-right: $spacing-small;
     padding-right: $spacing-small;

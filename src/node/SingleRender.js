@@ -5,7 +5,7 @@ import { useComponents } from "../hooks";
 export const SingleRender = ({
   node = {},
   loading,
-  className = "rwg--node-sin-ren",
+  className = "rwg--node-render rwg--single",
   wrap,
   skullColor,
   ...props
@@ -37,7 +37,7 @@ export const SingleRender = ({
 export const SingleCategoryListItem = ({ uri, name, children }) => {
   const Wrap = uri ? Link : "span";
   return (
-    <li className="rwg--node-sin-ren-cat-ls-itm">
+    <li className="category-item">
       <Wrap to={uri}>{name || children}</Wrap>
     </li>
   );
@@ -46,7 +46,7 @@ export const SingleCategoryListItem = ({ uri, name, children }) => {
 export const SinglePostRender = ({
   node = {},
   loading,
-  className = "rwg--node-sin-ren",
+  className = "rwg--node-render rwg--single rwg--post",
   wrap,
   skullColor,
   ...props
@@ -67,7 +67,7 @@ export const SinglePostRender = ({
       <article className={`single post-${databaseId}`}>
         <RenderWrapper {...{ className }} {...props}>
           <ExtraWrapper>
-            <h1 className="rwg--node-sin-ren-head">
+            <h1 className="rwg--node-render-head">
               {loading ? <components.SkullLine color={skullColor} /> : title}
             </h1>
 

@@ -6,7 +6,7 @@ const Entries = ({ children }) => {
 };
 
 const EntriesColumns = ({ children }) => {
-  return <div className="rwg--node-ent-col">{children}</div>;
+  return <div className="rwg--node-columns">{children}</div>;
 };
 
 const TwoColumn = ({ children }) => {
