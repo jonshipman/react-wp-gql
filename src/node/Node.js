@@ -49,7 +49,7 @@ export const Node = ({
 
   const isArchive = isArchiveProp ? isArchiveProp : isArchiveNode;
 
-  const RenderComponent = useNodeRenderer(__typename, isArchive);
+  const RenderComponent = useNodeRenderer({ __typename, isArchive, data });
 
   const title = !!titleProp ? titleProp : node.title || node.name;
 

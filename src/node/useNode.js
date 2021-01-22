@@ -111,13 +111,19 @@ export const useNode = (props) => {
   };
 };
 
-export const useNodeRenderer = (__typename, isArchive) => {
-  const { components: Components = {} } = useNodeContext();
+export const useNodeRenderer = ({ __typename, isArchive, data }) => {
+  const { components: Components = {}, templates = {} } = useNodeContext();
 
   if (isArchive) {
     return __typename && Components[`Archive${__typename}Render`]
       ? Components[`Archive${__typename}Render`]
       : ArchiveRender;
+  }
+
+  const templateName = data?.node?.template?.templateName;
+
+  if (!!templateName && !!templates[templateName]) {
+    return templates[templateName];
   }
 
   return __typename && Components[`Single${__typename}Render`]
