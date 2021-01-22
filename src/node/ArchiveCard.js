@@ -1,13 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { useComponents } from "../hooks";
+import { useNodeContext } from "../Context";
+import {
+  Button,
+  PostContent,
+  SkullButton,
+  SkullLine,
+  SkullParagraph,
+  SkullWord,
+} from "../elements";
+import { ClockIcon } from "../static/images";
 
 export const ArchiveCard = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.ArchiveCard) return <Components.ArchiveCard {...props} />;
+
   const { databaseId = 0, uri, title, date, excerpt, content, loading } =
     props || {};
-
-  const { components } = useComponents();
 
   const body = excerpt || content;
 
@@ -15,33 +24,25 @@ export const ArchiveCard = (props) => {
     <article className={`rwg--node-card post-${databaseId}`}>
       <h2 className="rwg--node-card-heading">
         <Link to={uri || "/"} className="rwg--node-card-heading-link">
-          {title ? title : <components.SkullLine />}
+          {title ? title : <SkullLine />}
         </Link>
         {loading || date ? (
           <div className="rwg--node-card-date">
-            <components.ClockIcon
-              className="v-mid mr2"
-              width={12}
-              height={12}
-            />
-            <span>{date ? date : <components.SkullWord />}</span>
+            <ClockIcon className="v-mid mr2" width={12} height={12} />
+            <span>{date ? date : <SkullWord />}</span>
           </div>
         ) : null}
       </h2>
 
-      {body ? (
-        <components.PostContent trim>{body}</components.PostContent>
-      ) : (
-        <components.SkullParagraph />
-      )}
+      {body ? <PostContent trim>{body}</PostContent> : <SkullParagraph />}
 
       <div className="rwg--node-card-btn-wrap">
         {uri ? (
-          <components.Button to={uri} type={3}>
+          <Button to={uri} type={3}>
             Read more
-          </components.Button>
+          </Button>
         ) : (
-          <components.SkullButton />
+          <SkullButton />
         )}
       </div>
     </article>

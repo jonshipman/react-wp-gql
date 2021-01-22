@@ -1,10 +1,18 @@
 import React, { forwardRef } from "react";
+import { useNodeContext } from "../Context";
 
-let PageWidth = ({ children, className }, ref) => (
-  <div className={`rwg--width ${className || ""}`} {...{ ref }}>
-    {children}
-  </div>
-);
+let PageWidth = (props, ref) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.PageWidth)
+    return <Components.PageWidth {...props} {...{ ref }} />;
+  const { children, className } = props;
+
+  return (
+    <div className={`rwg--width ${className || ""}`} {...{ ref }}>
+      {children}
+    </div>
+  );
+};
 
 PageWidth = forwardRef(PageWidth);
 

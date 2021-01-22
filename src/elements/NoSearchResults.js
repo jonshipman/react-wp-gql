@@ -1,15 +1,17 @@
 import React from "react";
+import { useNodeContext } from "../Context";
+import { PageWidth } from "./PageWidth";
 
-import { useComponents } from "../hooks";
-
-export const NoSearchResults = () => {
-  const { components } = useComponents();
+export const NoSearchResults = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.NoSearchResults)
+    return <Components.NoSearchResults {...props} />;
 
   return (
-    <components.PageWidth className="rwg--no-sch-res">
+    <PageWidth className="rwg--no-sch-res">
       <div>
         This is where the search results will be. Use the form above to search.
       </div>
-    </components.PageWidth>
+    </PageWidth>
   );
 };

@@ -1,24 +1,23 @@
 import React, { forwardRef } from "react";
+import { useNodeContext } from "../Context";
+import { PageWidth } from "./PageWidth";
+import { SkullLine } from "./Skeleton";
 
-import { useComponents } from "../hooks/useComponents";
+let Title = (p, ref) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.Title) return <Components.Title {...p} {...{ ref }} />;
 
-let Title = (
-  { notHeading, wrap = "h1", className = "", children, ...props },
-  ref,
-) => {
-  const { components } = useComponents();
+  const { notHeading, wrap = "h1", className = "", children, ...props } = p;
 
   const Wrap = notHeading ? "div" : wrap;
 
   return (
     <div className={`rwg--title-wrap ${className}`} {...props}>
-      <components.PageWidth>
+      <PageWidth>
         <Wrap className="rwg--title">
-          <span {...{ ref }}>
-            {children ? children : <components.SkullLine />}
-          </span>
+          <span {...{ ref }}>{children ? children : <SkullLine />}</span>
         </Wrap>
-      </components.PageWidth>
+      </PageWidth>
     </div>
   );
 };

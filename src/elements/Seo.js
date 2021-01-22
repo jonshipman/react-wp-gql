@@ -34,7 +34,7 @@ export const Seo = ({
   children,
 }) => {
   const canonical = canonicalProp || uri;
-  const description = description || metaDesc;
+  const description = descriptionProp || metaDesc;
 
   return (
     <Helmet>

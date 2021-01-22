@@ -13,5 +13,4 @@ export * from "./PostContent";
 export * from "./SearchForm";
 export * from "./Seo";
 export * from "./Skeleton";
-export * from "./Suspense";
 export * from "./Title";

@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import {
   getPageInfo,
-  useComponents,
   useNavigation,
   usePagination,
   useQueries,
@@ -9,6 +8,9 @@ import {
 } from "../hooks";
 import { useNodeContext } from "../Context";
 import { useMemo } from "react";
+import { ArchiveRender } from "./ArchiveRender";
+import { ArchiveCard } from "./ArchiveCard";
+import { SinglePostRender, SingleRender } from "./SingleRender";
 
 export const useNode = (props) => {
   const { perPage } = useNodeContext();
@@ -110,23 +112,25 @@ export const useNode = (props) => {
 };
 
 export const useNodeRenderer = (__typename, isArchive) => {
-  const { components } = useComponents();
+  const { components: Components = {} } = useNodeContext();
 
   if (isArchive) {
-    return __typename && components[`Archive${__typename}Render`]
-      ? components[`Archive${__typename}Render`]
-      : components.ArchiveRender;
+    return __typename && Components[`Archive${__typename}Render`]
+      ? Components[`Archive${__typename}Render`]
+      : ArchiveRender;
   }
 
-  return __typename && components[`Single${__typename}Render`]
-    ? components[`Single${__typename}Render`]
-    : components.SingleRender;
+  return __typename && Components[`Single${__typename}Render`]
+    ? Components[`Single${__typename}Render`]
+    : __typename === "Post"
+    ? SinglePostRender
+    : SingleRender;
 };
 
 export const useCardRenderer = (__typename) => {
-  const { components } = useComponents();
+  const { components: Components = {} } = useNodeContext();
 
-  return __typename && components[`Archive${__typename}Card`]
-    ? components[`Archive${__typename}Card`]
-    : components.ArchiveCard;
+  return __typename && Components[`Archive${__typename}Card`]
+    ? Components[`Archive${__typename}Card`]
+    : ArchiveCard;
 };

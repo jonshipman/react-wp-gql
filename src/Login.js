@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, Switch, Route, useHistory, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-
-import { useComponents } from "./hooks/useComponents";
 import { useQueries } from "./hooks/useQueries";
 import {
   LoggedInProvider,
@@ -11,6 +9,7 @@ import {
   useLogout,
 } from "./hooks/auth";
 import { generatePassword } from "./functions";
+import { Button, PageWidth } from "./elements";
 
 export const Logout = () => {
   const history = useHistory();
@@ -53,7 +52,6 @@ const Input = ({
 };
 
 export const LoginRender = ({ setMessage }) => {
-  const { components } = useComponents();
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -86,12 +84,9 @@ export const LoginRender = ({ setMessage }) => {
         />
 
         <div className="rwg--login-button">
-          <components.Button
-            {...{ loading }}
-            onClick={() => login(username, password)}
-          >
+          <Button {...{ loading }} onClick={() => login(username, password)}>
             Log In
-          </components.Button>
+          </Button>
         </div>
 
         <div className="rwg--login-links">
@@ -118,7 +113,6 @@ export const ForgotPasswordRender = ({ setMessage }) => {
   }, []);
 
   const { mutations } = useQueries();
-  const { components } = useComponents();
   const [state, setState] = useState({
     username: "",
     clientMutationId,
@@ -156,15 +150,12 @@ export const ForgotPasswordRender = ({ setMessage }) => {
       />
 
       <div className="rwg--login-button">
-        <components.Button
-          {...{ loading }}
-          onClick={() => mutation({ variables: state })}
-        >
+        <Button {...{ loading }} onClick={() => mutation({ variables: state })}>
           Request New Password
-        </components.Button>
+        </Button>
       </div>
 
-      <components.BackToLogin />
+      <BackToLogin />
     </div>
   );
 };
@@ -178,7 +169,6 @@ export const RegisterRender = ({ setMessage }) => {
   }, []);
 
   const { mutations } = useQueries();
-  const { components } = useComponents();
   const [state, setState] = useState({
     username: "",
     email: "",
@@ -226,22 +216,18 @@ export const RegisterRender = ({ setMessage }) => {
       />
 
       <div className="rwg--login-button">
-        <components.Button
-          {...{ loading }}
-          onClick={() => mutate({ variables: state })}
-        >
+        <Button {...{ loading }} onClick={() => mutate({ variables: state })}>
           Register
-        </components.Button>
+        </Button>
       </div>
 
-      <components.BackToLogin />
+      <BackToLogin />
     </div>
   );
 };
 
 export const ResetPasswordRender = ({ setMessage }) => {
   const { mutations } = useQueries();
-  const { components } = useComponents();
   const { key, login } = useParams();
 
   const clientMutationId = useMemo(() => {
@@ -292,15 +278,12 @@ export const ResetPasswordRender = ({ setMessage }) => {
       />
 
       <div className="rwg--login-button">
-        <components.Button
-          {...{ loading }}
-          onClick={() => mutation({ variables: state })}
-        >
+        <Button {...{ loading }} onClick={() => mutation({ variables: state })}>
           Login
-        </components.Button>
+        </Button>
       </div>
 
-      <components.BackToLogin />
+      <BackToLogin />
     </div>
   );
 };
@@ -312,7 +295,6 @@ export const BackToLogin = () => (
 );
 
 export const LoginPage = () => {
-  const { components } = useComponents();
   const { loading } = useIsLoggedIn();
   const [message, setMessage] = useState("");
 
@@ -332,16 +314,16 @@ export const LoginPage = () => {
 
       <Switch>
         <Route exact path="/register">
-          <components.RegisterRender {...{ setMessage }} />
+          <RegisterRender {...{ setMessage }} />
         </Route>
         <Route exact path="/forgot-password">
-          <components.ForgotPasswordRender {...{ setMessage }} />
+          <ForgotPasswordRender {...{ setMessage }} />
         </Route>
         <Route exact path="/rp/:key/:login">
-          <components.ResetPasswordRender {...{ setMessage }} />
+          <ResetPasswordRender {...{ setMessage }} />
         </Route>
         <Route path="*">
-          <components.LoginRender {...{ setMessage }} />
+          <LoginRender {...{ setMessage }} />
         </Route>
       </Switch>
     </div>
@@ -349,8 +331,7 @@ export const LoginPage = () => {
 };
 
 export const Login = ({ wrap }) => {
-  const { components } = useComponents();
-  const Wrap = wrap ? wrap : components.PageWidth;
+  const Wrap = wrap ? wrap : PageWidth;
 
   return (
     <Wrap className="rwg--login">

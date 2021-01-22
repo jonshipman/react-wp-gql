@@ -1,6 +1,10 @@
 import React from "react";
+import { useNodeContext } from "../Context";
 
-export const NotFound = () => {
+export const NotFound = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.NotFound) return <Components.NotFound {...props} />;
+
   return (
     <div className="rwg--no-fnd post-not-found">
       <h1 className="title">

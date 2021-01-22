@@ -1,7 +1,8 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNodeContext } from "../Context";
-import { useComponents, useNode, useMenu } from "../hooks";
+import { useNode, useMenu } from "../hooks";
+import { SkullWord } from "./Skeleton";
 
 const DefaultPreload = ({ uri }) => {
   useNode({ uri });
@@ -9,11 +10,18 @@ const DefaultPreload = ({ uri }) => {
   return null;
 };
 
-export const LinkInner = ({ className = "link-inner", children }) => {
+export const LinkInner = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.LinkInner) return <Components.LinkInner {...props} />;
+  const { className = "link-inner", children } = props;
+
   return <span className={className}>{children}</span>;
 };
 
 export const MenuItem = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.MenuItem) return <Components.MenuItem {...props} />;
+
   const {
     children,
     className = "",
@@ -47,7 +55,6 @@ export const MenuItemAnchor = ({
   const { Preload } = useNodeContext();
   const [entered, setEntered] = useState(false);
   const { level = 1, onClick = () => {} } = props;
-  const { components } = useComponents();
   const className = `menu-item-anchor ${classNameProp}`;
 
   const MenuPreload = !!Preload ? Preload : DefaultPreload;
@@ -78,26 +85,20 @@ export const MenuItemAnchor = ({
     <React.Fragment>
       {href && href !== "#no-link" && (
         <a href={href || "#"} rel="nofollow noopen" {...{ className }}>
-          <components.LinkInner {...innerProps}>
-            {children}
-          </components.LinkInner>
+          <LinkInner {...innerProps}>{children}</LinkInner>
         </a>
       )}
 
       {to && (
         <NavLink {...navLinkProps}>
           {entered && <MenuPreload uri={to} />}
-          <components.LinkInner {...innerProps}>
-            {children}
-          </components.LinkInner>
+          <LinkInner {...innerProps}>{children}</LinkInner>
         </NavLink>
       )}
 
       {((!href && !to) || href === "#no-link") && (
         <span {...{ className, onClick }}>
-          <components.LinkInner {...innerProps}>
-            {children}
-          </components.LinkInner>
+          <LinkInner {...innerProps}>{children}</LinkInner>
         </span>
       )}
     </React.Fragment>
@@ -105,23 +106,26 @@ export const MenuItemAnchor = ({
 };
 
 // Exportable submenu container.
-export const SubMenu = ({ className = "", children }) => {
+export const SubMenu = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.SubMenu) return <Components.SubMenu {...props} />;
+
+  const { className = "", children } = props;
+
   return <ul className={`sub-menu ${className}`}>{children}</ul>;
 };
 
 /**
  * The placeholder skeleton that shows before query loads.
  */
-export const MenuSkeleton = ({ error, skullColor: color, ...props }) => {
-  const { components } = useComponents();
+export const MenuSkeleton = (p) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.MenuSkeleton) return <Components.MenuSkeleton {...p} />;
 
+  const { error, skullColor: color, ...props } = p;
   const skullMenuItem = {
     url: "/",
-    label: error?.message ? (
-      error.message
-    ) : (
-      <components.SkullWord {...{ color }} />
-    ),
+    label: error?.message ? error.message : <SkullWord {...{ color }} />,
   };
 
   return Array.from(new Array(error?.message ? 1 : 5)).map(() => (
@@ -133,8 +137,6 @@ export const MenuSkeleton = ({ error, skullColor: color, ...props }) => {
  * Child item that loops to created the nested menu.
  */
 const ChildItem = ({ menuItem, level, location, index, ...props }) => {
-  const { components } = useComponents();
-
   const { childItems, connectedNode: connection } = menuItem || {};
   let { cssClasses } = menuItem || {};
   let { nodes: children } = childItems || {};
@@ -182,17 +184,15 @@ const ChildItem = ({ menuItem, level, location, index, ...props }) => {
   }
 
   return (
-    <components.MenuItem
+    <MenuItem
       key={menuItem.id}
       level={localLevel}
       id={`menu-item-${menuItem.databaseId}`}
       {...menuItemProps}
     >
-      <components.MenuItemAnchor {...anchorProps}>
-        {menuItem.label}
-      </components.MenuItemAnchor>
+      <MenuItemAnchor {...anchorProps}>{menuItem.label}</MenuItemAnchor>
       {children.length > 0 && (
-        <components.SubMenu {...subMenuProps}>
+        <SubMenu {...subMenuProps}>
           {children.map((menuItem) => (
             <ChildItem
               key={menuItem.id}
@@ -201,9 +201,9 @@ const ChildItem = ({ menuItem, level, location, index, ...props }) => {
               {...props}
             />
           ))}
-        </components.SubMenu>
+        </SubMenu>
       )}
-    </components.MenuItem>
+    </MenuItem>
   );
 };
 
@@ -219,8 +219,6 @@ export const MenuRender = ({
   children,
   ...props
 }) => {
-  const { components } = useComponents();
-
   let className = "";
 
   if (classNameProp.includes("flat-menu")) {
@@ -238,7 +236,7 @@ export const MenuRender = ({
     >
       {prepend}
       {(!!loading && (menuItems || []).length === 0) || props.error?.message ? (
-        <components.MenuSkeleton {...props} />
+        <MenuSkeleton {...props} />
       ) : (
         menuItems?.length > 0 &&
         menuItems.map((menuItem, index) => {
@@ -267,8 +265,6 @@ let Menu = (
   },
   ref,
 ) => {
-  const { components } = useComponents();
-
   const {
     menuItems: menuItemsData,
     loading: loadingData,
@@ -297,7 +293,7 @@ let Menu = (
     }
   }, [menuItems, onLoad]);
 
-  return <components.MenuRender {...renderProps} />;
+  return <MenuRender {...renderProps} />;
 };
 
 Menu = forwardRef(Menu);

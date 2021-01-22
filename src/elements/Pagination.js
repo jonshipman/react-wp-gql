@@ -1,22 +1,24 @@
 import React from "react";
+import { useNodeContext } from "../Context";
+import { Button } from "./Button";
 
-import { useComponents } from "../hooks/useComponents";
-
-export const Pagination = ({ hasNextPage, hasPreviousPage, prev, next }) => {
-  const { components } = useComponents();
+export const Pagination = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.Pagination) return <Components.Pagination {...props} />;
+  const { hasNextPage, hasPreviousPage, prev, next } = props;
 
   return (
     <div className="rwg--paged pagination">
       {hasPreviousPage && (
-        <components.Button className="prev" onClick={prev}>
+        <Button className="prev" onClick={prev}>
           Previous
-        </components.Button>
+        </Button>
       )}
 
       {hasNextPage && (
-        <components.Button className="next" onClick={next}>
+        <Button className="next" onClick={next}>
           Next
-        </components.Button>
+        </Button>
       )}
     </div>
   );

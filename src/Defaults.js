@@ -1,43 +1,14 @@
-import { ReactComponent as ClockIcon } from "./static/images/clock.svg";
-import { ReactComponent as FolderIcon } from "./static/images/folder.svg";
-import { ReactComponent as SearchIcon } from "./static/images/search.svg";
 import * as DefaultFragments from "./gql/fragments";
 import * as DefaultMutations from "./gql/mutations";
 import * as DefaultQueries from "./gql/queries";
-import * as Login from "./Login";
-import * as Elements from "./elements";
-import * as Nodes from "./node";
 
-export const DefaultComponents = {
-  ...Nodes,
-  ...Elements,
-  ...Login,
-  ClockIcon,
-  FolderIcon,
-  SearchIcon,
-};
-
-export const Populate = ({ components, fragments, queries, mutations }) => {
+export const Populate = ({ fragments, queries, mutations }) => {
   const ret = {};
-  ret.components = PopulateComponents(components);
   ret.fragments = PopulateFragments(fragments);
   ret.queries = PopulateQueries(queries);
   ret.mutations = PopulateMutations(mutations);
 
   return ret;
-};
-
-export const PopulateComponents = (passed = {}) => {
-  let components = { ...passed };
-  if (!components) components = {};
-
-  Object.keys(DefaultComponents).forEach((key) => {
-    if (!components[key]) {
-      components[key] = DefaultComponents[key];
-    }
-  });
-
-  return components;
 };
 
 export const PopulateFragments = (passed = {}) => {

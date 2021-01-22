@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useNodeContext } from "../Context";
-import { useComponents } from "../hooks";
+import { ErrorRouting, Pagination, Seo, Title, PageWidth } from "../elements";
 import { useNode, useNodeRenderer } from "./useNode";
 
 export const Node = ({
@@ -19,7 +19,6 @@ export const Node = ({
   ssr,
   ...props
 }) => {
-  const { components } = useComponents();
   const { pathname } = useLocation();
   const { siteName, archiveColumns } = useNodeContext();
 
@@ -71,7 +70,7 @@ export const Node = ({
   const uri = node.uri || pathname;
 
   if (isArchive) {
-    const Wrapper = wrap ? wrap : components.PageWidth;
+    const Wrapper = wrap ? wrap : PageWidth;
 
     const PaginationProps = {
       hasPreviousPage,
@@ -82,11 +81,11 @@ export const Node = ({
 
     return (
       <React.Fragment>
-        <components.Seo {...{ uri }} {...seo}>
+        <Seo {...{ uri }} {...seo}>
           <meta name="robots" content="noindex" />
-        </components.Seo>
+        </Seo>
 
-        {loading || title ? <components.Title>{title}</components.Title> : null}
+        {loading || title ? <Title>{title}</Title> : null}
 
         <Wrapper
           className="rwg--node-archive"
@@ -94,7 +93,7 @@ export const Node = ({
           {...props}
         >
           {error ? (
-            <components.ErrorRouting {...{ loading, error, wrap: "div" }} />
+            <ErrorRouting {...{ loading, error, wrap: "div" }} />
           ) : edges?.length === 0 && !loading ? (
             <div className="rwg--archive-nothing-found">
               <div>Nothing found.</div>
@@ -117,7 +116,7 @@ export const Node = ({
                   data,
                 }}
               />
-              <components.Pagination {...PaginationProps} />
+              <Pagination {...PaginationProps} />
             </React.Fragment>
           )}
         </Wrapper>
@@ -125,7 +124,7 @@ export const Node = ({
     );
   } else {
     if (!skip && (error || (!loading && !node?.id))) {
-      return <components.ErrorRouting {...{ error, loading }} />;
+      return <ErrorRouting {...{ error, loading }} />;
     }
 
     return (
@@ -134,7 +133,7 @@ export const Node = ({
           node?.databaseId || "0"
         }`}
       >
-        <components.Seo {...{ uri }} {...seo} />
+        <Seo {...{ uri }} {...seo} />
 
         <RenderComponent {...{ wrap, node, data, loading, error }} {...props} />
       </article>

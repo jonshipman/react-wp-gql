@@ -1,32 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useComponents } from "../hooks";
+import { useNodeContext } from "../Context";
+import {
+  PostContent,
+  SkullPage,
+  Title,
+  PageWidth,
+  SkullLine,
+  SkullWord,
+} from "../elements";
+import { ClockIcon, FolderIcon } from "../static/images";
 
-export const SingleRender = ({
-  node = {},
-  loading,
-  className = "rwg--node-render rwg--single",
-  wrap,
-  skullColor,
-  ...props
-}) => {
+export const SingleRender = (p) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.SingleRender) return <Components.SingleRender {...p} />;
+
+  const {
+    node = {},
+    loading,
+    className = "rwg--node-render rwg--single",
+    wrap,
+    skullColor,
+    ...props
+  } = p;
+
   const { content, title, name } = node;
 
-  const { components } = useComponents();
-  const RenderWrapper = wrap ? wrap : components.PageWidth;
-  const ExtraWrapper = !!components.ExtraWrap
-    ? components.ExtraWrap
+  const RenderWrapper = wrap ? wrap : PageWidth;
+  const ExtraWrapper = !!Components?.ExtraWrap
+    ? Components.ExtraWrap
     : React.Fragment;
 
   return (
     <div>
-      <components.Title>{title || name}</components.Title>
+      <Title>{title || name}</Title>
       <RenderWrapper {...{ className }} {...props}>
         <ExtraWrapper>
           {!!loading && !node?.content ? (
-            <components.SkullPage color={skullColor} />
+            <SkullPage color={skullColor} />
           ) : (
-            <components.PostContent>{content}</components.PostContent>
+            <PostContent>{content}</PostContent>
           )}
         </ExtraWrapper>
       </RenderWrapper>
@@ -43,39 +56,44 @@ export const SingleCategoryListItem = ({ uri, name, children }) => {
   );
 };
 
-export const SinglePostRender = ({
-  node = {},
-  loading,
-  className = "rwg--node-render rwg--single rwg--post",
-  wrap,
-  skullColor,
-  ...props
-}) => {
+export const SinglePostRender = (p) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.SinglePostRender)
+    return <Components.SinglePostRender {...p} />;
+
+  const {
+    node = {},
+    loading,
+    className = "rwg--node-render rwg--single rwg--post",
+    wrap,
+    skullColor,
+    ...props
+  } = p;
+
   const { databaseId, title, date, categories = {}, content } = node;
 
-  const { components } = useComponents();
-  const RenderWrapper = wrap ? wrap : components.PageWidth;
-  const ExtraWrapper = !!components.ExtraWrap
-    ? components.ExtraWrap
+  const RenderWrapper = wrap ? wrap : PageWidth;
+  const ExtraWrapper = !!Components?.ExtraWrap
+    ? Components.ExtraWrap
     : React.Fragment;
   const pageTitle =
     categories?.edges?.length > 0 ? categories.edges[0].node.name : "Blog";
 
   return (
     <React.Fragment>
-      <components.Title wrap="div">{pageTitle}</components.Title>
+      <Title wrap="div">{pageTitle}</Title>
       <article className={`single post-${databaseId}`}>
         <RenderWrapper {...{ className }} {...props}>
           <ExtraWrapper>
             <h1 className="rwg--node-render-head">
-              {loading ? <components.SkullLine color={skullColor} /> : title}
+              {loading ? <SkullLine color={skullColor} /> : title}
             </h1>
 
             <div className="post-meta">
               <div className="posted">
-                <components.ClockIcon width={20} height={20} />
+                <ClockIcon width={20} height={20} />
                 {loading ? (
-                  <components.SkullWord color={skullColor} />
+                  <SkullWord color={skullColor} />
                 ) : (
                   <span>{date}</span>
                 )}
@@ -83,23 +101,23 @@ export const SinglePostRender = ({
 
               <div className="post-categories">
                 {(categories?.edges?.length > 0 || loading) && (
-                  <components.FolderIcon width={20} height={20} />
+                  <FolderIcon width={20} height={20} />
                 )}
 
                 {loading ? (
                   <ul className="list">
-                    <components.SingleCategoryListItem>
-                      <components.SkullWord color={skullColor} />
-                    </components.SingleCategoryListItem>
-                    <components.SingleCategoryListItem>
-                      <components.SkullWord color={skullColor} />
-                    </components.SingleCategoryListItem>
+                    <SingleCategoryListItem>
+                      <SkullWord color={skullColor} />
+                    </SingleCategoryListItem>
+                    <SingleCategoryListItem>
+                      <SkullWord color={skullColor} />
+                    </SingleCategoryListItem>
                   </ul>
                 ) : (
                   categories?.edges?.length > 0 && (
                     <ul className="list">
                       {categories.edges.map((category) => (
-                        <components.SingleCategoryListItem
+                        <SingleCategoryListItem
                           key={category.node.id}
                           {...category.node}
                         />
@@ -111,9 +129,9 @@ export const SinglePostRender = ({
             </div>
 
             {loading ? (
-              <components.SkullPage color={skullColor} />
+              <SkullPage color={skullColor} />
             ) : (
-              <components.PostContent>{content}</components.PostContent>
+              <PostContent>{content}</PostContent>
             )}
           </ExtraWrapper>
         </RenderWrapper>

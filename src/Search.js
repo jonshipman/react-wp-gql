@@ -1,28 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNodeContext } from "./Context";
-import { useComponents, useQueries } from "./hooks";
+import { NoSearchResults, PageWidth, SearchForm } from "./elements";
+import { useQueries } from "./hooks";
 import { Node } from "./node/Node";
 
-const SearchRender = ({
-  className,
-  children,
-  edges: edgesProp,
-  loading,
-  filter,
-  setFilter,
-}) => {
-  const { components } = useComponents();
+const SearchRender = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.SearchRender) return <Components.SearchRender {...props} />;
+
+  const {
+    className,
+    children,
+    edges: edgesProp,
+    loading,
+    filter,
+    setFilter,
+  } = props;
+
   const edges = edgesProp ? edgesProp || [] : [];
 
   return (
-    <components.PageWidth {...{ className }}>
-      <components.SearchForm {...{ filter, setFilter }} />
+    <PageWidth {...{ className }}>
+      <SearchForm {...{ filter, setFilter }} />
       {!loading && edges.length === 0 && (filter || "").length < 3 ? (
-        <components.NoSearchResults />
+        <NoSearchResults />
       ) : (
         children
       )}
-    </components.PageWidth>
+    </PageWidth>
   );
 };
 

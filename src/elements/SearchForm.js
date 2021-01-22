@@ -1,8 +1,12 @@
 import React, { useCallback } from "react";
-import { useComponents } from "../hooks";
+import { useNodeContext } from "../Context";
+import { SearchIcon } from "../static/images";
 
-export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
-  const { components } = useComponents();
+export const SearchForm = (props) => {
+  const { components: Components } = useNodeContext();
+  if (Components?.SearchForm) return <Components.SearchForm {...props} />;
+
+  const { filter = "", setFilter = () => {} } = props;
 
   const updateSearch = useCallback(
     (value) => {
@@ -28,7 +32,7 @@ export const SearchForm = ({ filter = "", setFilter = () => {} }) => {
         />
       </div>
       <div className="rwg--sch-ico">
-        <components.SearchIcon width={24} />
+        <SearchIcon width={24} />
       </div>
     </div>
   );
