@@ -79,12 +79,11 @@
 
       @media #{$breakpoint-large} {
         display: flex;
-        flex: 1 1 auto;
 
         > div {
           &:first-child {
+            flex: 1 1 auto;
             padding-right: $spacing-large;
-            margin-top: -$spacing-large;
           }
 
           &:last-child {
