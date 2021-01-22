@@ -7,14 +7,14 @@ export const SkullLine = ({
   const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
-      <div className="relative z-1" aria-hidden="true">
+      <div className="rwg--skull-line" aria-hidden="true">
         <div
-          className={`bg-${color} z-2 absolute top-0 left-0 w-100`}
+          className={`bg-${color} rwg--skull-line-background`}
           style={{ lineHeight: 1 }}
         >
-          <span className="o-0">Loading</span>
+          <span className="rwg--skull-hidden">Loading</span>
         </div>
-        <div className="o-0">Loading</div>
+        <div className="rwg--skull-hidden">Loading</div>
       </div>
     </div>
   );
@@ -26,15 +26,15 @@ export const SkullWord = ({
 }) => {
   const className = `skull ${classNameProp}`;
   return (
-    <div className={`dib ${className}`}>
-      <div className="dib relative z-1" aria-hidden="true">
+    <div className={`rwg--skull-word ${className}`}>
+      <div className="rwg--skull-word-inner" aria-hidden="true">
         <div
-          className={`bg-${color} z-2 absolute top-0 left-0 w-100`}
+          className={`bg-${color} rwg--skull-word-background`}
           style={{ lineHeight: 1 }}
         >
-          <span className="o-0">Loading</span>
+          <span className="rwg--skull-hidden">Loading</span>
         </div>
-        <div className="o-0">Loading</div>
+        <div className="rwg--skull-hidden">Loading</div>
       </div>
     </div>
   );
@@ -47,10 +47,7 @@ export const SkullButton = ({
   const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
-      <div
-        className={`pointer link br2 ph4 pv2 white bg-${color} bn dib`}
-        aria-hidden="true"
-      >
+      <div className={`bg-${color} rwg--skull-button`} aria-hidden="true">
         Loading
       </div>
     </div>
@@ -61,13 +58,13 @@ export const SkullParagraph = ({
   className: classNameProp = "mb2",
   color = "light-gray",
 }) => {
-  const className = `skull ${classNameProp}`;
+  const className = `skull rwg--skull-p ${classNameProp}`;
   return (
     <div {...{ className }}>
       <SkullLine {...{ color }} />
       <SkullLine {...{ color }} />
       <SkullLine {...{ color }} />
-      <SkullLine className="mw4" {...{ color }} />
+      <SkullLine {...{ color }} />
     </div>
   );
 };
@@ -79,35 +76,32 @@ export const SkullImage = ({
   const className = `skull ${classNameProp}`;
   return (
     <div {...{ className }}>
-      <div
-        className={`bg-${color} aspect-ratio aspect-ratio--4x3`}
-        aria-hidden="true"
-      />
+      <div className={`bg-${color} rwg--skull-image`} aria-hidden="true" />
     </div>
   );
 };
 
 export const SkullPage = ({ className: classNameProp = "" }) => {
-  const className = `skull ${classNameProp}`;
+  const className = `skull rwg--skull-page ${classNameProp}`;
   return (
     <div {...{ className }}>
-      <SkullParagraph />
+      <SkullParagraph className="paragraph-1" />
 
-      <div className="f2 mv3 mw6 w-100">
+      <div className="heading-2">
         <SkullLine />
       </div>
 
-      <div className="flex-l flex-auto-l mv4">
-        <div className="pr4-l w-100 nt4-l">
+      <div className="paragraph-2">
+        <div>
           <SkullParagraph />
           <SkullParagraph />
         </div>
-        <SkullImage className="mw5 w-100" />
+        <SkullImage />
       </div>
 
       <SkullParagraph />
 
-      <div className="f2 mv3 mw5 w-100">
+      <div className="heading-3">
         <SkullLine />
       </div>
       <SkullParagraph />
