@@ -31,11 +31,16 @@ export const SingleRender = (p) => {
     ? Components.ExtraWrap
     : React.Fragment;
 
+  const EWProps = {};
+  if (ExtraWrapper !== React.Fragment) {
+    EWProps.node = node;
+  }
+
   return (
     <div>
       <Title>{title || name}</Title>
       <RenderWrapper {...{ className }} {...props}>
-        <ExtraWrapper>
+        <ExtraWrapper {...EWProps}>
           {!!loading && !node?.content ? (
             <SkullPage color={skullColor} />
           ) : (
@@ -79,12 +84,17 @@ export const SinglePostRender = (p) => {
   const pageTitle =
     categories?.edges?.length > 0 ? categories.edges[0].node.name : "Blog";
 
+  const EWProps = {};
+  if (ExtraWrapper !== React.Fragment) {
+    EWProps.node = node;
+  }
+
   return (
     <React.Fragment>
       <Title wrap="div">{pageTitle}</Title>
       <article className={`single post-${databaseId}`}>
         <RenderWrapper {...{ className }} {...props}>
-          <ExtraWrapper>
+          <ExtraWrapper {...EWProps}>
             <h1 className="rwg--node-render-head">
               {loading ? <SkullLine color={skullColor} /> : title}
             </h1>
