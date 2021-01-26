@@ -34,7 +34,7 @@ export const ArchiveCard = (props) => {
         ) : null}
       </h2>
 
-      {body ? <PostContent trim>{body}</PostContent> : <SkullParagraph />}
+      {!loading ? <PostContent trim>{body}</PostContent> : <SkullParagraph />}
 
       <div className="rwg--node-card-btn-wrap">
         {uri ? (
