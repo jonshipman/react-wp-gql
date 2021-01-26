@@ -4,13 +4,12 @@ import { NodeContext } from "./Context";
 
 export const NodeProvider = ({
   children,
-  components = {},
   fragments = {},
   queries = {},
   mutations = {},
   ...props
 }) => {
-  const refactored = Populate({ components, fragments, queries, mutations });
+  const refactored = Populate({ fragments, queries, mutations });
 
   // Used to force <Permissions> to render to check capabilities.
   const permissions = useRef({ refetch: [] });
