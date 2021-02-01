@@ -7,6 +7,7 @@ import { Search } from "./Search";
 
 export const WordPressRoutes = ({
   category = "category",
+  tag = "tag",
   blog = "blog",
   blogTitle = "Blog",
 }) => {
@@ -33,8 +34,12 @@ export const WordPressRoutes = ({
         <Node title={blogTitle} isArchive />
       </Route>
 
+      <Route path={`/${tag}/:slug`}>
+        <Node isArchive />
+      </Route>
+
       <Route path={`/${category}/:slug`}>
-        <Node title="Category" isArchive />
+        <Node isArchive />
       </Route>
 
       <Route path="*">

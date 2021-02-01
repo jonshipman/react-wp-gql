@@ -1,16 +1,5 @@
 import { CreatePaginationQuery } from "./CreatePaginationQuery";
 
-export const FragmentCategory = `
-  fragment CategoryFragment on Category {
-    id
-    databaseId
-    slug
-    name
-    uri
-    ${CreatePaginationQuery("posts", "...PostFragment")}
-  }
-`;
-
 export const FragmentPost = `
   fragment PostFragment on Post {
     id
@@ -57,6 +46,28 @@ export const FragmentUserArchive = `
   fragment UserArchiveFragment on User {
     id
     name
+    ${CreatePaginationQuery("posts", "...PostFragment")}
+  }
+`;
+
+export const FragmentCategory = `
+  fragment CategoryFragment on Category {
+    id
+    databaseId
+    slug
+    name
+    uri
+    ${CreatePaginationQuery("posts", "...PostFragment")}
+  }
+`;
+
+export const FragmentTag = `
+  fragment TagFragment on Tag {
+    id
+    databaseId
+    slug
+    name
+    uri
     ${CreatePaginationQuery("posts", "...PostFragment")}
   }
 `;

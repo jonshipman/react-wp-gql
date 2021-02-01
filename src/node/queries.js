@@ -24,6 +24,9 @@ export const QueryNodeByUri = (fragments) => gql`
       ... on Category {
         ...CategoryFragment
       }
+      ... on Tag {
+        ...TagFragment
+      }
       ... on ContentType {
         ...ContentTypeFragment
       }
@@ -34,6 +37,7 @@ export const QueryNodeByUri = (fragments) => gql`
   }
   ${fragments.FragmentContentType}
   ${fragments.FragmentCategory}
+  ${fragments.FragmentTag}
   ${fragments.FragmentPage}
   ${fragments.FragmentPost}
   ${fragments.FragmentUserArchive}
