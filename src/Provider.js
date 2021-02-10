@@ -13,10 +13,10 @@ export const NodeProvider = ({
   const refactored = Populate({ fragments, queries, mutations });
 
   const internalNodeRef = useRef({});
-  const internalEdgesRef = useRef({});
-  const internalDataRef = useRef({});
-  const internalNodeLoading = useRef();
-  const internalNodeError = useRef({});
+  const internalEdgesRef = useRef([]);
+  const internalDataRef = useRef();
+  const internalNodeLoading = useRef(false);
+  const internalNodeError = useRef();
 
   // Used to force <Permissions> to render to check capabilities.
   const permissions = useRef({ refetch: [] });

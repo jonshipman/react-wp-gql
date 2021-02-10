@@ -7,7 +7,7 @@ import {
   useCachedQuery,
 } from "../hooks";
 import { useNodeContext } from "../Context";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { ArchiveRender } from "./ArchiveRender";
 import { ArchiveCard } from "./ArchiveCard";
 import { SinglePostRender, SingleRender } from "./SingleRender";
@@ -98,25 +98,32 @@ export const useNode = (props) => {
     goPrev,
   });
 
-  if (nodeRef?.current) {
+  useEffect(() => {
     nodeRef.current = node;
-  }
-
-  if (edgesRef?.current) {
     edgesRef.current = edges;
-  }
-
-  if (dataRef?.current) {
     dataRef.current = data;
-  }
-
-  if (nodeLoading?.current) {
     nodeLoading.current = loading;
-  }
-
-  if (nodeError?.current) {
     nodeError.current = error;
-  }
+
+    return () => {
+      nodeRef.current = {};
+      edgesRef.current = [];
+      dataRef.current = null;
+      nodeLoading.current = false;
+      nodeError.current = null;
+    };
+  }, [
+    nodeRef,
+    edgesRef,
+    dataRef,
+    nodeLoading,
+    nodeError,
+    node,
+    edges,
+    data,
+    loading,
+    error,
+  ]);
 
   return {
     __typename,
