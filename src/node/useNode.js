@@ -98,13 +98,13 @@ export const useNode = (props) => {
     goPrev,
   });
 
-  useEffect(() => {
-    nodeRef.current = node;
-    edgesRef.current = edges;
-    dataRef.current = data;
-    nodeLoading.current = loading;
-    nodeError.current = error;
+  nodeRef.current = node;
+  edgesRef.current = edges;
+  dataRef.current = data;
+  nodeLoading.current = loading;
+  nodeError.current = error;
 
+  useEffect(() => {
     return () => {
       nodeRef.current = {};
       edgesRef.current = [];
