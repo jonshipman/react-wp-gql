@@ -12,15 +12,17 @@ export const NodeProvider = ({
   const props = { ...passed };
   const refactored = Populate({ fragments, queries, mutations });
 
+  // Used to force <Permissions> to render to check capabilities.
+  const permissions = useRef({ refetch: [] });
+
+  // Internal refs for when the parent project doesn't pass.
   const internalNodeRef = useRef({});
   const internalEdgesRef = useRef([]);
   const internalDataRef = useRef();
   const internalNodeLoading = useRef(false);
   const internalNodeError = useRef();
 
-  // Used to force <Permissions> to render to check capabilities.
-  const permissions = useRef({ refetch: [] });
-
+  /** Begin Node Ref Prop Check **/
   if (!props.node) {
     props.node = internalNodeRef;
   }
@@ -40,6 +42,7 @@ export const NodeProvider = ({
   if (!props.nodeError) {
     props.nodeError = internalNodeError;
   }
+  /** End Node Ref Prop Check **/
 
   return (
     <NodeContext.Provider
