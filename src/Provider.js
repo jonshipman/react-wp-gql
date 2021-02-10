@@ -7,12 +7,29 @@ export const NodeProvider = ({
   fragments = {},
   queries = {},
   mutations = {},
-  ...props
+  ...passed
 }) => {
+  const props = { ...passed };
   const refactored = Populate({ fragments, queries, mutations });
+
+  const internalNodeRef = useRef({});
+  const internalEdgesRef = useRef({});
+  const internalDataRef = useRef({});
 
   // Used to force <Permissions> to render to check capabilities.
   const permissions = useRef({ refetch: [] });
+
+  if (!props.node) {
+    props.node = internalNodeRef;
+  }
+
+  if (!props.edges) {
+    props.edges = internalEdgesRef;
+  }
+
+  if (!props.data) {
+    props.data = internalDataRef;
+  }
 
   return (
     <NodeContext.Provider

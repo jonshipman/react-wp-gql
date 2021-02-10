@@ -13,7 +13,12 @@ import { ArchiveCard } from "./ArchiveCard";
 import { SinglePostRender, SingleRender } from "./SingleRender";
 
 export const useNode = (props) => {
-  const { perPage } = useNodeContext();
+  const {
+    perPage,
+    node: nodeRef,
+    edges: edgesRef,
+    data: dataRef,
+  } = useNodeContext();
   const { queries } = useQueries();
 
   const {
@@ -90,6 +95,18 @@ export const useNode = (props) => {
     goNext,
     goPrev,
   });
+
+  if (nodeRef?.current) {
+    nodeRef.current = node;
+  }
+
+  if (edgesRef?.current) {
+    edgesRef.current = edges;
+  }
+
+  if (dataRef?.current) {
+    dataRef.current = data;
+  }
 
   return {
     __typename,
