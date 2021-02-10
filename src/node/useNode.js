@@ -18,6 +18,8 @@ export const useNode = (props) => {
     node: nodeRef,
     edges: edgesRef,
     data: dataRef,
+    nodeLoading,
+    nodeError,
   } = useNodeContext();
   const { queries } = useQueries();
 
@@ -106,6 +108,14 @@ export const useNode = (props) => {
 
   if (dataRef?.current) {
     dataRef.current = data;
+  }
+
+  if (nodeLoading?.current) {
+    nodeLoading.current = loading;
+  }
+
+  if (nodeError?.current) {
+    nodeError.current = error;
   }
 
   return {

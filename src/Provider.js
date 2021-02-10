@@ -15,6 +15,8 @@ export const NodeProvider = ({
   const internalNodeRef = useRef({});
   const internalEdgesRef = useRef({});
   const internalDataRef = useRef({});
+  const internalNodeLoading = useRef();
+  const internalNodeError = useRef({});
 
   // Used to force <Permissions> to render to check capabilities.
   const permissions = useRef({ refetch: [] });
@@ -29,6 +31,14 @@ export const NodeProvider = ({
 
   if (!props.data) {
     props.data = internalDataRef;
+  }
+
+  if (!props.nodeLoading) {
+    props.nodeLoading = internalNodeLoading;
+  }
+
+  if (!props.nodeError) {
+    props.nodeError = internalNodeError;
   }
 
   return (
