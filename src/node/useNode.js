@@ -112,18 +112,7 @@ export const useNode = (props) => {
       nodeLoading.current = false;
       nodeError.current = null;
     };
-  }, [
-    nodeRef,
-    edgesRef,
-    dataRef,
-    nodeLoading,
-    nodeError,
-    node,
-    edges,
-    data,
-    loading,
-    error,
-  ]);
+  }, [nodeRef, edgesRef, dataRef, nodeLoading, nodeError]);
 
   return {
     __typename,
