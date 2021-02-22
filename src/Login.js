@@ -9,7 +9,7 @@ import {
   useLogout,
 } from "./hooks/auth";
 import { generatePassword } from "./functions";
-import { Button, PageWidth, Title } from "./elements";
+import { Button, Title } from "./elements";
 
 export const Logout = () => {
   const history = useHistory();
@@ -296,7 +296,7 @@ export const BackToLogin = () => (
 
 export const LoginPage = ({
   title: TitleComponent = Title,
-  wrap: Wrap = PageWidth,
+  wrap: Wrap = "div",
 }) => {
   const { loading } = useIsLoggedIn();
   const [message, setMessage] = useState("");
@@ -307,7 +307,7 @@ export const LoginPage = ({
 
   return (
     <div>
-      <TitleComponent>Login</TitleComponent>
+      <TitleComponent {...{ wrap }}>Login</TitleComponent>
 
       <Wrap>
         <div

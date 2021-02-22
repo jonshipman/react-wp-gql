@@ -1,6 +1,5 @@
 import React from "react";
 import { Loading } from "./Loading";
-import { PageWidth } from "./PageWidth";
 import { LoadingError } from "./LoadingError";
 import { NotFound } from "./NotFound";
 import { useNodeContext } from "../Context";
@@ -10,7 +9,7 @@ export const ErrorRouting = (props) => {
   if (Components?.ErrorRouting) return <Components.ErrorRouting {...props} />;
 
   const { loading, error, wrap } = props;
-  const Wrap = wrap ? wrap : PageWidth;
+  const Wrap = wrap ? wrap : "div";
 
   if (loading) {
     return (

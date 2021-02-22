@@ -1,5 +1,4 @@
 import React from "react";
-import { useNodeContext } from "../Context";
 import { useCardRenderer } from "./useNode";
 
 const Entries = ({ children }) => {
@@ -40,7 +39,6 @@ export const ArchiveRender = ({
   loading,
   edges,
 }) => {
-  const { components: Components } = useNodeContext();
   const EntriesWrap = entries
     ? entries
     : columns > 1
@@ -69,29 +67,23 @@ export const ArchiveRender = ({
 
   const Card = card ? card : CardRender;
 
-  const ExtraWrap = !!Components?.ArchiveExtraWrap
-    ? Components.ArchiveExtraWrap
-    : React.Fragment;
-
   return (
     <EntriesWrap>
-      <ExtraWrap>
-        {loading ? (
-          <React.Fragment>
-            {Array.from(new Array(rows)).map((_, i) => (
-              <CardWrap key={`card-loading-${i}`}>
-                <Card {...{ loading }} />
-              </CardWrap>
-            ))}
-          </React.Fragment>
-        ) : !!edges ? (
-          edges.map(({ node }) => (
-            <CardWrap key={node.id}>
-              <Card {...{ loading }} {...node} />
+      {loading ? (
+        <React.Fragment>
+          {Array.from(new Array(rows)).map((_, i) => (
+            <CardWrap key={`card-loading-${i}`}>
+              <Card {...{ loading }} />
             </CardWrap>
-          ))
-        ) : null}
-      </ExtraWrap>
+          ))}
+        </React.Fragment>
+      ) : !!edges ? (
+        edges.map(({ node }) => (
+          <CardWrap key={node.id}>
+            <Card {...{ loading }} {...node} />
+          </CardWrap>
+        ))
+      ) : null}
     </EntriesWrap>
   );
 };

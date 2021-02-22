@@ -5,7 +5,7 @@
   padding-bottom: $spacing-large;
 
   > span {
-    font-size: $font-size-4;
+    font-size: $font-size-3;
     font-weight: 400;
     display: block;
   }
@@ -16,7 +16,6 @@
   }
 
   &-wrap {
-    background-color: $near-white;
     margin-bottom: $spacing-large;
   }
 }

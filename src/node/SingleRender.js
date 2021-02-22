@@ -5,7 +5,6 @@ import {
   PostContent,
   SkullPage,
   Title,
-  PageWidth,
   SkullLine,
   SkullWord,
 } from "../elements";
@@ -22,32 +21,21 @@ export const SingleRender = (p) => {
     className = "rwg--node-render rwg--single",
     wrap,
     skullColor,
-    ...props
   } = p;
 
   const { content, title, name } = node;
 
-  const RenderWrapper = wrap ? wrap : PageWidth;
-  const ExtraWrapper = !!Components?.ExtraWrap
-    ? Components.ExtraWrap
-    : React.Fragment;
-
-  const EWProps = {};
-  if (ExtraWrapper !== React.Fragment) {
-    EWProps.node = node;
-  }
+  const RenderWrapper = wrap ? wrap : "div";
 
   return (
     <div>
-      <TitleComponent>{title || name}</TitleComponent>
-      <RenderWrapper {...{ className }} {...props}>
-        <ExtraWrapper {...EWProps}>
-          {!!loading && !node?.content ? (
-            <SkullPage color={skullColor} />
-          ) : (
-            <PostContent>{content}</PostContent>
-          )}
-        </ExtraWrapper>
+      <TitleComponent {...{ wrap }}>{title || name}</TitleComponent>
+      <RenderWrapper {...{ className }}>
+        {!!loading && !node?.content ? (
+          <SkullPage color={skullColor} />
+        ) : (
+          <PostContent>{content}</PostContent>
+        )}
       </RenderWrapper>
     </div>
   );
@@ -74,78 +62,65 @@ export const SinglePostRender = (p) => {
     className = "rwg--node-render rwg--single rwg--post",
     wrap,
     skullColor,
-    ...props
   } = p;
 
   const { databaseId, title, date, categories = {}, content } = node;
 
-  const RenderWrapper = wrap ? wrap : PageWidth;
-  const ExtraWrapper = !!Components?.ExtraWrap
-    ? Components.ExtraWrap
-    : React.Fragment;
+  const RenderWrapper = wrap ? wrap : "div";
   const pageTitle =
-    categories?.edges?.length > 0 ? categories.edges[0].node.name : "Blog";
-
-  const EWProps = {};
-  if (ExtraWrapper !== React.Fragment) {
-    EWProps.node = node;
-  }
+    categories?.edges?.length > 0 ? categories.edges[0].node.name : "Archives";
 
   return (
     <React.Fragment>
-      <TitleComponent wrap="div">{pageTitle}</TitleComponent>
+      <TitleComponent {...{ wrap }} notHeading>
+        {pageTitle}
+      </TitleComponent>
       <article className={`single post-${databaseId}`}>
-        <RenderWrapper {...{ className }} {...props}>
-          <ExtraWrapper {...EWProps}>
-            <h1 className="rwg--node-render-head">
-              {loading ? <SkullLine color={skullColor} /> : title}
-            </h1>
+        <RenderWrapper {...{ className }}>
+          <h1 className="rwg--node-render-head">
+            {loading ? <SkullLine color={skullColor} /> : title}
+          </h1>
 
-            <div className="post-meta">
-              <div className="posted">
-                <ClockIcon width={20} height={20} />
-                {loading ? (
-                  <SkullWord color={skullColor} />
-                ) : (
-                  <span>{date}</span>
-                )}
-              </div>
-
-              <div className="post-categories">
-                {(categories?.edges?.length > 0 || loading) && (
-                  <FolderIcon width={20} height={20} />
-                )}
-
-                {loading ? (
-                  <ul className="list">
-                    <SingleCategoryListItem>
-                      <SkullWord color={skullColor} />
-                    </SingleCategoryListItem>
-                    <SingleCategoryListItem>
-                      <SkullWord color={skullColor} />
-                    </SingleCategoryListItem>
-                  </ul>
-                ) : (
-                  categories?.edges?.length > 0 && (
-                    <ul className="list">
-                      {categories.edges.map((category) => (
-                        <SingleCategoryListItem
-                          key={category.node.id}
-                          {...category.node}
-                        />
-                      ))}
-                    </ul>
-                  )
-                )}
-              </div>
+          <div className="post-meta">
+            <div className="posted">
+              <ClockIcon width={20} height={20} />
+              {loading ? <SkullWord color={skullColor} /> : <span>{date}</span>}
             </div>
 
-            {loading ? (
-              <SkullPage color={skullColor} />
-            ) : (
-              <PostContent>{content}</PostContent>
-            )}
-          </ExtraWrapper>
+            <div className="post-categories">
+              {(categories?.edges?.length > 0 || loading) && (
+                <FolderIcon width={20} height={20} />
+              )}
+
+              {loading ? (
+                <ul className="list">
+                  <SingleCategoryListItem>
+                    <SkullWord color={skullColor} />
+                  </SingleCategoryListItem>
+                  <SingleCategoryListItem>
+                    <SkullWord color={skullColor} />
+                  </SingleCategoryListItem>
+                </ul>
+              ) : (
+                categories?.edges?.length > 0 && (
+                  <ul className="list">
+                    {categories.edges.map((category) => (
+                      <SingleCategoryListItem
+                        key={category.node.id}
+                        {...category.node}
+                      />
+                    ))}
+                  </ul>
+                )
+              )}
+            </div>
+          </div>
+
+          {loading ? (
+            <SkullPage color={skullColor} />
+          ) : (
+            <PostContent>{content}</PostContent>
+          )}
         </RenderWrapper>
       </article>
     </React.Fragment>

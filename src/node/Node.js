@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useNodeContext } from "../Context";
-import { ErrorRouting, Pagination, Seo, Title, PageWidth } from "../elements";
+import { ErrorRouting, Pagination, Seo, Title } from "../elements";
 import { useNode, useNodeRenderer } from "./useNode";
 
 export const Node = ({
@@ -71,7 +71,7 @@ export const Node = ({
   const uri = node.uri || pathname;
 
   if (isArchive) {
-    const Wrapper = wrap ? wrap : PageWidth;
+    const Wrapper = wrap ? wrap : "div";
 
     const PaginationProps = {
       hasPreviousPage,
@@ -86,13 +86,11 @@ export const Node = ({
           <meta name="robots" content="noindex" />
         </Seo>
 
-        {loading || title ? <TitleComponent>{title}</TitleComponent> : null}
+        {loading || title ? (
+          <TitleComponent {...{ wrap }}>{title}</TitleComponent>
+        ) : null}
 
-        <Wrapper
-          className="rwg--node-archive"
-          {...{ edges, loading, error, __typename, node, data }}
-          {...props}
-        >
+        <Wrapper className="rwg--node-archive">
           {error ? (
             <ErrorRouting {...{ loading, error, wrap: "div" }} />
           ) : edges?.length === 0 && !loading ? (

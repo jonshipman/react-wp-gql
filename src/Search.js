@@ -6,7 +6,7 @@ import React, {
   useContext,
 } from "react";
 import { useNodeContext } from "./Context";
-import { NoSearchResults, PageWidth, SearchForm } from "./elements";
+import { NoSearchResults, SearchForm } from "./elements";
 import { useQueries } from "./hooks";
 import { Node } from "./node/Node";
 
@@ -16,7 +16,7 @@ const SearchRender = (props) => {
   const { components: Components } = useNodeContext();
   if (Components?.SearchRender) return <Components.SearchRender {...props} />;
 
-  const { wrap: Wrap = PageWidth } = useContext(SearchContext);
+  const { wrap: Wrap = "div" } = useContext(SearchContext);
 
   const {
     className,

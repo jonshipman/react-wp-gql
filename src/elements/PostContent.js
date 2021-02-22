@@ -18,7 +18,7 @@ export const PostContent = (props) => {
   const { className, content, children, trim = false } = props;
 
   let text = content || children;
-  if (trim) {
+  if (trim && typeof trim === "string") {
     text = trimString(text);
   }
 

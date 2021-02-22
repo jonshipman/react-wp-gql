@@ -5,6 +5,7 @@ import { Button } from "./Button";
 export const Pagination = (props) => {
   const { components: Components } = useNodeContext();
   if (Components?.Pagination) return <Components.Pagination {...props} />;
+
   const { hasNextPage, hasPreviousPage, prev, next } = props;
 
   return (

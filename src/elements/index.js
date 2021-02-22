@@ -8,7 +8,6 @@ export * from "./Menu";
 export * from "./MenuItem";
 export * from "./NoSearchResults";
 export * from "./NotFound";
-export * from "./PageWidth";
 export * from "./Pagination";
 export * from "./Permissions";
 export * from "./PostContent";
