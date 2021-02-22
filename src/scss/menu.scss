@@ -1,115 +1,87 @@
-.nested-menu {
-  padding-left: 0;
-  list-style: none;
+.menu-wrapper {
+  @media #{$breakpoint-not-small} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-  .current-item {
-    color: $primary;
+  @media #{$breakpoint-large} {
+    white-space: nowrap;
+  }
+
+  a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
   }
 
   .menu-item {
-    display: block;
     position: relative;
     z-index: 1;
 
-    > .sub-menu {
-      list-style: none;
-      padding-left: 0;
-      z-index: 1;
-
-      @media #{$breakpoint-large} {
-        background-color: $white;
-        opacity: 0;
-        transition: opacity 0.15s ease-in;
-        height: 0;
-        overflow: hidden;
-        position: absolute;
-        border-style: solid;
-        border-width: 1px;
-        border-color: $light-gray;
-
-        &:hover {
-          overflow: visible;
-        }
-      }
+    &.hover-menu-item {
+      z-index: 2;
     }
 
-    &:hover {
-      z-index: 2;
-
-      > .sub-menu {
-        opacity: 1;
-        height: auto;
+    &.hover-menu-item,
+    &.current-menu-item {
+      > a {
+        color: $primary;
       }
     }
   }
 
-  .menu-item-anchor {
-    color: inherit;
-    text-decoration: none;
-    display: block;
+  .sub-menu {
+    @media #{$breakpoint-not-small} {
+      position: absolute;
+      z-index: 1;
+      background-color: $white;
+      box-shadow: $box-shadow-4;
+    }
+
+    .menu-item {
+      > a {
+        padding: $spacing-small;
+
+        @media #{$breakpoint-not-small} {
+          padding-right: $spacing-large;
+        }
+      }
+    }
   }
 
   > .menu-item {
-    @media #{$breakpoint-large} {
-      display: inline-block;
-      padding-top: $spacing-medium;
-      padding-bottom: $spacing-medium;
-
-      &:hover {
-        z-index: 2;
-      }
-    }
-
-    > .menu-item-anchor {
-      padding-top: $spacing-small;
-      padding-bottom: $spacing-small;
-
-      @media #{$breakpoint-large} {
+    > a {
+      @media #{$breakpoint-not-small} {
+        padding-top: $spacing-large;
+        padding-bottom: $spacing-large;
         padding-left: $spacing-medium;
         padding-right: $spacing-medium;
       }
-    }
 
-    > .sub-menu {
-      @media #{$breakpoint-large} {
-        width: $width-5;
-        text-align: left;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
+      > span {
+        display: block;
       }
 
-      .menu-item {
-        padding-top: $spacing-small;
-        padding-bottom: $spacing-small;
-        padding-left: $spacing-small;
-        padding-right: $spacing-small;
-      }
+      > .sub-menu {
+        @media #{$breakpoint-not-small} {
+          margin-top: -$spacing-medium;
+        }
 
-      .sub-menu {
-        @media #{$breakpoint-large} {
-          top: 0;
-          left: 100%;
-          transform: none;
-          margin-left: -#{$spacing-medium};
+        .sub-menu {
+          @media #{$breakpoint-not-small} {
+            top: 0;
+            margin-top: 0;
+            left: 100%;
+          }
         }
       }
     }
 
-    &:last-child {
-      > .menu-item-anchor {
+    &.menu-item-last {
+      > a {
         padding-right: 0;
       }
     }
-  }
-}
-
-.flat-menu {
-  list-style: none;
-  padding-left: 0;
-
-  .menu-item-anchor {
-    color: inherit;
-    text-decoration: none;
   }
 }
