@@ -1,7 +1,7 @@
 $btn-trans: background-color 0.15s ease-in-out, color 0.15s ease-in;
 $btn-secondary: #f4f4f4 !default;
 
-&--btn {
+&--button {
   cursor: pointer;
   text-decoration: none;
   transition: $btn-trans;

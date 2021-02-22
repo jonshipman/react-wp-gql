@@ -76,7 +76,7 @@ let Button = (
 ) => {
   const LoadingComponent = LoadingProp ? LoadingProp : Loading;
 
-  const baseClassName = "rwg--btn";
+  const baseClassName = "rwg--button";
   const className = `${baseClassName} ${classNameProp || ""}`;
 
   if (loading) {
@@ -95,7 +95,7 @@ let Button = (
           {...{ className }}
           {...props}
         />
-        <LoadingComponent className="rwg--btn-loading" />
+        <LoadingComponent className="rwg--button-loading" />
       </div>
     );
   }
