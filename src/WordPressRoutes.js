@@ -9,7 +9,8 @@ export const WordPressRoutes = ({
   category = "category",
   tag = "tag",
   blog = "blog",
-  blogTitle = "Blog",
+  wrap,
+  title,
 }) => {
   return (
     <Switch>
@@ -23,27 +24,27 @@ export const WordPressRoutes = ({
           "/rp/:key/:login",
         ]}
       >
-        <Login />
+        <Login {...{ title, wrap }} />
       </Route>
 
       <Route exact path="/search">
-        <Search />
+        <Search {...{ title, wrap }} />
       </Route>
 
       <Route exact path={`/${blog}`}>
-        <Node title={blogTitle} isArchive />
+        <Node {...{ title, wrap }} isArchive />
       </Route>
 
       <Route path={`/${tag}/:slug`}>
-        <Node isArchive />
+        <Node {...{ title, wrap }} isArchive />
       </Route>
 
       <Route path={`/${category}/:slug`}>
-        <Node isArchive />
+        <Node {...{ title, wrap }} isArchive />
       </Route>
 
       <Route path="*">
-        <Node />
+        <Node {...{ title, wrap }} />
       </Route>
     </Switch>
   );

@@ -8,8 +8,9 @@ export const Node = ({
   databaseId,
   isArchive: isArchiveProp,
   perPage,
-  title: titleProp,
+  nodeTitle: titleProp,
   columns: columnsProp,
+  title: TitleComponent = Title,
   wrap,
   card,
   entries,
@@ -85,7 +86,7 @@ export const Node = ({
           <meta name="robots" content="noindex" />
         </Seo>
 
-        {loading || title ? <Title>{title}</Title> : null}
+        {loading || title ? <TitleComponent>{title}</TitleComponent> : null}
 
         <Wrapper
           className="rwg--node-archive"
@@ -135,7 +136,11 @@ export const Node = ({
       >
         <Seo {...{ uri }} {...seo} />
 
-        <RenderComponent {...{ wrap, node, data, loading, error }} {...props} />
+        <RenderComponent
+          title={TitleComponent}
+          {...{ wrap, node, data, loading, error }}
+          {...props}
+        />
       </article>
     );
   }

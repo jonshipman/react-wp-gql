@@ -1,12 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+} from "react";
 import { useNodeContext } from "./Context";
 import { NoSearchResults, PageWidth, SearchForm } from "./elements";
 import { useQueries } from "./hooks";
 import { Node } from "./node/Node";
 
+const SearchContext = createContext({});
+
 const SearchRender = (props) => {
   const { components: Components } = useNodeContext();
   if (Components?.SearchRender) return <Components.SearchRender {...props} />;
+
+  const { wrap: Wrap = PageWidth } = useContext(SearchContext);
 
   const {
     className,
@@ -20,18 +30,18 @@ const SearchRender = (props) => {
   const edges = edgesProp ? edgesProp || [] : [];
 
   return (
-    <PageWidth {...{ className }}>
+    <Wrap {...{ className }}>
       <SearchForm {...{ filter, setFilter }} />
       {!loading && edges.length === 0 && (filter || "").length < 3 ? (
         <NoSearchResults />
       ) : (
         children
       )}
-    </PageWidth>
+    </Wrap>
   );
 };
 
-export const Search = ({ title = "Search" }) => {
+export const Search = ({ nodeTitle = "Search", title, wrap }) => {
   const [filter, setFilter] = useState();
   const { queries } = useQueries();
   const { search } = useNodeContext();
@@ -54,6 +64,7 @@ export const Search = ({ title = "Search" }) => {
   const props = {
     isArchive: true,
     title,
+    nodeTitle,
     query: queries.QuerySearch,
     variables: { filter: filter || "" },
     skip: (filter || "").length < 3,
@@ -61,5 +72,9 @@ export const Search = ({ title = "Search" }) => {
     setFilter,
   };
 
-  return <Node wrap={SearchRender} {...props} />;
+  return (
+    <SearchContext.Provider value={{ wrap }}>
+      <Node wrap={SearchRender} {...props} />
+    </SearchContext.Provider>
+  );
 };

@@ -18,6 +18,7 @@ export const SingleRender = (p) => {
   const {
     node = {},
     loading,
+    title: TitleComponent = Title,
     className = "rwg--node-render rwg--single",
     wrap,
     skullColor,
@@ -38,7 +39,7 @@ export const SingleRender = (p) => {
 
   return (
     <div>
-      <Title>{title || name}</Title>
+      <TitleComponent>{title || name}</TitleComponent>
       <RenderWrapper {...{ className }} {...props}>
         <ExtraWrapper {...EWProps}>
           {!!loading && !node?.content ? (
@@ -68,6 +69,7 @@ export const SinglePostRender = (p) => {
 
   const {
     node = {},
+    title: TitleComponent = Title,
     loading,
     className = "rwg--node-render rwg--single rwg--post",
     wrap,
@@ -91,7 +93,7 @@ export const SinglePostRender = (p) => {
 
   return (
     <React.Fragment>
-      <Title wrap="div">{pageTitle}</Title>
+      <TitleComponent wrap="div">{pageTitle}</TitleComponent>
       <article className={`single post-${databaseId}`}>
         <RenderWrapper {...{ className }} {...props}>
           <ExtraWrapper {...EWProps}>

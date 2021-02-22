@@ -3,7 +3,7 @@ import { useNodeContext } from "../Context";
 import { PageWidth } from "./PageWidth";
 import { SkullLine } from "./Skeleton";
 
-let Title = (p, ref) => {
+export const Title = forwardRef((p, ref) => {
   const { components: Components } = useNodeContext();
   if (Components?.Title) return <Components.Title {...p} {...{ ref }} />;
 
@@ -20,8 +20,4 @@ let Title = (p, ref) => {
       </PageWidth>
     </div>
   );
-};
-
-Title = forwardRef(Title);
-
-export { Title };
+});

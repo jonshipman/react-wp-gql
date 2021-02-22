@@ -9,7 +9,7 @@ import {
   useLogout,
 } from "./hooks/auth";
 import { generatePassword } from "./functions";
-import { Button, PageWidth } from "./elements";
+import { Button, PageWidth, Title } from "./elements";
 
 export const Logout = () => {
   const history = useHistory();
@@ -294,7 +294,10 @@ export const BackToLogin = () => (
   </Link>
 );
 
-export const LoginPage = () => {
+export const LoginPage = ({
+  title: TitleComponent = Title,
+  wrap: Wrap = PageWidth,
+}) => {
   const { loading } = useIsLoggedIn();
   const [message, setMessage] = useState("");
 
@@ -304,47 +307,47 @@ export const LoginPage = () => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <TitleComponent>Login</TitleComponent>
 
-      <div
-        className="rwg--login-msg"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: message }}
-      />
+      <Wrap>
+        <div
+          className="rwg--login-msg"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: message }}
+        />
 
-      <Switch>
-        <Route exact path="/register">
-          <RegisterRender {...{ setMessage }} />
-        </Route>
-        <Route exact path="/forgot-password">
-          <ForgotPasswordRender {...{ setMessage }} />
-        </Route>
-        <Route exact path="/rp/:key/:login">
-          <ResetPasswordRender {...{ setMessage }} />
-        </Route>
-        <Route path="*">
-          <LoginRender {...{ setMessage }} />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route exact path="/register">
+            <RegisterRender {...{ setMessage }} />
+          </Route>
+          <Route exact path="/forgot-password">
+            <ForgotPasswordRender {...{ setMessage }} />
+          </Route>
+          <Route exact path="/rp/:key/:login">
+            <ResetPasswordRender {...{ setMessage }} />
+          </Route>
+          <Route path="*">
+            <LoginRender {...{ setMessage }} />
+          </Route>
+        </Switch>
+      </Wrap>
     </div>
   );
 };
 
-export const Login = ({ wrap }) => {
-  const Wrap = wrap ? wrap : PageWidth;
-
+export const Login = ({ wrap, title }) => {
   return (
-    <Wrap className="rwg--login">
+    <div className="rwg--login">
       <LoggedInProvider>
         <Switch>
           <Route exact path="/logout">
             <Logout />
           </Route>
           <Route>
-            <LoginPage />
+            <LoginPage {...{ title, wrap }} />
           </Route>
         </Switch>
       </LoggedInProvider>
-    </Wrap>
+    </div>
   );
 };
