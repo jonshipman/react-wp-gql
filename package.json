@@ -17,18 +17,12 @@
     "wordpress",
     "react"
   ],
-  "lint-staged": {
-    "{src}/**/*.{js,jsx,json,css}": [
-      "prettier --write",
-      "git add ."
-    ]
-  },
   "main": "dist/react-wordpress.min.js",
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack --config webpack.prod.js",
     "prepare": "webpack --config webpack.prod.js",
-    "precommit": "lint-staged"
+    "precommit": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\""
   },
   "peerDependencies": {
     "@apollo/client": "^3.2.5",
@@ -49,7 +43,6 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^3.0.0",
     "husky": "^0.14.3",
-    "lint-staged": "^7.3.0",
     "prettier": "^2.0.4",
     "react-syntax-highlighter": "^12.2.1",
     "url-loader": "^4.1.1",
