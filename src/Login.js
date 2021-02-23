@@ -307,7 +307,7 @@ export const LoginPage = ({
 
   return (
     <div>
-      <TitleComponent {...{ wrap }}>Login</TitleComponent>
+      <TitleComponent wrap={Wrap}>Login</TitleComponent>
 
       <Wrap>
         <div
