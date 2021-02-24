@@ -34,7 +34,7 @@ export const useNode = (props) => {
     fetchPolicy,
   } = props || {};
 
-  const { pathname: uri, search } = useLocation();
+  const { pathname, search } = useLocation();
   const previewId = new URLSearchParams(search).get("p");
 
   const databaseId = previewId || idProp;
@@ -55,7 +55,7 @@ export const useNode = (props) => {
     variables.uri =
       passedUri !== "/" ? passedUri.replace(/\/+$/, "") : passedUri;
   } else {
-    variables.uri = uri !== "/" ? uri.replace(/\/+$/, "") : uri;
+    variables.uri = pathname !== "/" ? pathname.replace(/\/+$/, "") : pathname;
   }
 
   const key = `useNode_${JSON.stringify(variables)}`;
