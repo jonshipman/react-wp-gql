@@ -49,7 +49,11 @@ export const useNode = (props) => {
     ? queryProp
     : queries.QueryNodeByUri;
 
-  const variables = { databaseId, ...varProp, ...varPaged };
+  const variables = { ...varProp, ...varPaged };
+
+  if (databaseId) {
+    variables.databaseId = databaseId;
+  }
 
   if (!!passedUri) {
     variables.uri =
