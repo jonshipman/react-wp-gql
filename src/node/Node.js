@@ -18,6 +18,7 @@ export const Node = ({
   variables,
   skip,
   ssr,
+  fetchPolicy,
   ...props
 }) => {
   const { pathname } = useLocation();
@@ -30,6 +31,7 @@ export const Node = ({
     variables,
     skip,
     ssr,
+    fetchPolicy,
     perPage,
     databaseId,
   });

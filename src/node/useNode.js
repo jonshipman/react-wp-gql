@@ -31,6 +31,7 @@ export const useNode = (props) => {
     variables: varProp = {},
     skip,
     ssr,
+    fetchPolicy,
   } = props || {};
 
   const { pathname: uri, search } = useLocation();
@@ -64,6 +65,7 @@ export const useNode = (props) => {
     variables,
     skip,
     ssr,
+    fetchPolicy,
   });
 
   const node = useMemo(() => (data ? data.node || {} : {}), [data]);
