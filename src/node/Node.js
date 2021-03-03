@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import { useNodeContext } from "../Context";
 import { ErrorRouting, Pagination, Seo, Title } from "../elements";
 import { useNode, useNodeRenderer } from "./useNode";
+import InternalNodeProvider from "./Context";
 
-export const Node = ({
+function PrivateNode({
   databaseId,
   isArchive: isArchiveProp,
   perPage,
@@ -20,7 +21,7 @@ export const Node = ({
   ssr,
   fetchPolicy,
   ...props
-}) => {
+}) {
   const { pathname } = useLocation();
   const { siteName, archiveColumns } = useNodeContext();
 
@@ -144,4 +145,12 @@ export const Node = ({
       </article>
     );
   }
-};
+}
+
+export function Node(props) {
+  return (
+    <InternalNodeProvider>
+      <PrivateNode {...props} />
+    </InternalNodeProvider>
+  );
+}

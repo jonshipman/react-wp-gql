@@ -11,8 +11,10 @@ import { useEffect, useMemo } from "react";
 import { ArchiveRender } from "./ArchiveRender";
 import { ArchiveCard } from "./ArchiveCard";
 import { SinglePostRender, SingleRender } from "./SingleRender";
+import { useInternalNodeContext } from "./Context";
 
-export const useNode = (props) => {
+export function useNode(props) {
+  const { internal } = useInternalNodeContext();
   const {
     perPage,
     node: nodeRef,
@@ -104,21 +106,25 @@ export const useNode = (props) => {
     goPrev,
   });
 
-  nodeRef.current = node;
-  edgesRef.current = edges;
-  dataRef.current = data;
-  nodeLoading.current = loading;
-  nodeError.current = error;
+  if (internal) {
+    nodeRef.current = node;
+    edgesRef.current = edges;
+    dataRef.current = data;
+    nodeLoading.current = loading;
+    nodeError.current = error;
+  }
 
   useEffect(() => {
     return () => {
-      nodeRef.current = {};
-      edgesRef.current = [];
-      dataRef.current = null;
-      nodeLoading.current = false;
-      nodeError.current = null;
+      if (internal) {
+        nodeRef.current = {};
+        edgesRef.current = [];
+        dataRef.current = null;
+        nodeLoading.current = false;
+        nodeError.current = null;
+      }
     };
-  }, [nodeRef, edgesRef, dataRef, nodeLoading, nodeError]);
+  }, [nodeRef, edgesRef, dataRef, nodeLoading, nodeError, internal]);
 
   return {
     __typename,
@@ -138,7 +144,7 @@ export const useNode = (props) => {
     seo,
     title,
   };
-};
+}
 
 export const useNodeRenderer = ({ __typename, isArchive, data }) => {
   const { components: Components = {}, templates = {} } = useNodeContext();
